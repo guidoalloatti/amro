@@ -3,14 +3,14 @@
 
 #include "response.h"
 
-class ClientResponse : Response
+class ClientResponse : public Response
 {
     QString method;
 
-    void newClient(JSONP &output, const QHash <QString, QString> &params);
-    void deleteClient(JSONP &output, const QHash <QString, QString> &params);
-    void updateClient(JSONP &output, const QHash <QString, QString> &params);
-    void getClient(JSONP &output, const QHash <QString, QString> &params);
+    static void newClient(JSONP &output, const QHash <QString, QString> &params);
+    static void deleteClient(JSONP &output, const QHash <QString, QString> &params);
+    static void updateClient(JSONP &output, const QHash <QString, QString> &params);
+    static void getClient(JSONP &output, const QHash <QString, QString> &params);
 
 public:
     ClientResponse();

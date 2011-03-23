@@ -2,15 +2,10 @@
 
 CertificateResponse::CertificateResponse()
 {
-    methodTable["NewCertificate"] = &newCertificate;
-    methodTable["DeleteCertificate"] = &deleteCertificate;
-    methodTable["UpdateCertificate"] = &updateCertificate;
-    methodTable["GetCertificate"] = &getCertificate;
-}
-
-void CertificateResponse::login(JSONP &output, const QHash <QString, QString> &params)
-{
-
+    methodTable["NewCertificate"] = &CertificateResponse::newCertificate;
+    methodTable["DeleteCertificate"] = &CertificateResponse::deleteCertificate;
+    methodTable["UpdateCertificate"] = &CertificateResponse::updateCertificate;
+    methodTable["GetCertificate"] = &CertificateResponse::getCertificate;
 }
 
 void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QString> &params)
@@ -35,7 +30,7 @@ void CertificateResponse::getCertificate(JSONP &output, const QHash <QString, QS
 
 void CertificateResponse::generate(QString method, JSONP &output, const QHash <QString, QString> &params)
 {
-    void (*f) (JSONP &, QHash <QString, QString> &) = methodTable.value(method);
+    void (*f) (JSONP &, const QHash <QString, QString> &) = methodTable.value(method, 0);
 
     if (f != 0)
         return (*f)(output, params);

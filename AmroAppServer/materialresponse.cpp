@@ -2,15 +2,10 @@
 
 MaterialResponse::MaterialResponse()
 {
-    methodTable["NewMaterial"] = &newMaterial;
-    methodTable["DeleteMaterial"] = &deleteMaterial;
-    methodTable["UpdateMaterial"] = &updateMaterial;
-    methodTable["GetMaterial"] = &getMaterial;
-}
-
-void MaterialResponse::login(JSONP &output, const QHash <QString, QString> &params)
-{
-
+    methodTable["NewMaterial"] = &MaterialResponse::newMaterial;
+    methodTable["DeleteMaterial"] = &MaterialResponse::deleteMaterial;
+    methodTable["UpdateMaterial"] = &MaterialResponse::updateMaterial;
+    methodTable["GetMaterial"] = &MaterialResponse::getMaterial;
 }
 
 void MaterialResponse::newMaterial(JSONP &output, const QHash <QString, QString> &params)
@@ -35,7 +30,7 @@ void MaterialResponse::getMaterial(JSONP &output, const QHash <QString, QString>
 
 void MaterialResponse::generate(QString method, JSONP &output, const QHash <QString, QString> &params)
 {
-    void (*f) (JSONP &, QHash <QString, QString> &) = methodTable.value(method);
+    void (*f) (JSONP &, const QHash <QString, QString> &) = methodTable.value(method, 0);
 
     if (f != 0)
         return (*f)(output, params);

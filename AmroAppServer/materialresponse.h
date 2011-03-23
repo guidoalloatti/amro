@@ -3,14 +3,14 @@
 
 #include "response.h"
 
-class MaterialResponse : Response
+class MaterialResponse : public Response
 {
     QString method;
 
-    void newMaterial(JSONP &output, const QHash <QString, QString> &params);
-    void deleteMaterial(JSONP &output, const QHash <QString, QString> &params);
-    void updateMaterial(JSONP &output, const QHash <QString, QString> &params);
-    void getMaterial(JSONP &output, const QHash <QString, QString> &params);
+    static void newMaterial(JSONP &output, const QHash <QString, QString> &params);
+    static void deleteMaterial(JSONP &output, const QHash <QString, QString> &params);
+    static void updateMaterial(JSONP &output, const QHash <QString, QString> &params);
+    static void getMaterial(JSONP &output, const QHash <QString, QString> &params);
 
 public:
     MaterialResponse();
@@ -19,3 +19,4 @@ public:
 };
 
 #endif // MATERIALRESPONSE_H
+

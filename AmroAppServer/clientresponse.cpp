@@ -2,15 +2,10 @@
 
 ClientResponse::ClientResponse()
 {
-    methodTable["NewClient"] = &newClient;
-    methodTable["DeleteClient"] = &deleteClient;
-    methodTable["UpdateClient"] = &updateClient;
-    methodTable["GetClient"] = &getClient;
-}
-
-void ClientResponse::login(JSONP &output, const QHash <QString, QString> &params)
-{
-
+    methodTable["NewClient"] = &ClientResponse::newClient;
+    methodTable["DeleteClient"] = &ClientResponse::deleteClient;
+    methodTable["UpdateClient"] = &ClientResponse::updateClient;
+    methodTable["GetClient"] = &ClientResponse::getClient;
 }
 
 void ClientResponse::newClient(JSONP &output, const QHash <QString, QString> &params)
@@ -35,7 +30,7 @@ void ClientResponse::getClient(JSONP &output, const QHash <QString, QString> &pa
 
 void ClientResponse::generate(QString method, JSONP &output, const QHash <QString, QString> &params)
 {
-    void (*f) (JSONP &, QHash <QString, QString> &) = methodTable.value(method);
+    void (*f) (JSONP &, const QHash <QString, QString> &) = methodTable.value(method, 0);
 
     if (f != 0)
         return (*f)(output, params);

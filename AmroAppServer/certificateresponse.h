@@ -3,14 +3,14 @@
 
 #include "response.h"
 
-class CertificateResponse : Response
+class CertificateResponse : public Response
 {
     QString method;
 
-    void newCertificate(JSONP &output, const QHash <QString, QString> &params);
-    void deleteCertificate(JSONP &output, const QHash <QString, QString> &params);
-    void updateCertificate(JSONP &output, const QHash <QString, QString> &params);
-    void getCertificate(JSONP &output, const QHash <QString, QString> &params);
+    static void newCertificate(JSONP &output, const QHash <QString, QString> &params);
+    static void deleteCertificate(JSONP &output, const QHash <QString, QString> &params);
+    static void updateCertificate(JSONP &output, const QHash <QString, QString> &params);
+    static void getCertificate(JSONP &output, const QHash <QString, QString> &params);
 
 public:
     CertificateResponse();
