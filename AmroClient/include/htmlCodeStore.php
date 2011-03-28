@@ -60,10 +60,19 @@ class htmlCodeStore {
 
     function getHeader()
     {
+		switch ($this->pageInvoice)
+		{
+			case "oc":
+				$pageDescription = "Gestión de Ordenes de Compra";
+				break;
+			default:
+				$pageDescription = $this->pageInvoice;
+				break;
+		}
+		
         $html = "
-                <br/>
-                Amro - Sistema de Gestion de Certificados
-                <br/>".$this->pageInvoice."<br/><br/>";
+				<img src='img/amro_header_2.png' alt='Header' />
+                <h2>Sistema de Gestion de Certificados :: ".$pageDescription."</h2>";
         return $html;
     }
 
@@ -123,12 +132,14 @@ class htmlCodeStore {
 			<input id="protocolo" />
 			
 			Cliente:<select name="option_cliente">
+				<option value="0">Todos</option>
 				<option value="1">Thorsa</option>
 				<option value="2">Cliente 2</option>
 				<option value="3">Cliente 3</option>
 			</select>
 			
 			Material:<select name="option_material">
+				<option value="0">Todos</option>
 				<option value="1">Material 1</option>
 				<option value="2">Material 2</option>
 				<option value="3">Material 3</option>
@@ -140,7 +151,7 @@ class htmlCodeStore {
 			
 			<br/><hr>
               <ul id="example" class="filetree">
-              <li><span class="file">Ordenes de Compra</span>
+              <li><span class="folder">Ordenes de Compra</span>
                 <ul>
                     <li><span class="folder">Orden de Compra 1</span>
                         <ul>
@@ -163,7 +174,7 @@ class htmlCodeStore {
                             <li><span class="file">Material WC</span></li>
                         </ul>
                     </li>
-                    <li><span class="file">Orden de Compra 4</span></li>
+                    <li><span class="folder">Orden de Compra 4</span></li>
                     </ul></ul>
 					<br/><hr>Subir Ordenes de Compra:<input type="file" />
 					';
