@@ -19,12 +19,12 @@ $(document).ready(function() {
 
     /* Click Actions */
     $("#btn_green").click(function() { // Certificados
-        var url = "certificado.php";
+        var url = "main.php?invoice_url=ce";
         $(location).attr('href',url);
     });
 
     $("#btn_red").click(function() { // Ordenes de Compra
-        var url = "administrarOC.php";
+        var url = "main.php?invoice_url=oc";
         $(location).attr('href',url);
     });
 
@@ -32,6 +32,13 @@ $(document).ready(function() {
     });
 
     $("#btn_gray").click(function() {
-    });
+		var url = "main.php?invoice_url=pr";
+        $(location).attr('href',url);
+	});
 
+	$("#btn_orange").click(function() { // Principal
+	    var url = "main.php?invoice_url=pr";
+        $(location).attr('href',url);
+    });
+	
 });
