@@ -28,8 +28,8 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 
-    $("#btn_blue").click(function() {
-		var url = "main.php?invoice_url=UNDEF";
+    $("#btn_blue").click(function() { // ABMS
+		var url = "main.php?invoice_url=ab";
         $(location).attr('href',url);
 	});
 

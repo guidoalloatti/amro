@@ -34,6 +34,9 @@ class Render
 
     private function getBody()
     {
+		$this->body = $this->html->getBody();
+		
+		
         switch($this->pageInvoice)
         {
             case "pr":
@@ -47,6 +50,9 @@ class Render
                 break;
 			case "pe":
 				$this->body = $this->htmlCode->getPermisos();
+                break;
+            case "ab":
+                $this->body = $this->htmlCode->getAbms();
                 break;
             default:
 				$this->body = $this->htmlCode->getDefaults();
@@ -66,9 +72,7 @@ class Render
     {
         echo $this->includes;
         echo $this->header;
-        echo "<hr>";
         echo $this->body;
-        echo "<hr>";
         echo $this->footer;
     }
 }
