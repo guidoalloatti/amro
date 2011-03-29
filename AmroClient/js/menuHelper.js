@@ -28,17 +28,23 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 
-    $("#btn_gray").click(function() {
-    });
-
-    $("#btn_gray").click(function() {
-		var url = "main.php?invoice_url=pr";
+    $("#btn_blue").click(function() {
+		var url = "main.php?invoice_url=UNDEF";
         $(location).attr('href',url);
 	});
 
+    $("#btn_gray").click(function() {
+		var url = "main.php?invoice_url=UNDEF";
+        $(location).attr('href',url);
+	});
+
+    $("#btn_yellow").click(function() {
+		var url = "main.php?invoice_url=pe";
+        $(location).attr('href',url);
+	});	
+	
 	$("#btn_orange").click(function() { // Principal
 	    var url = "main.php?invoice_url=pr";
         $(location).attr('href',url);
     });
-	
 });

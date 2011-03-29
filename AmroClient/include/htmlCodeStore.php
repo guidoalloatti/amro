@@ -9,6 +9,7 @@ class htmlCodeStore {
         $this->pageInvoice = $page_invoice;
     }
 
+	/* All Pages Commons */
     function getIncludes()
     {
         $html = '
@@ -27,35 +28,62 @@ class htmlCodeStore {
                     <link href="css/jquery.treeview.css" rel="stylesheet" type="text/css">
                     <link href="css/menu.buttons.css" rel="stylesheet" type="text/css">
             ';
+			
+		$html .= $this->getTitles();
+		
+		$html.= '</head><body>';
+		return $html;
 
-            switch ($this->pageInvoice)
-            {
-                case "certificado":
-                    $html.='
-                        <title>Creacion de Certificados</title>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                        <meta content="certificados" name="keywords">
-                        <link rel="icon" href="/favicon.gif" type="image/gif">
-                        ';
-                    break;
-                case "oc":
-                    $html.='
-                        <title>Administracion de Ordenes de Compra</title>
-                        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                        <meta content="compra" name="keywords">
-                        <link rel="icon" href="/favicon.gif" type="image/gif">
-                        <script>
-                            $(document).ready(function(){
-                                $("#example").treeview();
-                            });
-                        </script>';
-                    break;
-                default:
-                    break;
-            }
-
-        $html.= '</head><body>';
-        return $html;
+	}
+			
+	function getTitles()
+	{
+		switch ($this->pageInvoice)
+		{
+			case "ce":
+				$html.='
+					<title>Creacion de Certificados</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta content="certificados" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+				break;
+			case "oc":
+				$html.='
+					<title>Administracion de Ordenes de Compra</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta content="compra" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					<script>
+						$(document).ready(function(){
+							$("#example").treeview();
+						});
+					</script>';
+				break;
+			case "pe":
+				$html.='
+					<title>Gestionar Permisos de Usuarios</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta content="permisos" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+			case "pr":
+				$html.='
+					<title>Menu Principal</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta content="menu" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+			default:
+				$html.='
+					<title>Pagina no Encontrada</title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta content="not_found" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+				break;
+		}
+		return $html;
     }
 
     function getHeader()
@@ -79,10 +107,12 @@ class htmlCodeStore {
     function getFooter()
     {
         $html = "<br/>Usuario Logueado: Guido. Logueado a las 12:20:35.<br/>
+				<br/><a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
             </body></html>";
         return $html;
     }
 
+	/* Start of Pages Html */
     function getPrincipalBody()
     {
         $html = "
@@ -116,11 +146,21 @@ class htmlCodeStore {
                         </button>
                     </td>
                 </tr>
-            </table>
-            <!--
-                        <a href='principal.php'>Ir a la principal</a><br/><br/>
-                      -->
-            ";
+				 <tr>
+                    <td>
+                        <button class='yellow' id='btn_yellow'>
+                            <span>Gestionar Permisos de Usuarios</span>
+                        </button>
+                    </td>
+                </tr>
+				<tr>
+                    <td>
+                        <button class='orange' id='btn_orange'>
+                            <span>Ir al Menu Principal</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>";
         return $html;
     }
 
@@ -279,4 +319,21 @@ class htmlCodeStore {
 	    </div>';
         return $html;
     }
+	
+	function getPermisos()
+	{
+		$html = "
+			Pagina de Permisos!
+		";
+		return $html;
+	
+	}
+    
+	function getDefaults()
+	{
+		$html = "Pagina No Encontrada... Lo sentimos...";
+		return $html;
+	}
+	
+	
 }

@@ -36,16 +36,20 @@ class Render
     {
         switch($this->pageInvoice)
         {
-            case "index":
+            case "pr":
                 $this->body = $this->htmlCode->getPrincipalBody();
                 break;
             case "oc":
                 $this->body = $this->htmlCode->getManageOCBody();
                 break;
-            case "certificado":
+            case "ce":
                 $this->body = $this->htmlCode->getCertificados();
                 break;
+			case "pe":
+				$this->body = $this->htmlCode->getPermisos();
+                break;
             default:
+				$this->body = $this->htmlCode->getDefaults();
                 break;
         }
     }

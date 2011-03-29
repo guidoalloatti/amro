@@ -6,11 +6,11 @@
  *    * oc (Ordenes de Compra)
  */
 
- echo "ACA: ".$_GET["invoice_url"];
+ //echo "ACA: ".$_GET["invoice_url"];
  
 if(!isset($_GET["invoice_url"]))
 {
-	$invoice_url = "index";
+	$invoice_url = "pr";
 }
 else
 {
