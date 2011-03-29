@@ -14,7 +14,7 @@ class htmlCodeStore {
     {
         $html = '
             <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-            "http://www.w3.org/TR/html4/loose.dtd">
+			"http://www.w3.org/TR/html4/loose.dtd">
             <html>
                 <head>
                     <script src="js/jquery-1.5.1.min.js" type="text/javascript"></script>
@@ -22,6 +22,7 @@ class htmlCodeStore {
                     <script src="js/slideHelper.js" type="text/javascript"></script>
                     <script src="js/menuHelper.js" type="text/javascript"></script>
                     <script src="js/jquery.treeview.js" type="text/javascript"></script>
+                    <script src="js/commonHelper.js" type="text/javascript"></script>
 
                     <link href="css/slideStyle.css" rel="stylesheet" type="text/css">
                     <link href="css/screen.css" rel="stylesheet" type="text/css">
@@ -106,8 +107,7 @@ class htmlCodeStore {
 
     function getFooter()
     {
-        $html = "<br/>Usuario Logueado: Guido. Logueado a las 12:20:35.<br/>
-				<br/><a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
+        $html = "Usuario Logueado: Guido :: Logueado a las 12:20:35 :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
             </body></html>";
         return $html;
     }
@@ -167,9 +167,9 @@ class htmlCodeStore {
     function getManageOCBody()
     {
         $html = '
-		Filtro<br/>
+		<h3><u>Filtrar por los siguientes parametros</u></h3>
 			
-			<input id="protocolo" />
+			Numero de Protocolo: <input id="protocolo" />
 			
 			Cliente:<select name="option_cliente">
 				<option value="0">Todos</option>
@@ -185,10 +185,8 @@ class htmlCodeStore {
 				<option value="3">Material 3</option>
 			</select>
 			
-			<!-- <button class="common" id="search">Buscar</button> -->
-			
-			<a href="#"><span>Buscar</span></a>
-			
+			<input type="button" id="search" value="Buscar" />
+
 			<br/><hr>
               <ul id="example" class="filetree">
               <li><span class="folder">Ordenes de Compra</span>
@@ -322,9 +320,74 @@ class htmlCodeStore {
 	
 	function getPermisos()
 	{
-		$html = "
-			Pagina de Permisos!
-		";
+		$html = '
+			Usuario:
+			<select name="option_usuarios">
+				<option value="1">Admin</option>
+				<option value="2">Pepe</option>
+				<option value="3">Usuario 2</option>
+			</select><hr/>
+			
+			<table width="750px" border="0" cellpadding="15" cellspacing="15">
+				<tr>
+					<td width="250px" style="border: 2px" bgcolor="lightyellow">
+						<h3><u>Permisos de Usuario</u></h3>
+							<h5>Crear Usuario <input type="checkbox"  name="create_user" id="create_user_checkbox" value="0">
+							<br/>Listar Usuarios <input type="checkbox"  name="list_user" id="list_user_checkbox" value="0">
+							<br/>Eliminar Usuarios <input type="checkbox"  name="delete_user" id="delete_user_checkbox" value="0">
+							<br/>Modificar Usuarios <input type="checkbox"  name="edit_user" id="edit_user_checkbox" value="0">
+						</h5>
+					</td>
+					<td width="250px" style="border: 2px" bgcolor="lightgreen">
+						<h3><u>Permisos de Clientes</u></h3>
+							<h5>Crear Cliente <input type="checkbox"  name="create_client" id="create_client_checkbox" value="0">
+							<br/>Listar Clientes <input type="checkbox"  name="list_client" id="list_client_checkbox" value="0">
+							<br/>Eliminar Clientes <input type="checkbox"  name="delete_client" id="delete_client_checkbox" value="0">
+							<br/>Modificar Clientes <input type="checkbox"  name="edit_client" id="edit_client_checkbox" value="0">
+						</h5>
+					</td>
+					<td width="250px" style="border: 2px" bgcolor="lightgray">
+						<h3><u>Permisos de Ordenes de Compras</u></h3>
+							<h5>Crear Orden de Compra <input type="checkbox"  name="create_oc" id="create_oc_checkbox" value="0">
+							<br/>Listar Orden de Compra <input type="checkbox"  name="list_oc" id="list_oc_checkbox" value="0">
+							<br/>Eliminar Orden de Compra <input type="checkbox"  name="delete_oc" id="delete_oc_checkbox" value="0">
+							<br/>Modificar Orden de Compra <input type="checkbox"  name="edit_oc" id="edit_oc_checkbox" value="0">
+						</h5>
+					</td>
+				</tr>
+					<td width="250px" style="border: 2px" bgcolor="lightcyan">
+						<h3><u>Permisos de Materiales</u></h3>
+							<h5>Crear Material <input type="checkbox"  name="create_user" id="create_user_checkbox" value="0">
+							<br/>Listar Material <input type="checkbox"  name="list_user" id="list_user_checkbox" value="0">
+							<br/>Eliminar Material <input type="checkbox"  name="delete_user" id="delete_user_checkbox" value="0">
+							<br/>Modificar Material <input type="checkbox"  name="edit_user" id="edit_user_checkbox" value="0">
+						</h5>
+					</td>
+					<td width="250px" style="border: 2px" bgcolor="lightblue">
+						<h3><u>Permisos de Certificados</u></h3>
+							<h5>Crear Certificados <input type="checkbox"  name="create_certificate" id="create_certificate_checkbox" value="0">
+							<br/>Listar Certificados <input type="checkbox"  name="list_certificate" id="list_certificate_checkbox" value="0">
+							<br/>Eliminar Certificados <input type="checkbox"  name="delete_certificate" id="delete_certificate_checkbox" value="0">
+							<br/>Modificar Certificados <input type="checkbox"  name="edit_certificate" id="edit_certificate_checkbox" value="0">
+						</h5>
+					</td>
+					<td width="250px" style="border: 2px" bgcolor="#ff66ff">
+						<h3><u>Permisos de Configuraciones</u></h3>
+							<h5>Opcion 1 <input type="checkbox"  name="" id="" value="0">
+							<br/>Opcion 2 <input type="checkbox"  name="" id="" value="0">
+							<br/>Opcion 3 <input type="checkbox"  name="" id="" value="0">
+							<br/>Opcion 4 <input type="checkbox"  name="" id="" value="0">
+						</h5>
+					</td>
+			</table>
+			<hr/>
+			<!--
+			<input type="button" id="mark_all" value="Asignar todos los permisos" /> :: 
+			-->
+			<a href="#" id="mark_all" >Marcar todos los permisos</a> ::
+			<a href="#" id="unmark_all" >Desmarcar todos los permisos</a> ::
+			<a href="#" id="recargar" >Recargar Permisos</a> ::
+			<a href="main.php?invoice_url=pe&save=true" id="guardar" >Guardar Cambios</a>';
 		return $html;
 	
 	}
