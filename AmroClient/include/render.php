@@ -34,7 +34,7 @@ class Render
 
     private function getBody()
     {
-		$this->body = $this->html->getBody();
+		$this->body = $this->htmlCode->getBody();
 		
 		
         switch($this->pageInvoice)

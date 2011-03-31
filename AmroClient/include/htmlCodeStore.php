@@ -127,16 +127,16 @@ class htmlCodeStore {
 				$html_page_name = ".html";
 				break;
 			case "ce":
-				$this->body = $this->htmlCode->getCertificados();
+				$this->body = $this->getCertificados();
 				break;
 			case "pe":
-				$this->body = $this->htmlCode->getPermisos();
+				$this->body = $this->getPermisos();
 				break;
 			case "ab":
-				$this->body = $this->htmlCode->getAbms();
+				$this->body = $this->getAbms();
 				break;
 			default:
-				$this->body = $this->htmlCode->getDefaults();
+				$this->body = $this->getDefaults();
 				break;
 		}
 	}
