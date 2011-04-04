@@ -40,15 +40,14 @@ class abmManager
 			foreach($clientes as $cliente)
 			{
 				$this->html .= "<tr><td><a href='#'>".$cliente['nombre']."</td><td>".$cliente["direccion"]."</td></a></td>
-							   <td><img src='img/new.png' width='20' heigth='20' alt='Nuevo' /></td>
-							   <td><img src='img/edit.png' width='20' heigth='20' alt='Editar' /></td>
-							   <td><img src='img/delete.png' width='20' heigth='20' alt='Eliminar'/></td></tr>";
+							   <td><a href='' id='newClient'><img src='img/new.png' width='20' heigth='20' alt='Nuevo' title='Nuevo' /></a></td>
+							   <td><img src='img/edit.png' width='20' heigth='20' alt='Editar' title='Editar' /></td>
+							   <td><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' /></td></tr>";
 			}
 			
 			$this->html .= "	</td>
 							</tr>
 						</table>
-					
 					</td>
 					<td bgcolor='lightgreen' width='75%'>
 					<table >
