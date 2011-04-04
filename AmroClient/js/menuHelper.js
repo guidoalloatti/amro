@@ -47,4 +47,16 @@ $(document).ready(function() {
 	    var url = "main.php?invoice_url=pr";
         $(location).attr('href',url);
     });
+	
+	$("#btn_cliente_green").click(function() { // Abm Clientes
+	    //var url = "abms/abmManager.php?module=cliente";
+	    
+		var url = "main.php?invoice_url=abm&module=cliente";
+        $(location).attr('href',url);
+    });
+	
+	btn_cliente_green
+	
+	
+	
 });

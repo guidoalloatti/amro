@@ -1,0 +1,298 @@
+/* CSS Document orange*/
+ body {
+      background: url('images/textur.png') rgb(54,54,54);
+      text-align: center;
+      font-family: Tahoma, "Lucida Grande CE", lucida, sans-serif;
+      font-size: 14px;
+      color: rgb(66,66,66);
+      position: relative;
+      margin: 40px 0 100px 0;
+      padding: 0;
+  }
+  a {
+      color: rgb(218,112,42);
+      text-decoration: underline;
+  }
+  a:hover {
+      text-decoration: none;
+  }
+  .text a:hover {
+      text-decoration: none;
+      background: rgb(244,208,102);
+      color: rgb(0,0,0);
+  }
+  div#page {
+      width: 800px;
+      margin: 0 auto;
+      background: rgb(255,255,255);
+      text-align: left;
+  }
+  #header {
+      width: 800px;
+      height: 201px;
+      background: url('images/header.png') no-repeat rgb(240,127,32);
+      margin: 0;
+               
+  }
+  #header a {
+      color: rgb(255,255,255);
+      text-decoration: none;
+      font-size: 50px;
+      font-weight: normal;
+      width: 620px;
+      height: 131px;
+      display: block;      
+      padding: 70px 90px 0 90px;      
+  }
+  #header a:hover{
+      text-decoration: underline;
+  }
+  #left {
+      width: 540px;
+      float: left;
+      padding: 30px 25px;      
+  }
+  #right {
+      width: 200px;
+      float: right;
+      padding: 30px 10px 20px 0;      
+  }
+  .cleaner {
+      width: 1px;
+      height: 1px;
+      font-size: 1px;
+      line-height: 1px;
+      clear: both;
+  }
+  .article {
+      margin: 0 0 50px 0;
+  }
+  .article .text p {
+      margin: 15px 0;
+      line-height: 160%;
+      font-size: 13px;
+      color: rgb(66,66,66)
+  }
+  .article .top .calendar{
+      width: 42px;
+      height: 47px;
+      float: left;
+      background: url('images/calendar.png') rgb(150,150,150);
+      text-align: center;
+      font-size: 9px;
+      padding: 2px 2px 0 0;
+      margin: 5px 8px 5px 0;
+      color: rgb(255,255,255);     
+  }
+  .article .top .calendar span {
+      display: block;
+      text-align: center;      
+      font-size: 18px;
+      color: rgb(66,66,66);
+      padding-top: 5px;      
+  }
+  .article h2 {            
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: 23px;    
+      background: url('images/border-headline.png') no-repeat bottom right;  
+  }
+  .article h2 a{
+      color: rgb(66,66,66);
+      text-decoration: none;
+  }
+  .article h2 a:hover {
+      color: rgb(255,102,0);
+  } 
+  .info {      
+      margin: 2px 0 40px 0;
+      padding: 0;      
+  }
+  .info .category {
+      float: left;
+      padding-left: 25px;      
+      margin-left: 5px;
+      background: url('images/category.png') no-repeat left;
+  }
+  .info .comments {
+      float: right;
+      padding-left: 25px;
+      background: url('images/comment.png') no-repeat left;
+  }
+  .info .category a, .info .comments a {
+      color: rgb(218,112,42);
+      text-decoration: none;
+  }
+  .info .category a:hover, .info .comments a:hover {
+      text-decoration: underline;
+  }
+  ul#rss {
+      margin: 0;
+      padding: 10px 0 50px 100px;
+      background: url('images/rss.png') no-repeat left;
+  }
+  #rss li{
+      list-style: none;
+      color: rgb(218,112,42);
+      margin: 3px 0;
+  }
+  form#search {
+      margin: 10px 0;
+      padding: 0;
+      position: relative;
+  }
+  #search .input {
+      width: 110px;      
+      padding: 4px;
+      background: rgb(249,249,249);
+      border: 1px dashed rgb(144,144,144);
+      color: rgb(150,150,150);
+  }
+  #search .submit {
+      width: 36px;
+      height: 28px;
+      border: 0;
+      background: url('images/search.png') no-repeat;
+      cursor: hand;
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      top: -2px;
+      left: 128px;
+  }
+  ul.categories {
+      margin: 0;
+      padding: 0;      
+  }
+  .categories li {
+      border-bottom: 1px dashed rgb(177,177,177);
+      background: url('images/square.png') no-repeat left;
+      padding: 5px 0 2px 20px;
+      list-style: none;
+  }
+  .categories li a{
+      text-decoration: none;
+      color: rgb(0,0,0);
+  }
+  .categories li a:hover {
+      color: rgb(218,112,42);
+  }
+  #right h4 {
+      margin: 30px 0 0 0;
+      padding: 0 0 2px 0;
+      font-size: 15px;
+      font-weight: bold;
+      color: rgb(220,121,53);
+      border-bottom: 1px solid rgb(247,211,186);
+  }
+  ul.archive {
+      margin: 3px;
+      padding: 5px 0;
+      background: url('images/archive.png') repeat-y rgb(237,152,95);
+  }
+  .archive li {
+      list-style: none;
+      margin: 20px 5px 10px 20px;
+      padding: 0 0 0 30px;
+      background: url('images/li-calendar.png') no-repeat left;
+  }
+  .archive li a {
+      color: rgb(255,255,255);
+  }
+  .archive li a:hover {
+      color: rgb(61,61,61);
+      text-decoration: underline;
+  }
+  ul.links {
+      margin: 0;
+      padding: 0;
+  }
+  .links li {
+      list-style: none;      
+      padding: 3px 5px 3px 10px;
+      border-bottom: 1px solid rgb(247,211,186);
+  }
+  .links li a {
+      background: url('images/square.png') no-repeat left;
+      padding-left: 20px;
+      text-decoration: none;
+      color: rgb(39,39,39)
+  }
+  .links li a:hover {
+      color: rgb(218,112,42);
+  }
+  #best {
+      width: 90%;
+      margin: 15px auto;
+      margin-bottom: 0;
+      padding: 10px 30px;
+      background: url('images/best-back.png') rgb(104,104,104);
+      clear: both;
+  }
+  #best div.col {
+      float: left;
+      width: 30%;
+  }
+  #best ul {
+      width: 180px;
+      margin: 0;
+      padding: 0;      
+  }
+  #best ul li {
+      margin: 10px 0;
+      padding: 0;
+      padding-left: 30px;
+      list-style: none;
+      font-size: 11px;
+      background: url('images/best-li.png') no-repeat 0 6px;
+  } 
+  * html #best ul li { /*IE6 only*/
+     margin: 0;
+  }  
+  #best ul li a {
+      color: rgb(255,255,255);
+      font-weight: bold;      
+      text-decoration: none;      
+  }
+  #best ul li a:hover {
+      color: rgb(52,52,52);
+  }
+  #best ul li span {
+      display: block;
+      color: rgb(242,161,106);
+      margin-top: 3px;
+      
+  }
+  #best h3 {
+      color: rgb(255,255,255);
+      margin: 0;
+      padding: 0;
+      font-size: 17px;
+      font-weight: normal;
+  }
+  * html #best h3 { /*IE6 only*/
+     margin-bottom: 10px;
+  }
+  #best p {
+      color: rgb(254,254,254);
+      font-size: 11px;
+      margin: 10px 0;
+      padding: 0;
+  }
+  .footer {
+      clear: both;
+      margin: 0;
+      padding: 15px;
+      color: rgb(5,5,5);
+      font-size: 12px;
+      line-height: 160%;     
+  }
+  .footer a{
+      color: rgb(5,5,5);
+      text-decoration: underline;
+  }
+  .footer a:hover {
+      text-decoration: none;
+  }

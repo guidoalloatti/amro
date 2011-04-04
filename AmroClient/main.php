@@ -15,8 +15,17 @@ else
 	$invoice_url = $_GET["invoice_url"]; 
 }
 
+if(!isset($_GET["module"]))
+{
+	$module = "default";
+}
+else
+{
+	$module = $_GET["module"]; 
+}
+
 require_once("include/render.php");
-$myRender = new Render($invoice_url);
+$myRender = new Render($invoice_url, $module);
 $myRender->getPage();
 $myRender->renderPage();
 

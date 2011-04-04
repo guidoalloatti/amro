@@ -54,6 +54,13 @@ class htmlCodeStore {
 					<meta content="menu" name="keywords">
 					<link rel="icon" href="/favicon.gif" type="image/gif">
 					';
+			case "abm":
+				$html.='
+					<title>Altas, Bajas y Modificaciones</title>
+					<meta content="menu" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+					break;
             default:
                 $html.='
 					<title>Pagina no Encontrada</title>
@@ -85,7 +92,7 @@ class htmlCodeStore {
 
     function getFooter()
     {
-        $html = "<hr/>Usuario Logueado: Guido :: Logueado a las 12:20:35 :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
+        $html = "<hr/>Usuario Logueado: Guido (<a href='#'>Desloguear</a>) :: Logueado a las 12:20:35 :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
             </body></html>";
         return $html;
     }

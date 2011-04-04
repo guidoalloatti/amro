@@ -1,6 +1,7 @@
 <?php
 
 require_once("include/htmlCodeStore.php");
+require_once("abms/abmManager.php");
 
 class Render
 {
@@ -10,9 +11,11 @@ class Render
     private $footer;
     private $pageInvoice;
     private $htmlCode;
-
-    function __construct($pageInvoice)
+	private $module;
+	
+    function __construct($pageInvoice, $module=null)
     {
+		$this->module = $module;
         $this->pageInvoice = $pageInvoice;
         $this->htmlCode = new htmlCodeStore($pageInvoice);
     }
@@ -54,6 +57,19 @@ class Render
             case "ab":
                 $this->body = $this->htmlCode->getAbms();
                 break;
+			case "abm":
+			
+				$abmManager = new abmManager();
+				
+				switch($this->module)
+				{
+					case "cliente":
+						$this->body = $abmManager->getClienteAbm();
+						break;
+					default:
+						break;
+				}
+				break;
             default:
 				$this->body = $this->htmlCode->getDefaults();
                 break;
