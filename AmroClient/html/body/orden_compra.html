@@ -1,0 +1,43 @@
+<h3><u>Filtrar por los siguientes parametros</u></h3>
+Numero de Protocolo: <input id="protocolo" />
+Cliente:<select name="option_cliente">
+    <option value="0">Todos</option>
+    <option value="1">Thorsa</option>
+    <option value="2">Cliente 2</option>
+    <option value="3">Cliente 3</option>
+</select>
+Material:<select name="option_material">
+    <option value="0">Todos</option>
+    <option value="1">Material 1</option>
+    <option value="2">Material 2</option>
+    <option value="3">Material 3</option>
+</select>
+<input type="button" id="search" value="Buscar" />
+<br/><hr>
+  <ul id="example" class="filetree">
+  <li><span class="folder">Ordenes de Compra</span>
+    <ul>
+        <li><span class="folder">Orden de Compra 1</span>
+            <ul>
+                <li><span class="file">Material WC</span></li>
+            </ul>
+        </li>
+        <li><span class="folder">Orden de Compra 2</span>
+            <ul>
+                <li><span class="folder">Material WC</span>
+                    <ul>
+                        <li><span class="file">Detalles 1</span></li>
+                        <li><span class="file">Detalles 2</span></li>
+                    </ul>
+                </li>
+                <li><span class="file">Material AC</span></li>
+            </ul>
+        </li>
+        <li class="closed"><span class="folder">Orden de Compra 3 (closed at start)</span>
+            <ul>
+                <li><span class="file">Material WC</span></li>
+            </ul>
+        </li>
+        <li><span class="folder">Orden de Compra 4</span></li>
+        </ul></ul>
+        <br/><hr>Subir Ordenes de Compra:<input type="file" />
