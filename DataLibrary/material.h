@@ -24,10 +24,11 @@ public:
 
     void setChemicalLimit(ChemicalMeasure measure);
     ChemicalMeasure getChemicalLimit() const;
+    void setChemicalValue(QString p, double value);
 
     void setMechanicalLimit(MechanicalMeasure measure);
     MechanicalMeasure getMechanicalLimit() const;
-
+    void setMechanicalValue(QString p, double value);
 
 private:
     quint32 id;

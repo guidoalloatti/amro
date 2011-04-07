@@ -27,7 +27,13 @@ SOURCES += main.cpp \
     certificatemapper.cpp \
     privilegemapper.cpp \
     userpermissionsmapper.cpp \
-    clientcodemapper.cpp
+    clientcodemapper.cpp \
+    csvparsingline.cpp \
+    csvparsinglinemapper.cpp \
+    chemicalanalysis.cpp \
+    chemicalanalysismapper.cpp \
+    mechanicalanalysis.cpp \
+    mechanicalanalysismapper.cpp
 
 HEADERS += \
     datalib.h \
@@ -47,4 +53,10 @@ HEADERS += \
     certificatemapper.h \
     privilegemapper.h \
     userpermissionsmapper.h \
-    clientcodemapper.h
+    clientcodemapper.h \
+    csvparsingline.h \
+    csvparsinglinemapper.h \
+    chemicalanalysis.h \
+    chemicalanalysismapper.h \
+    mechanicalanalysis.h \
+    mechanicalanalysismapper.h

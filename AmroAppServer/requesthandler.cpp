@@ -45,6 +45,8 @@ void RequestHandler::run()
 
     QTextStream output(&socket);
 
+    qDebug() << "Conexion exitosa " << params << endl;
+
     ResponseMapper rm;
     rm.execute(params["method"], output, params);
 

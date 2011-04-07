@@ -19,4 +19,3 @@ public:
 };
 
 #endif // MATERIALRESPONSE_H
-

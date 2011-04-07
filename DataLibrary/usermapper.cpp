@@ -1,7 +1,8 @@
-#include "usermapper.h"
+    #include "usermapper.h"
 #include "userpermissionsmapper.h"
 
 #include "database.h"
+#include "datalib.h"
 #include <QtSql>
 
 #include "query.h"
@@ -38,12 +39,15 @@ QList <User> UserMapper::makeUsers(QSqlQuery &q)
         return users;
 }
 
-bool UserMapper::insert(const User &u)
+bool UserMapper::insert(User &u)
 {
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :name, :surname, :password, :email, :signature").
+            Values("DEFAULT, :name, :surname, :email, :password, :signature").
             prepare();
 
     q.bindValue(":name", u.getName());
@@ -54,13 +58,41 @@ bool UserMapper::insert(const User &u)
 
     bool s = q.exec();
 
-    qDebug() << q.lastError() << endl;
+    if (!s) {
+        qDebug() << q.lastError() << endl;
+        return s;
+    }
 
-    return s;
+    QSqlQuery q2 =
+            Query().
+            Select("LAST_INSERT_ID()").
+            prepare();
+
+    s = q2.exec();
+    if (!s) {
+        DataLib::rollback();
+        return false;
+    }
+
+    q2.next();
+    u.id = q2.value(0).toUInt();
+
+    foreach(Privilege p, u.getPrivileges()) {
+        s = UserPermissionsMapper().insert(u, p);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    return DataLib::commit();
 }
 
 bool UserMapper::erase(const User &u)
 {
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Delete().
@@ -70,15 +102,31 @@ bool UserMapper::erase(const User &u)
 
     q.bindValue(":id", u.getId());
 
-    return q.exec();
+    bool s = q.exec();
+
+    if (!s)
+        return false;
+
+    foreach(Privilege p, UserPermissionsMapper().getPrivileges(u)) {
+        s = UserPermissionsMapper().erase(u, p);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    return DataLib::commit();
 }
 
 bool UserMapper::update(const User &u)
-{
+{    
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, :name, :surname, :password, :email, :signature").
+            Set("name = :name, surname = :surname, email = :email, password = :password, signature = :signature").
             Where("id = :id").
             prepare();
 
@@ -89,7 +137,28 @@ bool UserMapper::update(const User &u)
     q.bindValue(":email", u.email);
     q.bindValue(":signature", u.signature);
 
-    return q.exec();
+    bool s = q.exec();
+
+    if (!s)
+        return false;    
+
+    foreach(Privilege p, UserPermissionsMapper().getPrivileges(u)) {
+        s = UserPermissionsMapper().erase(u, p);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    foreach(Privilege p, u.getPrivileges()) {
+        s = UserPermissionsMapper().insert(u, p);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    return DataLib::commit();
 }
 
 QList <User> UserMapper::get(quint32 id)
@@ -101,6 +170,16 @@ QList <User> UserMapper::get(quint32 id)
                       prepare();
 
     query.bindValue(":id", id);
+
+    return makeUsers(query);
+}
+
+QList <User> UserMapper::get()
+{
+    QSqlQuery query = Query().
+                      Select(selectFields).
+                      From(tableName).
+                      prepare();
 
     return makeUsers(query);
 }

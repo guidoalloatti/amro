@@ -15,11 +15,11 @@ Database::Database()
     if (!QSqlDatabase::database(name).isOpen())
     {
         QSqlDatabase db;
-        db = QSqlDatabase::addDatabase("QPSQL", name);
+        db = QSqlDatabase::addDatabase("QMYSQL", name);
         db.setHostName("localhost");
-        db.setDatabaseName("projectx");
-        db.setUserName("forkworks");
-        db.setPassword("forkworks");
+        db.setDatabaseName("amro");
+        db.setUserName("amro");
+        db.setPassword("amr0s3rv3r");
 
         // HACER: ver que hacer en caso de que open falle, podria poner un metodo que me diga si es valida la DB
         db.open();

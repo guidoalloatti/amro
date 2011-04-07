@@ -63,14 +63,14 @@ bool UserPermissionsMapper::insert(const User &u, const Privilege &p)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :user_id, :privilege_id").
+            Values(":user_id, :permission_id").
             prepare();
 
-    if (u.getPrivileges().contains(p))
-        return false;
+    /* user_id, permission_is esta seteada como UNIQUE, por
+       ende me despreocupo de cambios repetidos*/
 
     q.bindValue(":user_id", u.getId());
-    q.bindValue(":privilege_id", p.getId());
+    q.bindValue(":permission_id", p.getId());
 
     bool s = q.exec();
 
@@ -86,14 +86,11 @@ bool UserPermissionsMapper::erase(const User &u, const Privilege &p)
             Delete().
             From(tableName).
             Where("user_id = :user_id").
-            And("privilege_id = :privilege_id").
+            And("permission_id = :permission_id").
             prepare();
 
-    if (u.getPrivileges().contains(p))
-        return false;
-
     q.bindValue(":user_id", u.getId());
-    q.bindValue(":privilege_id", p.getId());
+    q.bindValue(":permission_id", p.getId());
 
     return q.exec();
 }
@@ -103,12 +100,12 @@ bool  UserPermissionsMapper::update(const User &u, const Privilege &p)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, :user_id, :privilege_id").
+            Set(":user_id, :permission_id").
             Where("user_id = :user_id").
             prepare();
 
     q.bindValue(":user_id", u.getId());
-    q.bindValue(":privilege_id", p.getId());
+    q.bindValue(":permission_id", p.getId());
 
     return q.exec();
 }
@@ -118,10 +115,10 @@ QList <Privilege>  UserPermissionsMapper::getPrivileges(const User &u)
     QSqlQuery query = Query().
                       Select(selectFields).
                       From(tableName).
-                      Where("id = :id").
+                      Where("user_id = :user_id").
                       prepare();
 
-    query.bindValue(":id", u.getId());
+    query.bindValue(":user_id", u.getId());
 
     return makePrivileges(query);
 }
@@ -131,10 +128,10 @@ QList <User> UserPermissionsMapper::getUsers(const Privilege &p)
     QSqlQuery query = Query().
                       Select(selectFields).
                       From(tableName).
-                      Where("id = :id").
+                      Where("permission_id = :permission_id").
                       prepare();
 
-    query.bindValue(":id", p.getId());
+    query.bindValue(":permission_id", p.getId());
 
     return makeUsers(query);
 }

@@ -54,13 +54,14 @@ bool ClientCodeMapper::insert(const Client &c, const QString &code)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :client_id, :code").
+            Values(":client_id, :code").
             prepare();
 
-    QList <QString> codes = ClientCodeMapper().getCodes(c.getId());
+    /* Poner client_id, codes como unique */
+    /*QList <QString> codes = ClientCodeMapper().getCodes(c.getId());
 
     if (codes.contains(code))
-        return false;
+        return false;*/
 
     q.bindValue(":client_id", c.getId());
     q.bindValue(":code", code);

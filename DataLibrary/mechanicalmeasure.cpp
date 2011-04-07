@@ -1,5 +1,7 @@
 #include "mechanicalmeasure.h"
 
+#include <QDebug>
+
 /*QString getString(MechanicalProperty p)
 {
     switch(p) {
@@ -40,6 +42,7 @@ void MechanicalMeasure::setValue(MechanicalProperty p, double value)
 
     if (property.isEmpty())
         return;*/
+
     if (!mProperties.contains(p))
         return;
 

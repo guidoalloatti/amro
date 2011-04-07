@@ -8,8 +8,8 @@
 
 #include "query.h"
 
-static const QString selectFields("id, protn, numprobeta, client_id, material_id, approver_id, reviewer_id, chemicalanalysis, "
-                                  "mechanicalanalysis, ordencompra, description, observations, date, termicopath");
+static const QString selectFields("id, protn, numprobeta, client_id, material_id, approver_id, reviewer_id, performer_id, chemicalanalysis, "
+                                  "mechanicalanalysis, ordencompra, description, observations, date, termicopath, certificatepath, state");
 
 CertificateMapper::CertificateMapper()
 {
@@ -54,11 +54,17 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
             else
                 continue;
 
-            QDataStream cds(QByteArray().fromPercentEncoding(q.value(7).toByteArray()));
+            QList <User> performers = UserMapper().get(q.value(7).toUInt());
+            if (performers.length() == 1)
+                c.performer = performers.first();
+            else
+                continue;
+
+            QDataStream cds(QByteArray().fromPercentEncoding(q.value(8).toByteArray()));
             QVariantHash chemicalData;
             cds >> chemicalData;
 
-            QDataStream mds(QByteArray().fromPercentEncoding(q.value(8).toByteArray()));
+            QDataStream mds(QByteArray().fromPercentEncoding(q.value(9).toByteArray()));
             QVariantHash mechanicalData;
             mds >> mechanicalData;
 
@@ -68,11 +74,13 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
             c.chemicalAnalysis = cMeasure;
             c.mechanicalAnalysis = mMeasure;
 
-            c.ordenCompra = q.value(9).toString();
-            c.description = q.value(10).toString();
-            c.observations = q.value(11).toString();
-            c.date = q.value(12).toDate();
-            c.tTermicoPath = q.value(13).toString();
+            c.ordenCompra = q.value(10).toString();
+            c.description = q.value(11).toString();
+            c.observations = q.value(12).toString();
+            c.date = q.value(13).toDate();
+            c.tTermicoPath = q.value(14).toString();
+            c.certificatePath = q.value(15).toString();
+            c.state = Status(q.value(16).toUInt());
 
             cs << c;
         }
@@ -85,8 +93,8 @@ bool CertificateMapper::insert(const Certificate &c)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, protn, numprobeta, client_id, material_id, approver_id, reviewer_id, chemicalanalysis, "
-                   "mechanicalanalysis, ordencompra, description, observations, date, termicopath").
+            Values("DEFAULT, :protn, :numprobeta, :client_id, :material_id, :approver_id, :reviewer_id, :performer_id, :chemicalanalysis, "
+                   ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :termicopath, :certificatepath, :state").
             prepare();
 
     QByteArray serializedCAnalysis;
@@ -105,6 +113,7 @@ bool CertificateMapper::insert(const Certificate &c)
     q.bindValue(":material_id", c.getMaterial().getId());
     q.bindValue("approver_id", c.getApprover().getId());
     q.bindValue(":reviewer_id", c.getReviewer().getId());
+    q.bindValue("performer_id", c.getPerformer().getId());
     q.bindValue(":chemicalanalysis", serializedCAnalysis.toPercentEncoding());
     q.bindValue(":mechanicalanalysis", serializedMAnalysis.toPercentEncoding());
     q.bindValue(":ordencompra", c.getOrdenCompra());
@@ -112,6 +121,8 @@ bool CertificateMapper::insert(const Certificate &c)
     q.bindValue(":observations", c.getObservations());
     q.bindValue(":date", c.getDate().toString(Qt::ISODate));
     q.bindValue(":termicopath", c.getTermicoPath());
+    q.bindValue("certificatepath", c.getCertificatePath());
+    q.bindValue(":state", c.getState());
 
     bool s = q.exec();
 
@@ -139,8 +150,8 @@ bool CertificateMapper::update(const Certificate &c)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, protn, numprobeta, client_id, material_id, approver_id, reviewer_id, chemicalanalysis, "
-                "mechanicalanalysis, ordencompra, description, observations, date, termicopath").
+            Set("DEFAULT, :protn, :numprobeta, :client_id, :material_id, :approver_id, :reviewer_id, :performer_id, :chemicalanalysis, "
+                ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :termicopath, :certificatepath, :state").
             Where("id = :id").
             prepare();
 
@@ -160,6 +171,7 @@ bool CertificateMapper::update(const Certificate &c)
     q.bindValue(":material_id", c.getMaterial().getId());
     q.bindValue("approver_id", c.getApprover().getId());
     q.bindValue(":reviewer_id", c.getReviewer().getId());
+    q.bindValue(":performer_id", c.getPerformer().getId());
     q.bindValue(":chemicalanalysis", serializedCAnalysis.toPercentEncoding());
     q.bindValue(":mechanicalanalysis", serializedMAnalysis.toPercentEncoding());
     q.bindValue(":ordencompra", c.getOrdenCompra());
@@ -167,6 +179,8 @@ bool CertificateMapper::update(const Certificate &c)
     q.bindValue(":observations", c.getObservations());
     q.bindValue(":date", c.getDate().toString(Qt::ISODate));
     q.bindValue(":termicopath", c.getTermicoPath());
+    q.bindValue("certificatepath", c.getCertificatePath());
+    q.bindValue("state", c.getState());
 
     q.bindValue(":id", c.getId());
 
@@ -187,15 +201,12 @@ QList <Certificate> CertificateMapper::get(quint32 id)
     return makeCertificates(query);
 }
 
-QList <Certificate> CertificateMapper::get(const QString &name)
+QList <Certificate> CertificateMapper::get()
 {
     QSqlQuery query = Query().
                       Select(selectFields).
                       From(tableName).
-                      Where("name = :name").
                       prepare();
-
-    query.bindValue(":name", name);
 
     return makeCertificates(query);
 }

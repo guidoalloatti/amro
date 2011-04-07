@@ -15,6 +15,7 @@ public:
     bool insert(const Material &m);
     bool update(const Material &m);
     bool erase(const Material &m);
+    QList <Material> get();
     QList <Material> get(quint32 id);
     QList <Material> get(const QString &name);
 

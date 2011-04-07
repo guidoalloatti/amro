@@ -61,7 +61,7 @@ bool MaterialMapper::insert(const Material &m)
     QByteArray serializedMAnalysis;
     QDataStream mas(&serializedMAnalysis, QIODevice::WriteOnly);
 
-    mas << m.getMechanicalLimit().print();
+    mas << m.getMechanicalLimit().print();    
 
     q.bindValue(":name", m.getName());
     q.bindValue(":description", m.getDescription());
@@ -94,7 +94,7 @@ bool MaterialMapper::update(const Material &m)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, :name, :description, :chemicalanalysis, :mechanicalanalysis").
+            Set("name = :name, description = :description, chemicalanalysis = :chemicalanalysis, mechanicalanalysis = :mechanicalanalysis").
             Where("id = :id").
             prepare();
 
@@ -118,6 +118,15 @@ bool MaterialMapper::update(const Material &m)
     return q.exec();
 }
 
+QList <Material> MaterialMapper::get()
+{
+    QSqlQuery query = Query().
+                      Select(selectFields).
+                      From(tableName).
+                      prepare();
+
+    return makeMaterials(query);
+}
 
 QList <Material> MaterialMapper::get(quint32 id)
 {

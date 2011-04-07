@@ -22,8 +22,23 @@ public:
 
     void setId(quint32 id);
     void setImagePath(QString path);
+    void setCertificatePath(QString path);
     void setChemicalAnalysis(ChemicalMeasure ca);
     void setMechanicalAnalysis(MechanicalMeasure ma);
+    void setOrdenCompra(QString orden);
+    void setDescription(QString description);
+    void setObservations(QString observations);
+    void setApprover(User approver);
+    void setReviewer(User reviewer);
+    void setPerformer(User performer);
+    void setState(Status s);
+    void setMaterial(Material m);
+    void setClient(Client c);
+    void setDate(QDate d);
+    void setProtN(QString protN);
+    void setNumProbeta(QString numProbeta);
+    void setChemicalValue(QString p, double value);
+    void setMechanicalValue(QString p, double value);
 
     quint32 getId() const;
     QString getProtN() const;
@@ -33,6 +48,7 @@ public:
     Status getState() const;
     User getApprover() const;
     User getReviewer() const;
+    User getPerformer() const;
     ChemicalMeasure getChemicalAnalysis() const;
     MechanicalMeasure getMechanicalAnalysis() const;
     Material getMaterial() const;
@@ -40,7 +56,7 @@ public:
     QString getDescription() const;
     QString getObservations() const;
 
-    int generateCertificate();
+    bool generateCertificate(QString &err);
     QString getCertificatePath() const;
     QString getTermicoPath() const;
 
@@ -48,7 +64,7 @@ private:
     quint32 id;
     QString protN, numProbeta;
     Client client;
-    User approver, reviewer;
+    User approver, reviewer, performer;
     ChemicalMeasure chemicalAnalysis;
     MechanicalMeasure mechanicalAnalysis;
     Material material;

@@ -29,7 +29,9 @@ SOURCES += main.cpp \
     clientresponse.cpp \
     userresponse.cpp \
     materialresponse.cpp \
-    certificateresponse.cpp
+    certificateresponse.cpp \
+    csvparsingresponse.cpp \
+    analysisresponse.cpp
 
 HEADERS += \
     requestlistener.h \
@@ -41,7 +43,9 @@ HEADERS += \
     clientresponse.h \
     userresponse.h \
     materialresponse.h \
-    certificateresponse.h
+    certificateresponse.h \
+    csvparsingresponse.h \
+    analysisresponse.h
 
 LIBS += -L../DataLibrary \
     -lDataLibrary

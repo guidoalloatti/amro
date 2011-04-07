@@ -12,17 +12,25 @@ class DATALIBSHARED_EXPORT User
 {
 public:
     User() {}
-    User(quint32 id, QString name, QString email, QString password, QList <Privilege> privileges, QString signature);
+    User(quint32 id, QString email, QString password);
+
     void setPassword(QString password);
     void setEmail(QString email);
     void setSignature(QString signature);
+    void addPrivilege(Privilege p);
+    void setSurname(QString surname);
+    void setName(QString name);
+
     quint32 getId() const;
     QString getName() const;
+    QString getSurname() const;
     QString getPassword() const;
     QString getEmail() const;
     QString getSignature() const;
     QList <Privilege> getPrivileges() const;
     bool operator== (const User &s1) {return id == s1.id;}
+
+    bool hasPrivileges(QString privilege);
 
 private:
     QList <Privilege> privileges;

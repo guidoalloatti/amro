@@ -22,6 +22,7 @@ QList <Privilege> PrivilegeMapper::makePrivileges(QSqlQuery &q)
         {
             Privilege p;
 
+
             p.id = q.value(0).toUInt();
             p.name = q.value(1).toString();
             p.description = q.value(2).toString();
@@ -69,7 +70,7 @@ bool PrivilegeMapper::update(const Privilege &p)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, :name, :surname, :password, :email, :signature").
+            Set("name = :name, description = :description").
             Where("id = :id").
             prepare();
 
@@ -78,6 +79,16 @@ bool PrivilegeMapper::update(const Privilege &p)
     q.bindValue(":description", p.getDescription());
 
     return q.exec();
+}
+
+QList <Privilege> PrivilegeMapper::get()
+{
+    QSqlQuery query = Query().
+                      Select(selectFields).
+                      From(tableName).
+                      prepare();
+
+    return makePrivileges(query);
 }
 
 QList <Privilege> PrivilegeMapper::get(quint32 id)

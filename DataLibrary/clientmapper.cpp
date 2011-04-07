@@ -1,12 +1,13 @@
 #include "clientmapper.h"
 #include "clientcodemapper.h"
 
+#include "datalib.h"
 #include "database.h"
 #include <QtSql>
 
 #include "query.h"
 
-static const QString selectFields("id, name, address, city, zip, country, phone, telefax, website, namecode, sequencenumber");
+static const QString selectFields("id, name, address, city, zip, country, phone, telefax, website, namecode, sequencedigits, currentsequence");
 
 ClientMapper::ClientMapper()
 {
@@ -33,7 +34,8 @@ QList <Client> ClientMapper::makeClients(QSqlQuery &q)
             c.telefax = q.value(7).toString();
             c.website = q.value(8).toString();
             c.nameCode = q.value(9).toString();
-            c.sequenceNumber = q.value(10).toString();
+            c.sequenceDigits = q.value(10).toUInt();
+            c.currentSequence = q.value(11).toUInt();
 
             c.codeHistory = ClientCodeMapper().getCodes(c.id);
 
@@ -43,12 +45,15 @@ QList <Client> ClientMapper::makeClients(QSqlQuery &q)
         return cs;
 }
 
-bool ClientMapper::insert(const Client &c)
+bool ClientMapper::insert(Client &c)
 {
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :name, :address, :city, :zip, :country, :phone, :telefax, :website").
+            Values("DEFAULT, :name, :address, :city, :zip, :country, :phone, :telefax, :website, :namecode, :sequencedigits").
             prepare();
 
     q.bindValue(":name", c.getName());
@@ -59,16 +64,44 @@ bool ClientMapper::insert(const Client &c)
     q.bindValue(":phone", c.phone);
     q.bindValue(":telefax", c.telefax);
     q.bindValue(":website", c.website);
+    q.bindValue("namecode", c.nameCode);
+    q.bindValue("sequencedigits", c.sequenceDigits);
 
     bool s = q.exec();
 
-    qDebug() << q.lastError() << endl;
+    if (!s) {
+        qDebug() << q.lastError() << endl;
+        return s;
+    }
 
-    return s;
+    QSqlQuery q2 =
+            Query().
+            Select("LAST_INSERT_ID()").
+            prepare();
+
+    s = q2.exec();
+    if (!s) {
+        DataLib::rollback();
+        return false;
+    }
+
+    q2.next();
+    c.id = q2.value(0).toUInt();
+
+    s = ClientCodeMapper().insert(c, c.getCurrentNameCode());
+    if (!s) {
+        DataLib::rollback();
+        return false;
+    }
+
+    return DataLib::commit();
 }
 
 bool ClientMapper::erase(const Client &c)
 {
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Delete().
@@ -78,15 +111,31 @@ bool ClientMapper::erase(const Client &c)
 
     q.bindValue(":id", c.getId());
 
-    return q.exec();
+    bool s = q.exec();
+
+    if (!s)
+        return false;
+
+    foreach (QString code, ClientCodeMapper().getCodes(c.getId())) {
+        s = ClientCodeMapper().erase(c, code);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    return DataLib::commit();
 }
 
 bool ClientMapper::update(const Client &c)
 {
+    if (!DataLib::transaction())
+        return false;
+
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("DEFAULT, :name, :address, :city, :zip, :country, :phone, :telefax, :website").
+            Set("name = :name, address = :address, city = :city, zip = :zip, country = :country, phone = :phone, telefax = :telefax, website = :website, namecode = :namecode, sequencedigits = :sequencedigits").
             Where("id = :id").
             prepare();
 
@@ -99,10 +148,35 @@ bool ClientMapper::update(const Client &c)
     q.bindValue(":phone", c.phone);
     q.bindValue(":telefax", c.telefax);
     q.bindValue(":website", c.website);
+    q.bindValue("namecode", c.nameCode);
+    q.bindValue("sequencedigits", c.sequenceDigits);
 
-    return q.exec();
+    bool s = q.exec();
+
+    if (!s)
+        return false;
+
+    QString code = c.getCurrentNameCode();
+    if (!code.isEmpty()) {
+        s = ClientCodeMapper().insert(c, code);
+        if (!s) {
+            DataLib::rollback();
+            return false;
+        }
+    }
+
+    return DataLib::commit();
 }
 
+QList <Client> ClientMapper::get()
+{
+    QSqlQuery query = Query().
+                      Select(selectFields).
+                      From(tableName).
+                      prepare();
+
+    return makeClients(query);
+}
 
 QList <Client> ClientMapper::get(quint32 id)
 {

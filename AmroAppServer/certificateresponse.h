@@ -9,7 +9,7 @@ class CertificateResponse : public Response
 
     static void newCertificate(JSONP &output, const QHash <QString, QString> &params);
     static void deleteCertificate(JSONP &output, const QHash <QString, QString> &params);
-    static void updateCertificate(JSONP &output, const QHash <QString, QString> &params);
+    //static void updateCertificate(JSONP &output, const QHash <QString, QString> &params);
     static void getCertificate(JSONP &output, const QHash <QString, QString> &params);
 
 public:

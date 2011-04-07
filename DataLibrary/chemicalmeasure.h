@@ -5,29 +5,19 @@
 
 #include <QHash>
 #include <QVariantHash>
+#include <QStringList>
 
-/*enum ChemicalProperty {
-    C,
-    Mn,
-    Si,
-    P,
-    Cr,
-    Ni,
-    Mo,
-    Cu,
-    V,
-    CE
-};*/
-static const QList <QString> chProperties = QList <QString>() << "c"
-                                                            << "mn"
-                                                            << "si"
-                                                            << "p"
-                                                            << "cr"
-                                                            << "ni"
-                                                            << "mo"
-                                                            << "cu"
-                                                            << "v"
-                                                            << "ce";
+static const QStringList chProperties = QStringList() << "c"
+                                                      << "mn"
+                                                      << "si"
+                                                      << "p"
+                                                      << "s"
+                                                      << "cr"
+                                                      << "ni"
+                                                      << "mo"
+                                                      << "cu"
+                                                      << "v"
+                                                      << "ce";
 
 typedef QString ChemicalProperty;
 

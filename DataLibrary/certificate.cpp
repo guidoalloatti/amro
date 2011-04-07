@@ -17,6 +17,11 @@ void Certificate::setImagePath(QString path)
     this->certificatePath = path;
 }
 
+void Certificate::setCertificatePath(QString path)
+{
+    this->certificatePath = path;
+}
+
 void Certificate::setChemicalAnalysis(ChemicalMeasure ca)
 {
     this->chemicalAnalysis = ca;
@@ -25,6 +30,66 @@ void Certificate::setChemicalAnalysis(ChemicalMeasure ca)
 void Certificate::setMechanicalAnalysis(MechanicalMeasure ma)
 {
     this->mechanicalAnalysis = ma;
+}
+
+void Certificate::setOrdenCompra(QString orden)
+{
+    this->ordenCompra = orden;
+}
+
+void Certificate::setDescription(QString description)
+{
+    this->description = description;
+}
+
+void Certificate::setObservations(QString observations)
+{
+    this->observations = observations;
+}
+
+void Certificate::setApprover(User approver)
+{
+    this->approver = approver;
+}
+
+void Certificate::setReviewer(User reviewer)
+{
+    this->reviewer = reviewer;
+}
+
+void Certificate::setPerformer(User performer)
+{
+    this->performer = performer;
+}
+
+void Certificate::setState(Status s)
+{
+    this->state = s;
+}
+
+void Certificate::setMaterial(Material m)
+{
+    this->material = m;
+}
+
+void Certificate::setClient(Client c)
+{
+    this->client = c;
+}
+
+void Certificate::setDate(QDate d)
+{
+    this->date = d;
+}
+
+void Certificate::setProtN(QString protN)
+{
+    this->protN = protN;
+}
+
+void Certificate::setNumProbeta(QString numProbeta)
+{
+    this->numProbeta = numProbeta;
 }
 
 quint32 Certificate::getId() const
@@ -67,6 +132,11 @@ User Certificate::getReviewer() const
     return this->reviewer;
 }
 
+User Certificate::getPerformer() const
+{
+    return this->performer;
+}
+
 ChemicalMeasure Certificate::getChemicalAnalysis() const
 {
     return this->chemicalAnalysis;
@@ -97,11 +167,13 @@ QString Certificate::getObservations() const
     return this->observations;
 }
 
-int Certificate::generateCertificate()
+bool Certificate::generateCertificate(QString &err)
 {
     //GENERAR CERTIFICADO EN HTML, IMPRIMIENDOLO EN PDF.
     //DESPUES VER CÓMO MODULARIZAR MAS ESTE PROCEDIMIENTO.
     //CANDIDATO... CertificateGenerator.
+    err = "NO ERROR";
+    return true;
 }
 
 QString Certificate::getCertificatePath() const
@@ -114,3 +186,12 @@ QString Certificate::getTermicoPath() const
     return this->tTermicoPath;
 }
 
+void Certificate::setChemicalValue(QString p, double value)
+{
+    this->chemicalAnalysis.setValue(p, value);
+}
+
+void Certificate::setMechanicalValue(QString p, double value)
+{
+    this->mechanicalAnalysis.setValue(p, value);
+}

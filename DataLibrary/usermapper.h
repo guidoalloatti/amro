@@ -12,9 +12,10 @@ class DATALIBSHARED_EXPORT UserMapper
 
 public:
     UserMapper();
-    bool insert(const User &u);
+    bool insert(User &u);
     bool update(const User &u);
     bool erase(const User &u);
+    QList <User> get();
     QList <User> get(quint32 id);
     QList <User> get(const QString &user, const QString &password);
 };

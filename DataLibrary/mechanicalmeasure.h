@@ -13,10 +13,12 @@
     Resiliencia
 };*/
 
-static const QList <QString> mProperties = QList <QString>() << "limite_fluencia"
-                                                            << "alargamiento"
-                                                            << "estriccion"
-                                                            << "resiliencia";
+static const QList <QString> mProperties = QList <QString>() << "tension_rotura"
+                                                             << "limite_fluencia"
+                                                             << "alargamiento"
+                                                             << "estriccion"
+                                                             << "resiliencia"
+                                                             << "dureza";
 
 typedef QString MechanicalProperty;
 
