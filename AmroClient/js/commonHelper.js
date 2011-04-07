@@ -10,8 +10,10 @@ $(document).ready(function() {
 		$("input[type='checkbox']:not([enabled='disabled'])").attr('checked', false);
 	});
 
+	/*
 	$("#newClient").click(function(){
 		alert("Pepe");
 	});
+	*/
 	
 });

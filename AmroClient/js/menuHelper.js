@@ -48,6 +48,7 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
+	
 	$("#btn_cliente_green").click(function() { // Abm Clientes
 	    //var url = "abms/abmManager.php?module=cliente";
 	    
@@ -55,7 +56,7 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
-	btn_cliente_green
+	//btn_cliente_green
 	
 	
 	
