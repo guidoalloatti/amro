@@ -31,12 +31,17 @@ void UserResponse::login(JSONP &output, const QHash <QString, QString> &params)
 
     qDebug() << "En LOGIN";
 
+    qDebug() << params["email"].toUtf8() + " " +params["password"];
+
     QList <User> users = um.get(params["email"], params["password"]);
 
-    if (users.size() == 1)
+    if (users.size() == 1) {
         output.add("result", true);
-    else
+    } else {
+                  qDebug() << "adfasdfsadf";
+
         output.add("result", false);
+    }
 }
 
 /* Recordar que email está marcado como UNIQUE en la base de datos */

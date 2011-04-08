@@ -35,7 +35,7 @@ void RequestHandler::run()
     //QHttpRequestHeader header(socket.readAll().constData());
     QHttpRequestHeader header(socket.readLine());
 
-    QUrl url(header.path());
+    QUrl url = QUrl().fromPercentEncoding(header.path().toUtf8());
 
     QHash <QString, QString> params;
     QPair <QString, QString> p;
