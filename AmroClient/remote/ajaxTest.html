@@ -8,7 +8,57 @@
 	<h1>Api Remote Testing Page</h1>
 	<br/>
 	<hr/>
-	<input type="button" value="Validar Login" id="validate_login_button" />
+	<table border="1" cellpadding="10">
+		<tr>
+		<td>
+			<input type="button" value="Insert User" id="insert_user_button" />
+			<input type="button" value="DeleteUser" id="delete_user_button" />
+			<input type="button" value="UpdateUser" id="update_user_button" />
+			<input type="button" value="GetUser" id="get_user_button" />
+			<input type="button" value="Login" id="validate_login_button" />
+		</td>
+		<td>
+			<input type="button" value="Insert Material" id="insert_material_button" />
+			<input type="button" value="DeleteMaterial" id="delete_material_button" />
+			<input type="button" value="UpdateMaterial" id="update_material_button" />
+			<input type="button" value="GetMaterial" id="get_material_button" />
+		</td>
+		<td>
+			<input type="button" value="Insert Client" id="insert_client_button" />
+			<input type="button" value="DeleteClient" id="delete_client_button" />
+			<input type="button" value="UpdateClient" id="update_client_button" />
+			<input type="button" value="GetClient" id="get_client_button" />
+		</td>
+		</tr>
+		
+		<tr>
+		<td>
+			<input type="button" value="Load MA" id="load_ma_button" />
+			<input type="button" value="Delete MA" id="delete_ma_button" />
+			<input type="button" value="Get MA (all)" id="get_all_ma_button" />
+			<input type="button" value="Get MA (by date)" id="get_ma_by_date_button" />
+		</td>
+		<td>
+			<input type="button" value="Parse CA" id="parse_ca_button" />
+			<input type="button" value="Delete CA" id="delete_ca_button" />
+			<input type="button" value="Check CA (all)" id="check_all_ca_button" />	
+			<input type="button" value="Check CA (by probeta)" id="check_ca_by_probeta_button" />	
+			<input type="button" value="Check CA (by material)" id="check_ca_by_material_button" />	
+			<input type="button" value="Check CA (by date)" id="check_ca_by_date_button" />	
+		</td>	
+		<td>
+			<input type="button" value="Parse CSV" id="parse_csv_button" />
+			<input type="button" value="Delete OC" id="delete_oc_button" />
+			<input type="button" value="Get OC (all)" id="get_all_oc_button" />	
+			<input type="button" value="Get OC (by client)" id="get_oc_by_client_button" />	
+			<input type="button" value="Get OC (by material)" id="get_oc_by_material_button" />	
+			<input type="button" value="Get OC (by probeta)" id="get_oc_by_probeta_button" />
+			<input type="button" value="Get OC (by OC)" id="get_oc_by_oc_button" />	
+		</td>
+		</tr>
+	</table>
+
+
 	<hr/>
 	<h4>Output</h4>
 	<div id="html_change">
