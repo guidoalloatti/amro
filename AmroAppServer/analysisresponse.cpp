@@ -11,8 +11,10 @@
 AnalysisResponse::AnalysisResponse()
 {
     methodTable["ParseCA"] = &AnalysisResponse::parseCA;
+    methodTable["DeleteCA"] = &AnalysisResponse::deleteCA;
     methodTable["CheckCA"] = &AnalysisResponse::checkCA;
     methodTable["LoadMA"] = &AnalysisResponse::loadMA;
+    methodTable["DeleteMA"] = &AnalysisResponse::deleteMA;
     methodTable["GetMA"] = &AnalysisResponse::getMA;
 }
 
@@ -63,7 +65,7 @@ static bool parseCSV(QFile *file, QVariantHash &error)
                 return false;
             }
 
-            break;
+            continue;
         }
 
         ChemicalAnalysis ca;
@@ -99,8 +101,9 @@ static bool parseCSV(QFile *file, QVariantHash &error)
         QVariantHash measures;
         foreach(QString measure, measuresIndexMapper.keys()) {
             QString value = fields.at(measuresIndexMapper[measure]);
-            measures[measure] = value.toDouble();
+            measures[measure] = QVariantList() << QVariant(value.toDouble()) << 0;
         }
+
         ca.setMeasures(ChemicalMeasure(measures));
 
         if (!ChemicalAnalysisMapper().insert(ca))
@@ -140,6 +143,28 @@ void AnalysisResponse::parseCA(JSONP &output, const QHash <QString, QString> &pa
     output.add("success", success);
 }
 
+void AnalysisResponse::deleteCA(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "DeleteCA");
+
+    QString email = params.value("email", "").toUtf8();
+    QString password = params.value("password", "").toUtf8();
+
+    bool success = false;
+
+    if (hasPermission(email, password, "CA_DELETE"))
+    {
+        quint32 id = params.value("id", "").toUInt();
+
+        ChemicalAnalysis ca;
+        ca.setId(id);
+        success = ChemicalAnalysisMapper().erase(ca);
+    } else
+        output.add("permissions", "denied");
+
+    output.add("success", success);
+}
+
 QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
 {
     QVariantList serializedAnalysys;
@@ -147,6 +172,7 @@ QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
     foreach(ChemicalAnalysis ca, analysis) {
         QVariantHash analysysProperties;
 
+        analysysProperties["id"] = ca.getId();
         analysysProperties["numprobeta"] = ca.getNumProbeta();
         analysysProperties["material_id"] = ca.getMaterial().getId();
         analysysProperties["date"] = ca.getDate();
@@ -223,14 +249,58 @@ void AnalysisResponse::loadMA(JSONP &output, const QHash <QString, QString> &par
          * %20 es el espacio
          * %3D es el =
          */
-        QByteArray mAnalysis = QByteArray::fromPercentEncoding(params.value("mechanicalanalysis", "").toUtf8()).simplified();
-        foreach(QByteArray analysis, mAnalysis.split(' ')) {
+        /*QByteArray mAnalysis = params.value("mechanicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray analysis, mAnalysis.split('+')) {
             QList <QByteArray> measure = analysis.split('=');
             ma.setMeasureValue(measure[0], measure[1].replace(',', ".").toDouble());
+        }*/
+
+        QByteArray mAnalysis = params.value("mechanicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray limit, mAnalysis.split('+')) {
+            QList <QByteArray> measure = limit.split('=');
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    ma.setMeasureMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    ma.setMeasureMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Mechanical Measures Values");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
+
 
         success = MechanicalAnalysisMapper().insert(ma);
     }
+
+    output.add("success", success);
+}
+
+void AnalysisResponse::deleteMA(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "DeleteMA");
+
+    QString email = params.value("email", "").toUtf8();
+    QString password = params.value("password", "").toUtf8();
+
+    bool success = false;
+
+    if (hasPermission(email, password, "MA_DELETE"))
+    {
+        quint32 id = params.value("id", "").toUInt();
+
+        MechanicalAnalysis ma;
+        ma.setId(id);
+        success = MechanicalAnalysisMapper().erase(ma);
+    } else
+        output.add("permissions", "denied");
 
     output.add("success", success);
 }
@@ -257,7 +327,7 @@ void AnalysisResponse::getMA(JSONP &output, const QHash <QString, QString> &para
 {
     output.add("method", "GetMA");
 
-    QString email = params.value("name", "").toUtf8();
+    QString email = params.value("email", "").toUtf8();
     QString password = params.value("password", "").toUtf8();
 
     bool success = false;

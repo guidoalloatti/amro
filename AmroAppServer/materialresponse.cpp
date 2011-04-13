@@ -40,17 +40,59 @@ void MaterialResponse::newMaterial(JSONP &output, const QHash <QString, QString>
          * %20 es el espacio
          * %3D es el =
          */
-        QByteArray cLimits = QByteArray::fromPercentEncoding(params.value("chlimits", "").toUtf8()).simplified();
-        foreach(QByteArray limit, cLimits.split(' ')) {
+        /*QByteArray cLimits = params.value("chlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, cLimits.split('+')) {
             QList <QByteArray> measure = limit.split('=');
             m.setChemicalValue(measure[0], measure[1].replace(',', ".").toDouble());
+        }*/
+
+        QByteArray cLimits = params.value("chlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, cLimits.split('+')) {
+            QList <QByteArray> measure = limit.split('=');
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    m.setChemicalMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    m.setChemicalMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Chemical Measures Values");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
 
-        QByteArray mLimits = QByteArray::fromPercentEncoding(params.value("mlimits", "").toUtf8()).simplified();
-        foreach(QByteArray limit, mLimits.split(' ')) {
+        QByteArray mLimits = params.value("mlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, mLimits.split('+')) {
             QList <QByteArray> measure = limit.split('=');
-            m.setMechanicalValue(measure[0], measure[1].replace(',', ".").toDouble());
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    m.setMechanicalMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    m.setMechanicalMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Mechanical Measures Values");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
+
+        /*QByteArray mLimits = params.value("mlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, mLimits.split('+')) {
+            QList <QByteArray> measure = limit.split('=');
+            m.setMechanicalValue(measure[0].simplified(), measure[1].replace(',', ".").toDouble());
+        }*/
 
         success = MaterialMapper().insert(m);
     } else
@@ -102,16 +144,45 @@ void MaterialResponse::updateMaterial(JSONP &output, const QHash <QString, QStri
          * %20 es el espacio
          * %3D es el =
          */
-        QByteArray cLimits = QByteArray::fromPercentEncoding(params.value("chlimits", "").toUtf8()).simplified();
-        foreach(QByteArray limit, cLimits.split(' ')) {
+        QByteArray cLimits = params.value("chlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, cLimits.split('+')) {
             QList <QByteArray> measure = limit.split('=');
-            m.getChemicalLimit().setValue(measure[0], measure[1].replace(',', ".").toDouble());
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    m.setChemicalMaxValue(measure[0], value.toDouble());
+                else
+                    m.setChemicalMinValue(measure[0], value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Measures Value");
+                    output.add("success", false);
+                    return;
+                }
+            }
         }
 
-        QByteArray mLimits = QByteArray::fromPercentEncoding(params.value("mlimits", "").toUtf8()).simplified();
-        foreach(QByteArray limit, mLimits.split(' ')) {
+        QByteArray mLimits = params.value("mlimits", "").toUtf8().simplified();
+        foreach(QByteArray limit, mLimits.split('+')) {
             QList <QByteArray> measure = limit.split('=');
-            m.getMechanicalLimit().setValue(measure[0], measure[1].replace(',', ".").toDouble());
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    m.setMechanicalMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    m.setMechanicalMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Mechanical Measures Values");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
 
         success = MaterialMapper().update(m);

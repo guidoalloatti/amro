@@ -88,17 +88,58 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
          * %20 es el espacio
          * %3D es el =
          */
-        QByteArray cAnalysis = QByteArray::fromPercentEncoding(params.value("chemicalanalysis", "").toUtf8()).simplified();
-        foreach(QByteArray analysis, cAnalysis.split(' ')) {
+        /*QByteArray cAnalysis = params.value("chemicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray analysis, cAnalysis.split('+')) {
             QList <QByteArray> measure = analysis.split('=');
             c.setChemicalValue(measure[0], measure[1].replace(',', ".").toDouble());
+        }*/
+        QByteArray cAnalysis = params.value("chemicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray limit, cAnalysis.split('+')) {
+            QList <QByteArray> measure = limit.split('=');
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    c.setChemicalMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    c.setChemicalMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Measures Value");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
 
-        QByteArray mAnalysis = QByteArray::fromPercentEncoding(params.value("mechanicalanalysis", "").toUtf8()).simplified();
-        foreach(QByteArray analysis, mAnalysis.split(' ')) {
+        /*QByteArray mAnalysis = params.value("mechanicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray analysis, mAnalysis.split('+')) {
             QList <QByteArray> measure = analysis.split('=');
             c.setMechanicalValue(measure[0], measure[1].replace(',', ".").toDouble());
+        }*/
+        QByteArray mAnalysis = params.value("mechanicalanalysis", "").toUtf8().simplified();
+        foreach(QByteArray limit, mAnalysis.split('+')) {
+            QList <QByteArray> measure = limit.split('=');
+            int min = 0;
+            foreach(QByteArray value, measure[1].replace(',', ".").split('-')) {
+                if (!min)
+                    c.setMechanicalMaxValue(measure[0].simplified(), value.toDouble());
+                else
+                    c.setMechanicalMinValue(measure[0].simplified(), value.toDouble());
+
+                min++;
+
+                if (min > 2) {
+                    output.add("error", "Bad Formatted Measures Value");
+                    output.add("success", false);
+                    return;
+                }
+
+            }
         }
+
 
         /*
          generateCertificate() debe setear los campos state y certificatePath antes

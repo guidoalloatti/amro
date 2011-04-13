@@ -42,6 +42,8 @@ void ClientResponse::newClient(JSONP &output, const QHash <QString, QString> &pa
         c.setZip(params.value("zip", "").toUtf8());
         c.setCountry(params.value("country", "").toUtf8());
         c.setPhone(params.value("phone", "").toUtf8());
+        c.setWebsite(params.value("website", "").toUtf8());
+        c.setTelefax(params.value("telefax", "").toUtf8());
         c.setSequenceDigits(params.value("seqdigits", "").toUInt());
 
         QString code = params.value("code", "").toUtf8();

@@ -33,6 +33,7 @@ void RequestHandler::run()
     if (!socket.canReadLine())
         socket.waitForReadyRead(20 * 1000);
     //QHttpRequestHeader header(socket.readAll().constData());
+
     QHttpRequestHeader header(socket.readLine());
 
     QUrl url(header.path());
@@ -40,8 +41,10 @@ void RequestHandler::run()
     QHash <QString, QString> params;
     QPair <QString, QString> p;
 
-    foreach (p, url.queryItems())
-        params[p.first] = p.second;
+    foreach (p, url.queryItems()) {
+        QByteArray decoded = QByteArray::fromPercentEncoding(p.second.toUtf8());
+        params[p.first] = decoded.simplified();
+    }
 
     QTextStream output(&socket);
 

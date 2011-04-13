@@ -7,6 +7,7 @@
 CSVParsingResponse::CSVParsingResponse()
 {
     methodTable["ParseCSV"] = &CSVParsingResponse::parseCSV;
+    methodTable["DeleteOC"] = &CSVParsingResponse::deleteOC;
     methodTable["GetOC"] = &CSVParsingResponse::getOC;
 }
 
@@ -20,7 +21,7 @@ static bool hasPermission(QString email, QString password, QString permission)
     return users[0].hasPrivileges(permission);
 }
 
-static const QStringList columns = QStringList() << "colada" << "compra" << "descripción" << "material" << "cliente";
+static const QStringList columns = QStringList() << "colada" << "compra" << "descrip" << "material" << "cliente";
 
 static bool parseLines(QFile *file, QVariantHash &error)
 {
@@ -39,6 +40,8 @@ static bool parseLines(QFile *file, QVariantHash &error)
         fields = line.split(';');
 
         lineNumber++;
+        /* Primero leo el header para saber qué campo corresponderá a su
+           homólogo en la base de datos*/
         if (lineNumber == 1) {
             int index = 0, columnsMatched = 0;
             foreach(QString field, fields) {
@@ -63,9 +66,10 @@ static bool parseLines(QFile *file, QVariantHash &error)
                 return false;
             }
 
-
-            break;
+            continue;
         }
+
+        /* A partir de la segunda línea, son todos objectos CSVParsingLine */
 
         CSVParsingLine pl;
 
@@ -84,11 +88,13 @@ static bool parseLines(QFile *file, QVariantHash &error)
         }
 
         QList <Client> clients;
-        clients = ClientMapper().get(fields.at(headerIndexMapper.value("cliente", -1)));
-        if (clients.length() == 1)
-            pl.setClient(clients.first());
-        else {
-            error[QString::number(lineNumber)] = "Client Unknown";
+        int cIndex = headerIndexMapper.value("cliente", -1);
+        if (cIndex != -1) {
+            clients = ClientMapper().get(fields.at(cIndex));
+            if (clients.length() == 1)
+                pl.setClient(clients.first());
+            else
+                error[QString::number(lineNumber)] = "Client Unknown";
         }
 
         QString probeta = fields.at(headerIndexMapper["colada"]);
@@ -113,9 +119,10 @@ static bool parseLines(QFile *file, QVariantHash &error)
             lastOrdenCompra = orden;
         pl.setOrdenCompra(orden.toUInt());
 
-        if (headerIndexMapper.value("descripción", -1) != -1
-            )
-            pl.setDescription(fields.at(headerIndexMapper["descripción"]));
+        if (headerIndexMapper.value("descrip", -1) != -1) {
+            pl.setDescription(fields.at(headerIndexMapper["descrip"]));
+        } else
+            pl.setDescription("");
 
         if (!CSVParsingLineMapper().insert(pl))
             error[QString::number(lineNumber)] = "Insert Error";
@@ -154,6 +161,28 @@ void CSVParsingResponse::parseCSV(JSONP &output, const QHash <QString, QString> 
     output.add("success", success);
 }
 
+void CSVParsingResponse::deleteOC(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "DeleteOC");
+
+    QString email = params.value("email", "").toUtf8();
+    QString password = params.value("password", "").toUtf8();
+
+    bool success = false;
+
+    if (hasPermission(email, password, "OC_DELETE"))
+    {
+        quint32 id = params.value("id", "").toUInt();
+
+        CSVParsingLine pl;
+        pl.setId(id);
+        success = CSVParsingLineMapper().erase(pl);
+    } else
+        output.add("permissions", "denied");
+
+    output.add("success", success);
+}
+
 QVariantList serializeCSVLines(QList <CSVParsingLine> lines)
 {
     QVariantList serializedLines;
@@ -161,11 +190,12 @@ QVariantList serializeCSVLines(QList <CSVParsingLine> lines)
     foreach(CSVParsingLine pl, lines) {
         QVariantHash linesProperties;
 
+        linesProperties["id"] = pl.getId();
         linesProperties["numprobeta"] = pl.getNumProbeta();
         linesProperties["ordencompra"] = pl.getOrdenCompra();
         linesProperties["client_id"] = pl.getClient().getId();
         linesProperties["material_id"] = pl.getMaterial().getId();
-        linesProperties["description"] = pl.getDescription();
+        linesProperties["description"] = pl.getDescription().replace('"', "''");
 
         serializedLines << linesProperties;
     }

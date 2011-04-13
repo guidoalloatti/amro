@@ -22,7 +22,12 @@ void ResponseMapper::execute(const QString &method, QTextStream &output, const Q
     output << response.toString();
     output.flush();
 
-    JSONP jsonp(&output, params["callback"]);
+    QByteArray result;
+    QTextStream out(&result);
+
+    //JSONP jsonp(&output, params["callback"]);
+    JSONP jsonp(&out, params["callback"]);
+
 
     qDebug() << method;
 
@@ -38,5 +43,6 @@ void ResponseMapper::execute(const QString &method, QTextStream &output, const Q
 
     jsonp.close();
 
-    qDebug() << "Termine llamada";
+    qDebug() << "Termine llamada : " + result;
+    output << result;
 }

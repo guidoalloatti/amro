@@ -5,7 +5,6 @@
 #-------------------------------------------------
 
 QT       += core
-
 QT       -= gui
 
 TARGET = AmroAppServer
@@ -13,7 +12,6 @@ CONFIG   += console
 CONFIG   -= app_bundle
 
 TEMPLATE = app
-
 QT += network
 QT += sql
 

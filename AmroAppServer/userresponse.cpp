@@ -34,9 +34,9 @@ void UserResponse::login(JSONP &output, const QHash <QString, QString> &params)
     QList <User> users = um.get(params["email"], params["password"]);
 
     if (users.size() == 1)
-        output.add("result", true);
+        output.add("success", true);
     else
-        output.add("result", false);
+        output.add("success", false);
 }
 
 /* Recordar que email está marcado como UNIQUE en la base de datos */
