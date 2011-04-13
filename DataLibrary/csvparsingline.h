@@ -14,12 +14,14 @@ public:
     CSVParsingLine();
 
     void setNumProbeta(QString numProbeta);
+    void setId(quint32 id);
     void setOrdenCompra(quint32 ordenCompra);
     void setMaterial(Material m);
     void setClient(Client m);
     void setDescription(QString desc);
 
     QString getNumProbeta() const;
+    quint32 getId() const;
     quint32 getOrdenCompra() const;
     Material getMaterial() const;
     Client getClient() const;
@@ -31,6 +33,7 @@ private:
     Material material;
     Client client;
     QString description;
+    quint32 id;
 
     friend class CSVParsingLineMapper;
 };

@@ -5,7 +5,7 @@
 #include "database.h"
 #include <QtSql>
 
-static const QString selectFields("numprobeta, material_id, date, chemicalanalysis");
+static const QString selectFields("id, numprobeta, material_id, date, chemicalanalysis");
 
 ChemicalAnalysisMapper::ChemicalAnalysisMapper()
 {
@@ -22,17 +22,19 @@ QList <ChemicalAnalysis> ChemicalAnalysisMapper::makeChemicalAnalysis(QSqlQuery 
         {
             ChemicalAnalysis ca;
 
-            ca.numProbeta = q.value(0).toString();
+            ca.id = q.value(0).toUInt();
 
-            QList <Material> materials = MaterialMapper().get(q.value(1).toUInt());
+            ca.numProbeta = q.value(1).toString();
+
+            QList <Material> materials = MaterialMapper().get(q.value(2).toUInt());
             if (materials.length() == 1)
                 ca.material = materials.first();
             else
                 continue;
 
-            ca.date = q.value(2).toDate();
+            ca.date = q.value(3).toDate();
 
-            QDataStream cds(QByteArray().fromPercentEncoding(q.value(3).toByteArray()));
+            QDataStream cds(QByteArray().fromPercentEncoding(q.value(4).toByteArray()));
             QVariantHash chemicalData;
             cds >> chemicalData;
 
@@ -51,7 +53,7 @@ bool ChemicalAnalysisMapper::insert(const ChemicalAnalysis &ca)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values(":numprobeta, :material_id, :date, :chemicalanalysis").
+            Values("DEFAULT, :numprobeta, :material_id, :date, :chemicalanalysis").
             prepare();
 
     QByteArray serializedCAnalysis;
@@ -77,10 +79,10 @@ bool ChemicalAnalysisMapper::erase(const ChemicalAnalysis &ca)
             Query().
             Delete().
             From(tableName).
-            Where("numprobeta = :numprobeta").
+            Where("id = :id").
             prepare();
 
-    q.bindValue(":numprobeta", ca.getNumProbeta());
+    q.bindValue(":id", ca.getId());
 
     return q.exec();
 }
@@ -92,6 +94,7 @@ bool ChemicalAnalysisMapper::update(const ChemicalAnalysis &ca)
             Update(tableName).
             Set("material_id = :material_id, date = :date, chemicalanalysis = :chemicalanalysis").
             Where("numprobeta = :numprobeta").
+            And("id = :id").
             prepare();
 
     QByteArray serializedCAnalysis;
@@ -103,6 +106,7 @@ bool ChemicalAnalysisMapper::update(const ChemicalAnalysis &ca)
     q.bindValue(":numprobeta", ca.getNumProbeta());
     q.bindValue(":material_id", ca.getMaterial().getId());
     q.bindValue(":date", ca.getDate());
+    q.bindValue(":id", ca.getId());
 
     return q.exec();
 }

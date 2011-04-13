@@ -24,16 +24,17 @@ typedef QString ChemicalProperty;
 class DATALIBSHARED_EXPORT ChemicalMeasure
 {
 public:
-    ChemicalMeasure() {}
+    ChemicalMeasure();
     ChemicalMeasure(QVariantHash m);
 
-    void setValue(ChemicalProperty p, double value);
-    double getValue(ChemicalProperty p);
+    void setMaxValue(ChemicalProperty p, double value);
+    void setMinValue(ChemicalProperty p, double value);
+    double getMaxValue(ChemicalProperty p);
+    double getMinValue(ChemicalProperty p);
     QVariantHash print() const;
 
 private:
-    //QHash <ChemicalProperty, double> measures;
-    QVariantHash measures;
+    QHash <QString, QPair<double, double> > measures;
 
 };
 

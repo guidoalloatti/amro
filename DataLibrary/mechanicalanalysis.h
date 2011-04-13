@@ -19,7 +19,9 @@ public:
     Material getMaterial() const;
     QDate getDate() const;
     MechanicalMeasure getMeasures() const;
-    void setMeasureValue(QString p, double value);
+    void setMeasureMaxValue(QString p, double value);
+    void setMeasureMinValue(QString p, double value);
+
 private:
     quint32 id;
     QDate date;

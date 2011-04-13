@@ -2,68 +2,81 @@
 
 #include <QDebug>
 
-/*QString getString(MechanicalProperty p)
+
+MechanicalMeasure::MechanicalMeasure()
 {
-    switch(p) {
-        case(TensionRotura):
-            return "tension_rotura";
-        case(LimiteFluencia):
-            return "limite_fluencia";
-        case(Estriccion):
-            return "estriccion";
-        case(Resiliencia):
-            return "resiliencia";
-        default:
-            return QString("");
-    }
-}*/
+    foreach(QString property, mProperties)
+        this->measures[property] = QPair <double, double> (0, 0);
+}
 
 MechanicalMeasure::MechanicalMeasure(QVariantHash m)
 {
-    foreach(QString key, m.keys())
-        /*switch(value) {
-            case(TensionRotura):
-            case(LimiteFluencia):
-            case(Estriccion):
-            case(Resiliencia):
-                this->measures[key] = m[key];
-                break;
-            default:
-                break;
-        }*/
-        if (mProperties.contains(key))
-            if (m[key].canConvert(QVariant::Double))
-                this->measures[key] = m[key];
+    foreach(QString property, mProperties) {
+        this->measures[property] = QPair <double, double> (0, 0);
+
+        if (m.keys().contains(property)) {
+            if (m.value(property).canConvert(QVariant::List)) {
+                QVariantList list = m[property].toList();
+
+                if (list.length() > 2 || list.empty())
+                    continue;
+
+                int index = 0;
+                foreach(QVariant value, list) {
+                    if (value.canConvert(QVariant::Double)) {
+                        if (!index)
+                            this->measures[property].first = value.toDouble();
+                        else
+                            this->measures[property].second = value.toDouble();
+                    }
+                    index++;
+                }
+
+            }
+        }
+    }
+
 }
 
-void MechanicalMeasure::setValue(MechanicalProperty p, double value)
+void MechanicalMeasure::setMaxValue(MechanicalProperty p, double max)
 {
-    /*QString property = getString(p);
-
-    if (property.isEmpty())
-        return;*/
-
     if (!mProperties.contains(p))
         return;
 
-    this->measures[p] = QVariant(value);
+    this->measures[p].first = max;
 }
 
-double MechanicalMeasure::getValue(MechanicalProperty p)
+void MechanicalMeasure::setMinValue(MechanicalProperty p, double min)
 {
-    /*QString property = getString(p);
+    if (!mProperties.contains(p))
+        return;
 
-    if (property.isEmpty())
-        return;*/
+    this->measures[p].second = min;
+}
 
-    if (this->measures.contains(p))
-        return this->measures[p].toDouble();
+double MechanicalMeasure::getMaxValue(MechanicalProperty p)
+{
+    if (!this->measures.contains(p))
+        return this->measures[p].first;
+
+    return -1;
+}
+
+double MechanicalMeasure::getMinValue(MechanicalProperty p)
+{
+    if (!this->measures.contains(p))
+        return this->measures[p].second;
 
     return -1;
 }
 
 QVariantHash MechanicalMeasure::print() const
 {
-    //return QVariantHash(measures);
-    return this->measures;
+    QVariantHash m;
+
+    foreach(QString key, this->measures.keys())
+        m[key] = QVariantList() << QVariant(measures[key].first)
+                                << QVariant(measures[key].second);
+
+    return m;
 }

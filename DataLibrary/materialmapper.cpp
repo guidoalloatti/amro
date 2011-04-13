@@ -61,7 +61,7 @@ bool MaterialMapper::insert(const Material &m)
     QByteArray serializedMAnalysis;
     QDataStream mas(&serializedMAnalysis, QIODevice::WriteOnly);
 
-    mas << m.getMechanicalLimit().print();    
+    mas << m.getMechanicalLimit().print();
 
     q.bindValue(":name", m.getName());
     q.bindValue(":description", m.getDescription());

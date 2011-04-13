@@ -6,7 +6,7 @@
 #include "database.h"
 #include <QtSql>
 
-static const QString selectFields("numprobeta, ordencompra, material_id, client_id, description");
+static const QString selectFields("id, numprobeta, ordencompra, material_id, client_id, description");
 
 CSVParsingLineMapper::CSVParsingLineMapper()
 {
@@ -23,22 +23,26 @@ QList <CSVParsingLine> CSVParsingLineMapper::makeCSVParsingLines(QSqlQuery &q)
         {
             CSVParsingLine pl;
 
-            pl.numProbeta = q.value(0).toString();
-            pl.ordenCompra = q.value(1).toUInt();
+            pl.id = q.value(0).toUInt();
+            pl.numProbeta = q.value(1).toString();
+            pl.ordenCompra = q.value(2).toUInt();
 
-            QList <Material> materials = MaterialMapper().get(q.value(2).toUInt());
+            QList <Material> materials = MaterialMapper().get(q.value(3).toUInt());
             if (materials.length() == 1)
                 pl.material = materials.first();
             else
                 continue;
 
-            QList <Client> clients = ClientMapper().get(q.value(3).toUInt());
-            if (clients.length() == 1)
-                pl.client = clients.first();
-            else
-                continue;
+            if (q.value(4) != 0) {
+                QList <Client> clients = ClientMapper().get(q.value(4).toUInt());
+                if (clients.length() == 1)
+                    pl.client = clients.first();
+                else
+                    continue;
+            } else
+                pl.client.setId(0);
 
-            pl.description = q.value(4).toString();
+            pl.description = q.value(5).toString();
 
             pls << pl;
         }
@@ -51,7 +55,7 @@ bool CSVParsingLineMapper::insert(const CSVParsingLine &pl)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values(":numprobeta, :ordencompra, :material_id, :client_id, :description").
+            Values("DEFAULT, :numprobeta, :ordencompra, :material_id, :client_id, :description").
             prepare();
 
     q.bindValue(":numprobeta", pl.getNumProbeta());
@@ -67,16 +71,17 @@ bool CSVParsingLineMapper::insert(const CSVParsingLine &pl)
     return s;
 }
 
+
 bool CSVParsingLineMapper::erase(const CSVParsingLine &pl)
 {
     QSqlQuery q =
             Query().
             Delete().
             From(tableName).
-            Where("numprobeta = :numprobeta").
+            Where("id = :id").
             prepare();
 
-    q.bindValue(":numprobeta", pl.numProbeta);
+    q.bindValue(":id", pl.getId());
 
     return q.exec();
 }
@@ -88,6 +93,7 @@ bool CSVParsingLineMapper::update(const CSVParsingLine &pl)
             Update(tableName).
             Set("ordencompra = :ordencompra, material_id = :material_id, client_id = :client_id, description = :description").
             Where("numprobeta = :numprobeta").
+            And("id = :id").
             prepare();
 
     q.bindValue(":numprobeta", pl.getNumProbeta());
@@ -95,6 +101,7 @@ bool CSVParsingLineMapper::update(const CSVParsingLine &pl)
     q.bindValue(":material_id", pl.getMaterial().getId());
     q.bindValue(":ordencompra", pl.getOrdenCompra());
     q.bindValue(":description", pl.getDescription());
+    q.bindValue(":id", pl.getId());
 
     return q.exec();
 }

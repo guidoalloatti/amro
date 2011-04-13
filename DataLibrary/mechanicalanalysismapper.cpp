@@ -5,7 +5,7 @@
 #include "database.h"
 #include <QtSql>
 
-static const QString selectFields("material_id, date, mechanicalanalysis");
+static const QString selectFields("id, material_id, date, mechanicalanalysis");
 
 MechanicalAnalysisMapper::MechanicalAnalysisMapper()
 {
@@ -22,15 +22,17 @@ QList <MechanicalAnalysis> MechanicalAnalysisMapper::makeMechanicalAnalysis(QSql
         {
             MechanicalAnalysis ma;
 
-            QList <Material> materials = MaterialMapper().get(q.value(0).toUInt());
+            ma.setId(q.value(0).toUInt());
+
+            QList <Material> materials = MaterialMapper().get(q.value(1).toUInt());
             if (materials.length() == 1)
                 ma.material = materials.first();
             else
                 continue;
 
-            ma.date = q.value(1).toDate();
+            ma.date = q.value(2).toDate();
 
-            QDataStream mds(QByteArray().fromPercentEncoding(q.value(2).toByteArray()));
+            QDataStream mds(QByteArray().fromPercentEncoding(q.value(3).toByteArray()));
             QVariantHash MechanicalData;
             mds >> MechanicalData;
 

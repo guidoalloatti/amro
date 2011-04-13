@@ -37,8 +37,11 @@ public:
     void setDate(QDate d);
     void setProtN(QString protN);
     void setNumProbeta(QString numProbeta);
-    void setChemicalValue(QString p, double value);
-    void setMechanicalValue(QString p, double value);
+    void setChemicalMaxValue(QString p, double value);
+    void setChemicalMinValue(QString p, double value);
+
+    void setMechanicalMaxValue(QString p, double value);
+    void setMechanicalMinValue(QString p, double value);
 
     quint32 getId() const;
     QString getProtN() const;

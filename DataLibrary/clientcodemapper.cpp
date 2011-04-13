@@ -94,7 +94,7 @@ QList <QString> ClientCodeMapper::getCodes(quint32 id)
     QSqlQuery query = Query().
                       Select(selectFields).
                       From(tableName).
-                      Where("id = :id").
+                      Where("client_id = :id").
                       prepare();
 
     query.bindValue(":id", id);

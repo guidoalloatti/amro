@@ -14,6 +14,11 @@ void CSVParsingLine::setOrdenCompra(quint32 ordenCompra)
     this->ordenCompra = ordenCompra;
 }
 
+void CSVParsingLine::setId(quint32 id)
+{
+    this->id = id;
+}
+
 void CSVParsingLine::setMaterial(Material m)
 {
     this->material = m;
@@ -33,6 +38,12 @@ QString CSVParsingLine::getNumProbeta() const
 {
     return this->numProbeta;
 }
+
+quint32 CSVParsingLine::getId() const
+{
+    return this->id;
+}
+
 quint32 CSVParsingLine::getOrdenCompra() const
 {
     return this->ordenCompra;

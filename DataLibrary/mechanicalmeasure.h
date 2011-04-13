@@ -25,16 +25,17 @@ typedef QString MechanicalProperty;
 class DATALIBSHARED_EXPORT MechanicalMeasure
 {
 public:
-    MechanicalMeasure() {}
+    MechanicalMeasure();
     MechanicalMeasure(QVariantHash m);
 
-    void setValue(MechanicalProperty p, double value);
-    double getValue(MechanicalProperty p);
+    void setMaxValue(MechanicalProperty p, double max);
+    void setMinValue(MechanicalProperty p, double min);
+    double getMaxValue(MechanicalProperty p);
+    double getMinValue(MechanicalProperty p);
     QVariantHash print() const;
 
 private:
-    //QHash <MechanicalProperty, double> measures;
-    QVariantHash measures;
+    QHash <QString, QPair<double, double> > measures;
 };
 
 #endif // MECHANICALMEASURE_H

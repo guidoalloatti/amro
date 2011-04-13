@@ -186,12 +186,22 @@ QString Certificate::getTermicoPath() const
     return this->tTermicoPath;
 }
 
-void Certificate::setChemicalValue(QString p, double value)
+void Certificate::setChemicalMaxValue(QString p, double max)
 {
-    this->chemicalAnalysis.setValue(p, value);
+    this->chemicalAnalysis.setMaxValue(p, max);
 }
 
-void Certificate::setMechanicalValue(QString p, double value)
+void Certificate::setChemicalMinValue(QString p, double min)
 {
-    this->mechanicalAnalysis.setValue(p, value);
+    this->chemicalAnalysis.setMaxValue(p, min);
+}
+
+void Certificate::setMechanicalMaxValue(QString p, double value)
+{
+    this->mechanicalAnalysis.setMaxValue(p, value);
+}
+
+void Certificate::setMechanicalMinValue(QString p, double value)
+{
+    this->mechanicalAnalysis.setMinValue(p, value);
 }

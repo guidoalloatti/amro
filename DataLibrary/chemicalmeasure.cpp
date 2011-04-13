@@ -1,56 +1,81 @@
 #include "chemicalmeasure.h"
 
-ChemicalMeasure::ChemicalMeasure(QVariantHash m)
+#include <QDebug>
+
+ChemicalMeasure::ChemicalMeasure()
 {
-    foreach(QString key, m.keys())
-        /*switch(key) {
-            case(C):
-            case(Mn):
-            case(Si):
-            case(P):
-            case(Cr):
-            case(Ni):
-            case(Mo):
-            case(Cu):
-            case(V):
-            case(CE):
-                this->measures[key] = m[key];
-                break;
-            default:
-                break;
-        }*/
-        if (chProperties.contains(key))
-            if (m[key].canConvert(QVariant::Double))
-                this->measures[key] = m[key];
+    foreach(QString property, chProperties)
+        this->measures[property] = QPair <double, double> (0, 0);
 }
 
-void ChemicalMeasure::setValue(ChemicalProperty p, double value)
+ChemicalMeasure::ChemicalMeasure(QVariantHash m)
 {
-    /*QString property = getString(p);
+    foreach(QString property, chProperties) {
+        this->measures[property] = QPair <double, double> (0, 0);
 
-    if (property.isEmpty())
-        return;*/
+        if (m.keys().contains(property)) {
+            if (m.value(property).canConvert(QVariant::List)) {
+                QVariantList list = m[property].toList();
+
+                if (list.length() > 2 || list.empty())
+                    continue;
+
+                int index = 0;
+                foreach(QVariant value, list) {
+                    if (value.canConvert(QVariant::Double)) {
+                        if (!index)
+                            this->measures[property].first = value.toDouble();
+                        else
+                            this->measures[property].second = value.toDouble();
+                    }
+                    index++;
+                }
+
+            }
+        }
+    }
+
+}
+
+void ChemicalMeasure::setMaxValue(ChemicalProperty p, double max)
+{
     if (!chProperties.contains(p))
         return;
 
-    this->measures[p] = QVariant(value);
+    this->measures[p].first = max;
 }
 
-double ChemicalMeasure::getValue(ChemicalProperty p)
+void ChemicalMeasure::setMinValue(ChemicalProperty p, double min)
 {
-    /*QString property = getString(p);
+    if (!chProperties.contains(p))
+        return;
+    this->measures[p].second = min;
 
-    if (property.isEmpty())
-        return;*/
+}
 
+double ChemicalMeasure::getMaxValue(ChemicalProperty p)
+{
     if (!this->measures.contains(p))
-        return this->measures[p].toDouble();
+        return this->measures[p].first;
+
+    return -1;
+}
+
+double ChemicalMeasure::getMinValue(ChemicalProperty p)
+{
+    if (!this->measures.contains(p))
+        return this->measures[p].second;
 
     return -1;
 }
 
 QVariantHash ChemicalMeasure::print() const
 {
-    //return QVariantHash(measures);
-    return this->measures;
+    QVariantHash m;
+
+    foreach(QString key, this->measures.keys())
+        m[key] = QVariantList() << QVariant(measures[key].first)
+                                << QVariant(measures[key].second);
+
+    return m;
 }

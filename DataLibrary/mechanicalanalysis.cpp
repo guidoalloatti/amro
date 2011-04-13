@@ -44,10 +44,16 @@ MechanicalMeasure MechanicalAnalysis::getMeasures() const
     return this->measures;
 }
 
-void MechanicalAnalysis::setMeasureValue(QString p, double value)
+void MechanicalAnalysis::setMeasureMaxValue(QString p, double value)
 {
-    this->measures.setValue(p, value);
+    this->measures.setMaxValue(p, value);
 }
+
+void MechanicalAnalysis::setMeasureMinValue(QString p, double value)
+{
+    this->measures.setMinValue(p, value);
+}
+
 
 
 

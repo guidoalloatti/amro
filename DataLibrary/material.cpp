@@ -47,9 +47,14 @@ ChemicalMeasure Material::getChemicalLimit() const
     return this->chemicalLimits;
 }
 
-void Material::setChemicalValue(QString p, double value)
+void Material::setChemicalMaxValue(QString p, double max)
 {
-    this->chemicalLimits.setValue(p, value);
+    this->chemicalLimits.setMaxValue(p, max);
+}
+
+void Material::setChemicalMinValue(QString p, double min)
+{
+    this->chemicalLimits.setMinValue(p, min);
 }
 
 void Material::setMechanicalLimit(MechanicalMeasure measure)
@@ -62,7 +67,12 @@ MechanicalMeasure Material::getMechanicalLimit() const
     return this->mechanicalLimits;
 }
 
-void Material::setMechanicalValue(QString p, double value)
+void Material::setMechanicalMaxValue(QString p, double value)
 {
-    this->mechanicalLimits.setValue(p, value);
+    this->mechanicalLimits.setMaxValue(p, value);
+}
+
+void Material::setMechanicalMinValue(QString p, double value)
+{
+    this->mechanicalLimits.setMinValue(p, value);
 }

@@ -53,7 +53,7 @@ bool ClientMapper::insert(Client &c)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :name, :address, :city, :zip, :country, :phone, :telefax, :website, :namecode, :sequencedigits").
+            Values("DEFAULT, :name, :address, :city, :zip, :country, :phone, :telefax, :website, :namecode, :sequencedigits, :currentsequence").
             prepare();
 
     q.bindValue(":name", c.getName());
@@ -65,7 +65,8 @@ bool ClientMapper::insert(Client &c)
     q.bindValue(":telefax", c.telefax);
     q.bindValue(":website", c.website);
     q.bindValue("namecode", c.nameCode);
-    q.bindValue("sequencedigits", c.sequenceDigits);
+    q.bindValue(":sequencedigits", c.sequenceDigits);
+    q.bindValue(":currentsequence", 0);
 
     bool s = q.exec();
 
@@ -148,13 +149,15 @@ bool ClientMapper::update(const Client &c)
     q.bindValue(":phone", c.phone);
     q.bindValue(":telefax", c.telefax);
     q.bindValue(":website", c.website);
-    q.bindValue("namecode", c.nameCode);
-    q.bindValue("sequencedigits", c.sequenceDigits);
+    q.bindValue(":namecode", c.nameCode);
+    q.bindValue(":sequencedigits", c.sequenceDigits);
 
     bool s = q.exec();
 
-    if (!s)
+    if (!s) {
+        qDebug() << q.lastError() << endl;
         return false;
+    }
 
     QString code = c.getCurrentNameCode();
     if (!code.isEmpty()) {
