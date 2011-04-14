@@ -338,9 +338,11 @@ $(document).ready(function() {
 		{
 			target: "User",
 			method: "DeleteUser",
+			// Quien lo esta borrando
 			email: "pmata@amro.com",
 			password: "123",
-			id: "4"
+			// A quien se borra
+			id: "6"
 		},
 		function(data) {
 			html_code += dump(data);

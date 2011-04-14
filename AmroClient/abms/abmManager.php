@@ -18,33 +18,26 @@ class abmManager
 			
 		if($module == "cliente")
 		{
-
-			$cliente_1 = array("nombre" => "Thorsa", "direccion" => "Amenabar 123");
+	
+			/*
+			$cliente_1 = array("nombre" => "Thorsa", "direccion" => "Amenabar 15324543");
 			$cliente_2 = array("nombre" => "Rensor", "direccion" => "Pucherito 3223");
 			$cliente_3 = array("nombre" => "Workfront", "direccion" => "Libertad 11235");
-			$cliente_4 = array("nombre" => "Withmore", "direccion" => "Churco 9873");
+			$cliente_4 = array("nombre" => "Withmorfdsfggxdfe", "direccion" => "Churco 9873");
 			$clientes = array();
 			$clientes[0] = $cliente_1;
 			$clientes[1] = $cliente_2;
 			$clientes[2] = $cliente_3;
 			$clientes[3] = $cliente_4;
-
-			$this->html = "<h3>Listado de Clientes</h3>
-			<table width='60%' border='0px'>
-				<tr>
-					<td width='25%' bgcolor='lightblue'>
-						<table >
-							<tr>
-								<td>";
-
-			foreach($clientes as $cliente)
-			{
-				$this->html .= "<tr><td><a href='#'>".$cliente['nombre']."</td><td>".$cliente["direccion"]."</td></a></td>
-							   <td><a href='' id='newClient'><img src='img/new.png' width='20' heigth='20' alt='Nuevo' title='Nuevo' /></a></td>
-							   <td><img src='img/edit.png' width='20' heigth='20' alt='Editar' title='Editar' /></td>
-							   <td><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' /></td></tr>";
-			}
+			*/
 			
+			$this->html = "<h3>Listado de Clientes</h3>
+			<table width='80%' border='0px'>
+				<tr>
+					<td width='35%' bgcolor='lightblue' id='client_list' >
+						<table>
+					";
+	
 			$this->html .= "	</td>
 							</tr>
 						</table>
@@ -53,7 +46,78 @@ class abmManager
 					<table >
 						<tr>
 							<td>
-								Ponela bien careta
+								<table>
+									<tr>
+										<td>
+											Nombre:
+										</td>
+										<td>
+											<input type='label' id='name' />
+										</td>
+										<td>
+											Direccion:
+										</td>
+										<td>
+											<input type='label' id='address' />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Ciudad:
+										</td>
+										<td>
+											<input type='label' id='city' />
+										</td>
+										<td>
+											Codigo Postal:
+										</td>
+										<td>
+											<input type='label' id='zip' />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Pais:
+										</td>
+										<td>
+											<input type='label' id='country' />
+										</td>
+										<td>
+											Telefono:
+										</td>
+										<td>
+											<input type='label' id='phone' />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Fax:
+										</td>
+										<td>
+											<input type='label' id='telefax' />
+										</td>
+										<td>
+											Pagina Web:
+										</td>
+										<td>
+											<input type='label' id='website' />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											Codigo de Identificacion:
+										</td>
+										<td>
+											<input type='label' id='namecode' />
+										</td>
+										<td>
+											Cantidad Maxima de Certificados:
+										</td>
+										<td>
+											<input type='label' id='sequencedigits' />
+										</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					</table>
@@ -63,6 +127,7 @@ class abmManager
 			<hr>
 			<a href='#' id='guardar_cliente' >Guardar Cliente</a> ::
 			<a href='#' id='eliminar_cliente'>Eliminar Cliente</a> ::
+			<a href='#' id='recargar_cliente'>Regargar Cliente</a> ::
 			<a href='#' id='nuevo_cliente'   >Nuevo Cliente</a>
 			<hr/>";
 		}
