@@ -18,23 +18,11 @@ class abmManager
 			
 		if($module == "cliente")
 		{
-	
-			/*
-			$cliente_1 = array("nombre" => "Thorsa", "direccion" => "Amenabar 15324543");
-			$cliente_2 = array("nombre" => "Rensor", "direccion" => "Pucherito 3223");
-			$cliente_3 = array("nombre" => "Workfront", "direccion" => "Libertad 11235");
-			$cliente_4 = array("nombre" => "Withmorfdsfggxdfe", "direccion" => "Churco 9873");
-			$clientes = array();
-			$clientes[0] = $cliente_1;
-			$clientes[1] = $cliente_2;
-			$clientes[2] = $cliente_3;
-			$clientes[3] = $cliente_4;
-			*/
-			
-			$this->html = "<h3>Listado de Clientes</h3>
-			<table width='80%' border='0px'>
+
+			$this->html = "<h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
+			<table width='90%' height='300px' border='0px'>
 				<tr>
-					<td width='35%' bgcolor='lightblue' id='client_list' >
+					<td width='20%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
 						<table>
 					";
 	
@@ -42,11 +30,20 @@ class abmManager
 							</tr>
 						</table>
 					</td>
-					<td bgcolor='lightgreen' width='75%'>
-					<table >
+					<td bgcolor='lightgray' width='80%' VALIGN='top'>
+						<table bgcolor='#BBBBBB'>
+							<tr>
+								<td><h3>Cliente Seleccionado:</h3></td>
+								<td align='right' id='cliente_seleccionado_name'></td>
+								<td id='cliente_seleccionado_id'></td>
+							</tr>
+						</table>
+						<table><hr noshade/></table>					
+					<table>
 						<tr>
 							<td>
 								<table>
+									<tr>
 									<tr>
 										<td>
 											Nombre:
@@ -114,7 +111,7 @@ class abmManager
 											Cantidad Maxima de Certificados:
 										</td>
 										<td>
-											<input type='label' id='sequencedigits' />
+											<input type='label' id='seqdigits' />
 										</td>
 									</tr>
 								</table>
@@ -126,10 +123,12 @@ class abmManager
 			</table>
 			<hr>
 			<a href='#' id='guardar_cliente' >Guardar Cliente</a> ::
-			<a href='#' id='eliminar_cliente'>Eliminar Cliente</a> ::
+			<a href='#' id='actualizar_cliente' >Modificar Cliente</a> ::
+			<!-- <a href='#' id='eliminar_cliente'>Eliminar Cliente</a> :: -->
 			<a href='#' id='recargar_cliente'>Regargar Cliente</a> ::
-			<a href='#' id='nuevo_cliente'   >Nuevo Cliente</a>
-			<hr/>";
+			<a href='#' id='recargar_lista_clientes'>Regargar Lista de Clientes</a> ::
+			<a href='#' id='nuevo_cliente'>Nuevo Cliente</a><br/>
+			<div id='html_code'></div>";
 		}
 		
 		return $this->html;
