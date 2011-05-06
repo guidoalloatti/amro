@@ -55,7 +55,8 @@ void ChemicalMeasure::setMinValue(ChemicalProperty p, double min)
 
 double ChemicalMeasure::getMaxValue(ChemicalProperty p)
 {
-    if (!this->measures.contains(p))
+    QStringList properties = this->measures.keys();
+    if (properties.contains(p))
         return this->measures[p].first;
 
     return -1;
@@ -63,7 +64,8 @@ double ChemicalMeasure::getMaxValue(ChemicalProperty p)
 
 double ChemicalMeasure::getMinValue(ChemicalProperty p)
 {
-    if (!this->measures.contains(p))
+    QStringList properties = this->measures.keys();
+    if (properties.contains(p))
         return this->measures[p].second;
 
     return -1;

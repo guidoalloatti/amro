@@ -4,6 +4,8 @@
 #include "../DataLibrary/materialmapper.h"
 #include "../DataLibrary/clientmapper.h"
 
+#include "certificategenerator.h"
+
 CertificateResponse::CertificateResponse()
 {
     methodTable["NewCertificate"] = &CertificateResponse::newCertificate;
@@ -51,7 +53,9 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
             break;
         }
 
-        c.setNumProbeta(c.getClient().getCurrentNameCode() + c.getClient().getSequenceNumber());
+        //c.setNumProbeta(c.getClient().getCurrentNameCode() + c.getClient().getSequenceNumber());
+        c.setNumProbeta(params.value("identificacion", "").toUtf8());
+
 
         quint32 material_id = params.value("material_id", "").toUInt();
         QList <Material> materials = MaterialMapper().get(material_id);
@@ -80,7 +84,9 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
             break;
         }
 
-        output.add("performer_id", users[0].getId());
+
+        //output.add("performer_id", users[0].getId());
+        c.setPerformer(users[0]);
 
         c.setDate(QDate::currentDate());
 
@@ -144,8 +150,8 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
         /*
          generateCertificate() debe setear los campos state y certificatePath antes
          de insertar el certificado en la BD */
-        QString err;
-        if (!c.generateCertificate(err))  {
+        QString err = "Generation Error";
+        if (!CertificateGenerator().generate(c))  {
             output.add("certificate", err);
             break;
         }
@@ -206,6 +212,8 @@ QVariantList serializeCertificates(QList <Certificate> certificates)
         certificateProperties["state"] = c.getState(),
         certificateProperties["client_id"] = c.getClient().getId();
         certificateProperties["date"] = c.getDate();
+        certificateProperties["description"] = c.getDescription();
+
 
         /* Este serialize es para el mostrarle los certificados hechos al cliente,
            para qué enviar las siguientes propiedades?
@@ -233,7 +241,7 @@ QVariantList serializeCertificates(QList <Certificate> certificates)
 
 void CertificateResponse::getCertificate(JSONP &output, const QHash <QString, QString> &params)
 {
-    output.add("method", "DeleteCertificate");
+    output.add("method", "GetCertificate");
 
     QString email = params.value("email", "").toUtf8();
     QString password = params.value("password", "").toUtf8();

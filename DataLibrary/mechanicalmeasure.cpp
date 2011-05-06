@@ -1,6 +1,7 @@
 #include "mechanicalmeasure.h"
 
 #include <QDebug>
+#include <QStringList>
 
 
 MechanicalMeasure::MechanicalMeasure()
@@ -56,7 +57,8 @@ void MechanicalMeasure::setMinValue(MechanicalProperty p, double min)
 
 double MechanicalMeasure::getMaxValue(MechanicalProperty p)
 {
-    if (!this->measures.contains(p))
+    QStringList properties = this->measures.keys();
+    if (properties.contains(p))
         return this->measures[p].first;
 
     return -1;
@@ -64,7 +66,8 @@ double MechanicalMeasure::getMaxValue(MechanicalProperty p)
 
 double MechanicalMeasure::getMinValue(MechanicalProperty p)
 {
-    if (!this->measures.contains(p))
+    QStringList properties = this->measures.keys();
+    if (properties.contains(p))
         return this->measures[p].second;
 
     return -1;

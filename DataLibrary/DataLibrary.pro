@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT += sql
-QT -= gui
+QT += gui
 TARGET = DataLibrary
 TEMPLATE = lib
 DEFINES += DATALIB_LIBRARY

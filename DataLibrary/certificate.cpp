@@ -14,7 +14,7 @@ void Certificate::setId(quint32 id)
 
 void Certificate::setImagePath(QString path)
 {
-    this->certificatePath = path;
+    this->tTermicoPath = path;
 }
 
 void Certificate::setCertificatePath(QString path)
@@ -169,10 +169,6 @@ QString Certificate::getObservations() const
 
 bool Certificate::generateCertificate(QString &err)
 {
-    //GENERAR CERTIFICADO EN HTML, IMPRIMIENDOLO EN PDF.
-    //DESPUES VER CÓMO MODULARIZAR MAS ESTE PROCEDIMIENTO.
-    //CANDIDATO... CertificateGenerator.
-    err = "NO ERROR";
     return true;
 }
 

@@ -166,10 +166,9 @@ void ClientResponse::getClient(JSONP &output, const QHash <QString, QString> &pa
         QList <Client> clients;
         if (params.keys().contains("id"))
             clients = ClientMapper().get(params.value("id").toUInt());
-        else if (params.keys().contains("name"))
-            clients = ClientMapper().get(QString(params.value("name").toUtf8()));
         else
             clients = ClientMapper().get();
+
         success = true;
         output.add("clients", serializeClients(clients));
     } else

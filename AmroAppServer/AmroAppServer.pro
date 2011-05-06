@@ -5,7 +5,9 @@
 #-------------------------------------------------
 
 QT       += core
-QT       -= gui
+QT       += gui
+QT       += webkit
+
 
 TARGET = AmroAppServer
 CONFIG   += console
@@ -29,7 +31,8 @@ SOURCES += main.cpp \
     materialresponse.cpp \
     certificateresponse.cpp \
     csvparsingresponse.cpp \
-    analysisresponse.cpp
+    analysisresponse.cpp \
+    certificategenerator.cpp
 
 HEADERS += \
     requestlistener.h \
@@ -43,7 +46,8 @@ HEADERS += \
     materialresponse.h \
     certificateresponse.h \
     csvparsingresponse.h \
-    analysisresponse.h
+    analysisresponse.h \
+    certificategenerator.h
 
 LIBS += -L../DataLibrary \
     -lDataLibrary
