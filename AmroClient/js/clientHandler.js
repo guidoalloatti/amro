@@ -1,12 +1,13 @@
 // Global Variables Definitions
+var server_url = "http://192.168.1.101:8080/?callback=?";
+//var server_url = server_url;
 
 $(document).ready(function() {
 
-	getClientList();
+	//getClientList();
 
 	$("#guardar_cliente").click(function(){
 		insertClient();
-		
 	});
 	
 	$("#recargar_lista_clientes").click(function(){
@@ -50,7 +51,7 @@ function loadClient(name, id)
 
 function insertClient()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{	
 		target: "Client",
 		method: "NewClient",
@@ -67,16 +68,21 @@ function insertClient()
 		email: "pmata@amro.com",
 		password: "123",
 	},
-	function(data) {
-		//html_code += dump(data);
-		//$("#html_change").replaceWith(html_code);				
+	function(data) {s
 		getClientList();
 	});
 }
 
 function updateClient()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+
+	if($("#cliente_seleccionado_id").html() == "")
+	{
+		alert("No esta definido el id del cliente.");
+		return;
+	}
+
+	$.getJSON(server_url,
 	{
 		target: "Client",
 		method: "UpdateClient",
@@ -90,14 +96,11 @@ function updateClient()
 		telefax: $("#telefax").val(),
 		seqdigits: $("#seqdigits").val(),
 		code: $("#namecode").val(),
-		id: $("#namecode").val(),
+		id: $("#cliente_seleccionado_id").html(),
 		email: "pmata@amro.com",
 		password: "123",
 	},
 	function(data) {
-		//console.log("Actualizando Cliente");
-		//html_code += dump(data);
-		//$("#html_change").replaceWith(html_code);				
 	});
 }
 
@@ -108,7 +111,7 @@ function getClientList()
 
 function getClient(id, name)
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "Client",
 		method: "GetClient",
@@ -123,7 +126,7 @@ function getClient(id, name)
 		else	
 		{
 			$("#name").val(data.clients[0].name);
-			$("#namecode").val(data.clients[0].id);
+			$("#namecode").val(data.clients[0].code);
 			$("#address").val(data.clients[0].address);
 			$("#city").val(data.clients[0].city);
 			$("#zip").val(data.clients[0].zip);
@@ -132,7 +135,6 @@ function getClient(id, name)
 			$("#website").val(data.clients[0].website);
 			$("#telefax").val(data.clients[0].telefax);
 			$("#seqdigits").val(data.clients[0].seqdigits);
-			$("#code").val(data.clients[0].code);
 			$("#cliente_seleccionado_name").html(data.clients[0].name);
 			$("#cliente_seleccionado_id").html(data.clients[0].id);
 		}	
@@ -151,7 +153,7 @@ function deleteClientConfirmation(name, id)
 function getClients()
 {
 
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "Client",
 		method: "GetClient",
@@ -179,7 +181,7 @@ function getClients()
 
 function deleteClient(id, name)
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "Client",
 		method: "DeleteClient",
@@ -188,10 +190,8 @@ function deleteClient(id, name)
 		id: id,
 	},
 	function(data) {
-		console.log("Se elimino cliente "+name+" con id "+id);
 		getClientList();
-		//html_code += dump(data);
-		//$("#html_change").replaceWith(html_code);				
+		//console.log("Se elimino cliente "+name+" con id "+id);
 	});
 }
 

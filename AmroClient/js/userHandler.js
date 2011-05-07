@@ -1,12 +1,13 @@
 // Global Variables Definitions
+var server_url = "http://192.168.1.101:8080/?callback=?";
+//var server_url = server_url;
 
 $(document).ready(function() {
 
-	getUserList();
+	//getUserList();
 
 	$("#guardar_usuario").click(function(){
 		insertUsuario();
-		
 	});
 	
 	$("#recargar_lista_usuarios").click(function(){
@@ -22,7 +23,7 @@ $(document).ready(function() {
 	});
 	
 	$("#actualizar_usuario").click(function(){
-		updateUsuario();
+		updateUser();
 	});
 	
 	
@@ -34,6 +35,9 @@ function newUsuario()
 	$("#name").val("");
 	$("#surname").val("");
 	$("#signature").val("");
+	$("#email").val("");
+	$("#password").val("");
+	
 }
 	
 function loadUser(name, id)
@@ -43,33 +47,40 @@ function loadUser(name, id)
 
 function insertUsuario()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{	
 		target: "User",
 		method: "NewUser",
+		password: $("#password").val(),
+		email: $("#email").val(),
+		signature: $("#signature").val(),
 		name: $("#name").val(),
 		surname: $("#surname").val(),
-		email: "pmata@amro.com",
-		password: "123",
 		signature: $("#signature").val(),
 	},
 	function(data) {
-		alert("insertUser");
 		getUserList();
 	});
 }
 
 function updateUser()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	if($("#usuario_seleccionado_id").html() == "")
+	{
+		alert("No esta definido el id del usuario.");
+		return;
+	}
+	
+	$.getJSON(server_url,
 	{
 		target: "User",
 		method: "UpdateUser",
 		name: $("#name").val(),
-		surname: $("surname").val(),
-		email: "pmata@amro.com",
-		password: "123",
+		surname: $("#surname").val(),
+		email: $("#email").val(),
+		password: $("#password").val(),
 		signature: $("#signature").val(),
+		id: $("#usuario_seleccionado_id").html(),
 	},
 	function(data) {
 	});
@@ -82,7 +93,7 @@ function getUserList()
 
 function getUser(id, name)
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "User",
 		method: "GetUser",
@@ -97,6 +108,10 @@ function getUser(id, name)
 		else	
 		{
 			$("#name").val(data.users[0].name);
+			$("#surname").val(data.users[0].surname);
+			$("#email").val(data.users[0].email);
+			//$("#password").val(data.users[0].password);
+			$("#signature").val(data.users[0].signature);
 			$("#usuario_seleccionado_name").html(data.users[0].name);
 			$("#usuario_seleccionado_id").html(data.users[0].id);
 		}	
@@ -113,7 +128,7 @@ function deleteUserConfirmation(name, id)
 
 function getUsers()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "User",
 		method: "GetUser",
@@ -136,7 +151,7 @@ function getUsers()
 
 function deleteUser(id, name)
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "User",
 		method: "DeleteUser",

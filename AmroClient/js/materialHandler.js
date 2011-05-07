@@ -1,10 +1,10 @@
 // Global Variables Definitions
-var server_url = "http://192.168.1.101:8080/?callback=?";
-//var server_url = "http://localhost:8080/?callback=?";
+//var server_url = "http://192.168.1.101:8080/?callback=?";
+var server_url = "http://localhost:8080/?callback=?";
 
 $(document).ready(function() {
 
-	getMaterialList();
+	//getMaterialList();
 
 	$("#guardar_material").click(function(){
 		insertMaterial();
@@ -100,10 +100,6 @@ function insertMaterial()
 					"resiliencia="+$("#resiliencia_max").val()+"-"+$("#resiliencia_min").val()+"+"+
 					"dureza="+$("#dureza_min").val()+"-"+$("#dureza_min").val();
 					
-	//alert(quimicos);
-	//alert(mecanicos);
-	//return;
-	
 	$.getJSON(server_url,
 	{	
 		target: "Material",
@@ -113,6 +109,7 @@ function insertMaterial()
 		mlimits: mecanicos,
 		email: "pmata@amro.com",
 		password: "123",
+		//id: id,
 	},
 	function(data) {
 		getMaterialList();
@@ -122,24 +119,30 @@ function insertMaterial()
 function updateMaterial()
 {
 
-		var quimicos = 	"c="+$("#carbono").val()+"+"+
-					"mn="+$("#manganeso").val()+"+"+
-					"si="+$("#silicio").val()+"+"+
-					"p="+$("#fosforo").val()+"+"+
-					"s="+$("#azufre").val()+"+"+
-					"cr="+$("#cromo").val()+"+"+
-					"ni="+$("#niquel").val()+"+"+
-					"mo="+$("#molibdeno").val()+"+"+
-					"cu="+$("#cobre").val()+"+"+
-					"v="+$("#vanadio").val()+"+"+
-					"ce="+$("#ce").val();	
+	if($("#material_seleccionado_id").html() == "")
+	{
+		alert("No esta definido el id del material.");
+		return;
+	}
 
-	var mecanicos = "tension_rotura="+$("#tension_rotura").val()+"+"+
-					"limite_fluencia="+$("#limite_fluencia").val()+"+"+
-					"alargamiento="+$("#alargamiento").val()+"+"+
-					"estriccion="+$("#estriccion").val()+"+"+
-					"resiliencia="+$("#resiliencia").val()+"+"+
-					"dureza="+$("#dureza").val();
+	var quimicos = 	"c="+$("#carbono_max").val()+"-"+$("#carbono_min").val()+"+"+
+					"mn="+$("#manganeso_max").val()+"-"+$("#manganeso_min").val()+"+"+
+					"si="+$("#silicio_max").val()+"-"+$("#silicio_min").val()+"+"+
+					"p="+$("#fosforo_max").val()+"-"+$("#fosforo_min").val()+"+"+
+					"s="+$("#azufre_max").val()+"-"+$("#azufre_min").val()+"+"+
+					"cr="+$("#cromo_max").val()+"-"+$("#cromo_min").val()+"+"+
+					"ni="+$("#niquel_max").val()+"-"+$("#niquel_min").val()+"+"+
+					"mo="+$("#molibdeno_max").val()+"-"+$("#molibdeno_min").val()+"+"+
+					"cu="+$("#cobre_max").val()+"-"+$("#cobre_min").val()+"+"+
+					"v="+$("#vanadio_max").val()+"-"+$("#vanadio_min").val()+"+"+
+					"ce="+$("#ce_max").val()+"-"+$("#ce_min").val();	
+
+	var mecanicos = "tension_rotura="+$("#tension_rotura_max").val()+"-"+$("#tension_rotura_min").val()+"+"+
+					"limite_fluencia="+$("#limite_fluencia_max").val()+"-"+$("#limite_fluencia_min").val()+"+"+
+					"alargamiento="+$("#alargamiento_max").val()+"-"+$("#alargamiento_min").val()+"+"+
+					"estriccion="+$("#estriccion_max").val()+"-"+$("#estriccion_min").val()+"+"+
+					"resiliencia="+$("#resiliencia_max").val()+"-"+$("#resiliencia_min").val()+"+"+
+					"dureza="+$("#dureza_min").val()+"-"+$("#dureza_min").val();
 
 	$.getJSON(server_url,
 	{
@@ -150,8 +153,10 @@ function updateMaterial()
 		mlimits: mecanicos,
 		email: "pmata@amro.com",
 		password: "123",
+		id: $("#material_seleccionado_id").html(),
 	},
 	function(data) {
+		//alert( $("#material_seleccionado_id").html());
 	});
 }
 
@@ -176,7 +181,10 @@ function getMaterial(id, name)
 			alert("Error en la cantidad de materiales, no se puede especificar el material seleccionado");
 		else	
 		{
+			// Name and Id
 			$("#name").val(data.materials[0].name);
+			$("#material_seleccionado_name").html(data.materials[0].name);
+			$("#material_seleccionado_id").html(data.materials[0].id);
 			
 			// Quimicos
 			$("#carbono_max").val(data.materials[0].chlimits.c[0]);
@@ -193,9 +201,14 @@ function getMaterial(id, name)
 			$("#cromo_min").val(data.materials[0].chlimits.cr[1]);
 			$("#niquel_max").val(data.materials[0].chlimits.ni[0]);
 			$("#niquel_min").val(data.materials[0].chlimits.ni[1]);
-			$("#").val(data.materials[0].chlimits.[0]);
-			$("#").val(data.materials[0].chlimits.[1]);
-			
+			$("#molibdeno_max").val(data.materials[0].chlimits.mo[0]);
+			$("#molibdeno_min").val(data.materials[0].chlimits.mo[1]);			
+			$("#cobre_max").val(data.materials[0].chlimits.cu[0]);
+			$("#cobre_min").val(data.materials[0].chlimits.cu[1]);			
+			$("#vanadio_max").val(data.materials[0].chlimits.v[0]);
+			$("#vanadio_min").val(data.materials[0].chlimits.v[1]);			
+			$("#ce_max").val(data.materials[0].chlimits.ce[0]);
+			$("#ce_min").val(data.materials[0].chlimits.ce[1]);
 			
 			// Mecanicos
 			$("#tension_rotura_max").val(data.materials[0].mlimits.tension_rotura[0]);
@@ -210,9 +223,6 @@ function getMaterial(id, name)
 			$("#resiliencia_min").val(data.materials[0].mlimits.resiliencia[1]);
 			$("#dureza_max").val(data.materials[0].mlimits.dureza[0]);
 			$("#dureza_min").val(data.materials[0].mlimits.dureza[1]);
-			
-			$("#material_seleccionado_name").html(data.material[0].name);
-			$("#material_seleccionado_id").html(data.material[0].id);
 		}	
 	});
 }

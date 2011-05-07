@@ -36,7 +36,7 @@ class abmManager
 	
 	function getAbmMaterialHtml()
 	{
-		$this->html = "<h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
+		$this->html = "<body onload='getMaterialList();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='material_list' VALIGN='top'>
@@ -172,7 +172,7 @@ class abmManager
 	
 	function getAbmUsuarioHtml()
 	{	
-		$this->html = "<h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
+		$this->html = "<body onload='getUserList();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='usuario_list' VALIGN='top'>
@@ -195,30 +195,29 @@ class abmManager
 						<td>
 							<table>
 								<tr>
-								<tr>
-									<td>
-										Nombre:
-									</td>
-									<td>
-										<input type='label' id='name' />
-									</td>
+									<td>Nombre:</td>
+									<td><input type='label' id='name' /></td>
 								</tr>
 								<tr>
-									<td>
-										Apellido:
-									</td>
-									<td>
-										<input type='label' id='surname' />
-									</td>
+									<td>Apellido:</td>
+									<td><input type='label' id='surname' /></td>
+								</tr>		
+								<tr>
+									<td>Email:</td>
+									<td><input type='label' id='email' /></td>
 								</tr>
 								<tr>
-									<td>
-										Firma:
-									</td>
-									<td>
-										<textarea id='signature'></textarea>
-									</td>
-								</tr>								
+									<td>Password:</td>
+									<td><input type='label' id='password' /></td>
+								</tr>
+								<tr>
+									<td>Firma:</td>
+									<td><input type='file' id='signature' /></td>
+								</tr>	
+								<tr>
+									<td><a href='main.php?invoice_url=pe&userid=1'>Gestionar Permisos del Usuario</a></td>
+								</tr>
+								
 							</table>
 						</td>
 					</tr>
@@ -238,7 +237,7 @@ class abmManager
 	function getAbmClienteHtml()
 	{
 		
-		$this->html = "<h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
+		$this->html = "<body onload='getClientList();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
