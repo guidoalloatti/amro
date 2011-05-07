@@ -60,136 +60,98 @@ class abmManager
 							<table>
 								<tr>
 								<tr>
-									<td>
-										Nombre:
-									</td>
-									<td>
-										<input type='label' id='name' />
-									</td>
-								</tr>
-								<tr><td><b>Quimicas</b></td></tr>
-								<tr>
-									<td>
-										% Carbono:
-									</td>
-									<td>
-										<input type='label' id='carbono' />
-									</td>
-									<td>
-										% Cromo:
-									</td>
-									<td>
-										<input type='label' id='cromo' />
-									</td>
+								<td><table><tr>
+									<td>Nombre:</td>
+									<td><input type='label' id='name' /></td>
+								</tr></table></td>
 								</tr>
 								<tr>
-									<td>
-										% Manganeso:
-									</td>
-									<td>
-										<input type='label' id='manganeso' />
-									</td>
-									<td>
-										% Silicio:
-									</td>
-									<td>
-										<input type='label' id='silicio' />
-									</td>
+									<th><b>Material Quimico</b></th>
+									<th><b>Maximo</b></th>
+									<th><b>Minimo</b></th>
+									<th><b>Material Quimico</b></th>
+									<th><b>Maximo</b></th>
+									<th><b>Minimo</b></th>
 								</tr>
 								<tr>
-									<td>
-										% Fosforo:
-									</td>
-									<td>
-										<input type='label' id='fosforo' />
-									</td>
-									<td>
-										% Azufre:
-									</td>
-									<td>
-										<input type='label' id='azufre' />
-									</td>
+									<td align='right'>% Carbono:</td>
+									<td><input type='label' id='carbono_max' size='2'/></td>
+									<td><input type='label' id='carbono_min' size='2'/></td>
+									<td align='right'>% Cromo:</td>
+									<td><input type='label' id='cromo_max' size='2'/></td>
+									<td><input type='label' id='cromo_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td>
-										% Niquel:
-									</td>
-									<td>
-										<input type='label' id='niquel' />
-									</td>
-									<td>
-										% Molibdeno:
-									</td>
-									<td>
-										<input type='label' id='molibdeno' />
-									</td>
+									<td align='right'>% Manganeso:</td>
+									<td><input type='label' id='manganeso_max' size='2'/></td>
+									<td><input type='label' id='manganeso_min' size='2'/></td>
+									<td align='right'>% Silicio:</td>
+									<td><input type='label' id='silicio_max' size='2'/></td>
+									<td><input type='label' id='silicio_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td>
-										% Cobre:
-									</td>
-									<td>
-										<input type='label' id='cobre' />
-									</td>
-									<td>
-										% Vanadio:
-									</td>
-									<td>
-										<input type='label' id='vanadio' />
-									</td>
+									<td align='right'>% Fosforo:</td>
+									<td><input type='label' id='fosforo_max' size='2'/></td>
+									<td><input type='label' id='fosforo_min' size='2'/></td>
+									<td align='right'>% Azufre:</td>
+									<td><input type='label' id='azufre_max' size='2'/></td>
+									<td><input type='label' id='azufre_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td>
-										C.E.:
-									</td>
-									<td>
-										<input type='label' id='ce' />
-									</td>
+									<td align='right'>% Niquel:</td>
+									<td><input type='label' id='niquel_max' size='2'/></td>
+									<td><input type='label' id='niquel_min' size='2'/></td>
+									<td align='right'>% Molibdeno:</td>
+									<td><input type='label' id='molibdeno_max' size='2'/></td>
+									<td><input type='label' id='molibdeno_min' size='2'/></td>
+								</tr>
+								<tr>
+									<td align='right'>% Cobre:</td>
+									<td><input type='label' id='cobre_max' size='2'/></td>
+									<td><input type='label' id='cobre_min' size='2'/></td>
+									<td align='right'>% Vanadio:</td>
+									<td><input type='label' id='vanadio_max' size='2'/></td>
+									<td><input type='label' id='vanadio_min' size='2'/></td>
+								</tr>
+								<tr>
+									<td align='right'>C.E.:</td>
+									<td><input type='label' id='ce_max' size='2'/></td>
+									<td><input type='label' id='ce_min' size='2'/></td>
 								<tr>
 										
 								</tr>
-								<tr><td><b>Mecanicas</b></td></tr>
 								<tr>
-									<td>
-										Tension de Rotura (Mpa):
-									</td>
-									<td>
-										<input type='label' id='tension_rotura' />
-									</td>
-									<td>
-										Limite de Fluencia (Mpa):
-									</td>
-									<td>
-										<input type='label' id='limite_fluencia' />
-									</td>
+									<th><b>Propiedad Mecanica</b></th>
+									<th><b>Maximo</b></th>
+									<th><b>Minimo</b></th>
+									<th><b>Propiedad Mecanica</b></th>
+									<th><b>Maximo</b></th>
+									<th><b>Minimo</b></th>
+									
+									</tr>
+								<tr>
+									<td align='right'>Tension de Rotura (Mpa):</td>
+									<td ><input type='label' id='tension_rotura_max' size='2'/></td>
+									<td><input type='label' id='tension_rotura_min' size='2'/></td>
+									<td align='right'>Limite de Fluencia (Mpa):</td>
+									<td><input type='label' id='limite_fluencia_max' size='2'/></td>
+									<td><input type='label' id='limite_fluencia_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td>
-										Alargamiento (%):
-									</td>
-									<td>
-										<input type='label' id='alargamiento' />
-									</td>
-									<td>
-										Estriccion (%):
-									</td>
-									<td>
-										<input type='label' id='estriccion' />
-									</td>
+									<td align='right'>Alargamiento (%):</td>
+									<td><input type='label' id='alargamiento_max' size='2'/></td>
+									<td><input type='label' id='alargamiento_min' size='2'/></td>
+									<td align='right'>Estriccion (%):</td>
+									<td><input type='label' id='estriccion_max' size='2'/></td>
+									<td><input type='label' id='estriccion_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td>
-										Resiliencia (J) Charpy A:
-									</td>
-									<td>
-										<input type='label' id='resiliencia' />
-									</td>
-									<td>
-										Dureza (Hb) 10/3000:
-									</td>
-									<td>
-										<input type='label' id='dureza' />
-									</td>
+									<td align='right'>Resiliencia (J) Charpy A:</td>
+									<td><input type='label' id='resiliencia_max' size='2'/></td>
+									<td><input type='label' id='resiliencia_min' size='2'/></td>
+									<td align='right'>Dureza (Hb) 10/3000:</td>
+									<td><input type='label' id='dureza_max' size='2'/></td>
+									<td><input type='label' id='dureza_min' size='2'/></td>
 								</tr>
 							</table>
 						</td>
