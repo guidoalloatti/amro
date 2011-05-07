@@ -29,6 +29,10 @@ void ChemicalAnalysis::setMeasures(ChemicalMeasure ca)
     this->measures = ca;
 }
 
+void ChemicalAnalysis::setTTDate(QDate date) {
+    this->TTDate = date;
+}
+
 QString ChemicalAnalysis::getNumProbeta() const
 {
     return this->numProbeta;
@@ -54,4 +58,8 @@ ChemicalMeasure ChemicalAnalysis::getMeasures() const
     return this->measures;
 }
 
+QDate ChemicalAnalysis::GetTTDate() const
+{
+    return this->TTDate;
+}
 

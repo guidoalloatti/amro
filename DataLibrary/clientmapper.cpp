@@ -128,7 +128,7 @@ bool ClientMapper::erase(const Client &c)
     return DataLib::commit();
 }
 
-bool ClientMapper::update(const Client &c)
+bool ClientMapper::updateWithCode(const Client &c)
 {
     if (!DataLib::transaction())
         return false;
@@ -169,6 +169,36 @@ bool ClientMapper::update(const Client &c)
     }
 
     return DataLib::commit();
+}
+
+bool ClientMapper::updateWithoutCode(const Client &c)
+{
+    QSqlQuery q =
+            Query().
+            Update(tableName).
+            Set("name = :name, address = :address, city = :city, zip = :zip, country = :country, phone = :phone, telefax = :telefax, website = :website, sequencedigits = :sequencedigits").
+            Where("id = :id").
+            prepare();
+
+    q.bindValue(":id", c.getId());
+    q.bindValue(":name", c.getName());
+    q.bindValue(":address", c.address);
+    q.bindValue(":city", c.city);
+    q.bindValue(":zip", c.zip);
+    q.bindValue(":country", c.country);
+    q.bindValue(":phone", c.phone);
+    q.bindValue(":telefax", c.telefax);
+    q.bindValue(":website", c.website);
+    q.bindValue(":sequencedigits", c.sequenceDigits);
+
+    bool s = q.exec();
+
+    if (!s) {
+        qDebug() << q.lastError() << endl;
+        return false;
+    }    
+
+    return true;
 }
 
 QList <Client> ClientMapper::get()

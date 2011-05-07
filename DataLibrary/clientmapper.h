@@ -13,7 +13,8 @@ class DATALIBSHARED_EXPORT ClientMapper
 public:
     ClientMapper();
     bool insert(Client &c);
-    bool update(const Client &c);
+    bool updateWithoutCode(const Client &c);
+    bool updateWithCode(const Client &c);
     bool erase(const Client &c);
     QList <Client> get();
     QList <Client> get(quint32 id);

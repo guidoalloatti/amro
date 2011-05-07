@@ -50,7 +50,7 @@ QString User::getName() const
 
 QString User::getSurname() const
 {
-    return this->name;
+    return this->surname;
 }
 
 QString User::getPassword() const
