@@ -101,21 +101,28 @@ void ClientResponse::updateClient(JSONP &output, const QHash <QString, QString> 
         c.setZip(params.value("zip", "").toUtf8());
         c.setCountry(params.value("country", "").toUtf8());
         c.setPhone(params.value("phone", "").toUtf8());
+        c.setWebsite(params.value("website", "").toUtf8());
+        c.setTelefax(params.value("telefax", "").toUtf8());
         c.setSequenceDigits(params.value("seqdigits", "").toUInt());
 
         QString code = params.value("code", "").toUtf8();
-        c.setCurrentNameCode(code);
 
         if (!code.isEmpty()) {
             QList <Client> clients = ClientCodeMapper().getClients(code);
-            if (!clients.isEmpty()) {
-                output.add("code", code);
-                output.add("success", false);
-                return;
-            }
+            if (!clients.isEmpty())     {
+                if (clients.first().getId() != c.getId()) {
+                    output.add("code", code);
+                    output.add("success", false);
+                    return;
+                }
+            } else
+                c.setCurrentNameCode(code);
         }
 
-        success = ClientMapper().update(c);
+        if (c.getCurrentNameCode().isEmpty())
+            success = ClientMapper().updateWithoutCode(c);
+        else
+            success = ClientMapper().updateWithCode(c);
     } else
         output.add("permissions", "denied");
 
@@ -138,6 +145,7 @@ QVariantList serializeClients(QList <Client> clients)
         clientProperties["telefax"] = c.getTelefax();
         clientProperties["website"] = c.getWebsite();
         clientProperties["code"] = c.getCurrentNameCode();
+        clientProperties["zip"] = c.getZip();
         clientProperties["seqdigits"] = c.getSequenceDigits();
         clientProperties["seqnum"] = c.getSequenceNumber();
 

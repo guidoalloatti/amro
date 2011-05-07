@@ -98,6 +98,9 @@ static bool parseCSV(QFile *file, QVariantHash &error)
         }
         ca.setDate(newDate);
 
+        // Hasta ahora es esta fecha, luego se va a poder cambiar a través de un abm
+        ca.setTTDate(newDate);
+
         QVariantHash measures;
         foreach(QString measure, measuresIndexMapper.keys()) {
             QString value = fields.at(measuresIndexMapper[measure]);
@@ -176,6 +179,7 @@ QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
         analysysProperties["numprobeta"] = ca.getNumProbeta();
         analysysProperties["material_id"] = ca.getMaterial().getId();
         analysysProperties["date"] = ca.getDate();
+        analysysProperties["ttdate"] = ca.GetTTDate();
         analysysProperties["chemicalanalysis"] = ca.getMeasures().print();
 
         serializedAnalysys << analysysProperties;

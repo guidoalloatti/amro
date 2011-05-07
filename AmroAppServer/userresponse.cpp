@@ -122,6 +122,7 @@ QVariantList serializeUsers(QList <User> users)
         userProperties["name"] = u.getName();
         userProperties["surname"] = u.getSurname();
         userProperties["email"] = u.getEmail();
+        userProperties["signature"] = u.getSignature();
 
         QVariantList serializedPrivs;
         foreach(Privilege p, u.getPrivileges())
