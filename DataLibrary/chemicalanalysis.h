@@ -15,12 +15,14 @@ public:
     void setMaterial(Material m);
     void setDate(QDate date);
     void setMeasures(ChemicalMeasure cm);
+    void setTTDate(QDate date);
 
     QString getNumProbeta() const;
     quint32 getId() const;
     Material getMaterial() const;
     QDate getDate() const;
     ChemicalMeasure getMeasures() const;
+    QDate GetTTDate() const;
 
 private:
     quint32 id;
@@ -28,6 +30,7 @@ private:
     QDate date;
     Material material;
     ChemicalMeasure measures;
+    QDate TTDate;
 
     friend class ChemicalAnalysisMapper;
 };
