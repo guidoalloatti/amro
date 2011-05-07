@@ -58,18 +58,17 @@ class Render
                 $this->body = $this->htmlCode->getAbms();
                 break;
 			case "abm":
-			
 				$abmManager = new abmManager();
-				
-				switch($this->module)
+				$this->body = $abmManager->getAbmHtml();
+				break;
+					
+				/*switch($this->module)
 				{
 					case "cliente":
-						$this->body = $abmManager->getClienteAbm();
 						break;
 					default:
 						break;
-				}
-				break;
+				}*/
             default:
 				$this->body = $this->htmlCode->getDefaults();
                 break;
@@ -86,9 +85,6 @@ class Render
 
     public function renderPage()
     {
-        echo $this->includes;
-        echo $this->header;
-        echo $this->body;
-        echo $this->footer;
+        echo $this->includes . $this->header . $this->body . $this->footer;
     }
 }

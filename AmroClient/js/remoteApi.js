@@ -319,6 +319,7 @@ $(document).ready(function() {
 // }
 */
 
+/*
 function getMaterial()
 {
 $.getJSON("http://localhost:8080/?callback=?",
@@ -457,6 +458,8 @@ function(data) {
 });
 
 }	
+*/
+
 
 function validateLogin()
 {

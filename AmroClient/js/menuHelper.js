@@ -48,16 +48,20 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
-	
+	// Click en botones de ABM
 	$("#btn_cliente_green").click(function() { // Abm Clientes
-	    //var url = "abms/abmManager.php?module=cliente";
-	    
 		var url = "main.php?invoice_url=abm&module=cliente";
         $(location).attr('href',url);
     });
 	
-	//btn_cliente_green
+	$("#btn_usuarios_red").click(function() { // Abm Usuarios
+		var url = "main.php?invoice_url=abm&module=usuario";
+        $(location).attr('href',url);
+    });
 	
-	
+	$("#btn_materiales_gray").click(function() { // Abm Clientes
+		var url = "main.php?invoice_url=abm&module=material";
+        $(location).attr('href',url);
+    });
 	
 });
