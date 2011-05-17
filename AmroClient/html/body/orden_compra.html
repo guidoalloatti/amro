@@ -1,10 +1,18 @@
-<h3><u>Filtrar por los siguientes parametros</u></h3>
+<b><u>Buscar entre las Ordenes de Compra por:</u></b>
+		<INPUT TYPE=RADIO NAME="filtro" VALUE="o" id="filtro_orden_compra">Orden de Compra
+		<INPUT TYPE=RADIO NAME="filtro" VALUE="p" id="filtro_probeta">Numero de Probeta
+		<INPUT TYPE=RADIO NAME="filtro" VALUE="c" id="filtro_cliente">Cliente
+		<INPUT TYPE=RADIO NAME="filtro" VALUE="l" id="filtro_materiales">Material
+		<input type="button" id="search" value="Buscar" onclick="searchOC();"/>
+<hr/>
 <table>
 	<tr>
+		<td>Numero de Orden de Compra:</td><td><input id="orden_compra" /></td>
 		<td>Numero de Probeta:</td><td><input id="protocolo" /></td>
+	<tr>
+	</tr>
 		<td>Cliente:</td><td id="clientes"></td>
 		<td>Material:</td><td id="materiales"></td>
-		<td><input type="button" id="search" value="Buscar" onclick="searchOC();"/></td>
 	</tr>
 </table>
 <br/><hr>
@@ -12,9 +20,6 @@
 	<tr>
 		<td>
 			<div id="ordenes_compra">
-			
-			
-			
 			</div>
 		</td>
 	</tr>
