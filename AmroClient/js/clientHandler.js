@@ -1,6 +1,6 @@
 // Global Variables Definitions
-var server_url = "http://192.168.1.101:8080/?callback=?";
-//var server_url = server_url;
+//var server_url = "http://192.168.1.101:8080/?callback=?";
+var server_url = "http://localhost:8080/?callback=?";
 
 $(document).ready(function() {
 
@@ -28,6 +28,11 @@ $(document).ready(function() {
 	
 	
 });
+
+function pep()
+{
+	alert("Juanchorga");
+}
 
 // Funciones de Manejo de Clientes
 function newClient()

@@ -113,6 +113,7 @@ function insertMaterial()
 	},
 	function(data) {
 		getMaterialList();
+		newMaterial();
 	});
 }
 

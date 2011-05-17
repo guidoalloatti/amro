@@ -1,25 +1,36 @@
 <h3><u>Filtrar por los siguientes parametros</u></h3>
-Numero de Probeta: <input id="protocolo" />
-Cliente:<select name="option_cliente">
-    <option value="0">Todos</option>
-    <option value="1">Thorsa</option>
-    <option value="2">Cliente 2</option>
-    <option value="3">Cliente 3</option>
-</select>
-Material:<select name="option_material">
-    <option value="0">Todos</option>
-    <option value="1">Material 1</option>
-    <option value="2">Material 2</option>
-    <option value="3">Material 3</option>
-</select>
-<input type="button" id="search" value="Buscar" />
+<table>
+	<tr>
+		<td>Numero de Probeta:</td><td><input id="protocolo" /></td>
+		<td>Cliente:</td><td id="clientes"></td>
+		<td>Material:</td><td id="materiales"></td>
+		<td><input type="button" id="search" value="Buscar" onclick="searchOC();"/></td>
+	</tr>
+</table>
 <br/><hr>
+<table>
+	<tr>
+		<td>
+			<div id="ordenes_compra">
+			
+			
+			
+			</div>
+		</td>
+	</tr>
+</table
+>
+
+<!--
   <ul id="example" class="filetree">
   <li><span class="folder">Ordenes de Compra</span>
     <ul>
-        <li><span class="folder">Orden de Compra 1</span>
+        <li>
+			<span class="folder">Orden de Compra 1</span>
             <ul>
-                <li><span class="file">Material WC</span></li>
+                <li>
+					<span class="file">Material WC</span>
+				</li>
             </ul>
         </li>
         <li><span class="folder">Orden de Compra 2</span>
@@ -40,4 +51,5 @@ Material:<select name="option_material">
         </li>
         <li><span class="folder">Orden de Compra 4</span></li>
         </ul></ul>
-        <br/><hr>Subir Ordenes de Compra:<input type="file" />
+-->		
+<br/><hr>Subir Ordenes de Compra:<input type="file" /><a href='#' id='cargar_ocs' >Mostrar todas las OCs Disponibles</a>

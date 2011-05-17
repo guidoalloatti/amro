@@ -1,0 +1,41 @@
+
+table.oc
+{
+	border-collapse: collapse;
+	margin-bottom: 5em;
+	font-size: 120%;
+	line-height: 4;
+
+}
+
+tr.odd
+{
+	background: #lightgray;
+}
+
+td.oc
+{
+	/* background: #lightgreen; */
+}
+
+th.oc
+{
+	padding: .6em .10em;
+	background: #lightblue;
+	font-weight: bold;
+	text-align: left;
+	/* padding-left: 20px; */
+}
+
+th.oc.name { width: 12em; }
+th.oc.location { width: 12em; }
+th.oc.color { width: 10em; }
+
+thead th.oc
+{
+	background: #c6ceda;
+	border-color: #fff #fff #888 #fff;
+	border-style: solid;
+	border-width: 1px 1px 2px 1px;
+	padding-left: .5em;
+}

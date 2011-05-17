@@ -110,7 +110,105 @@ class htmlCodeStore {
 
     function getCertificados()
     {
-        return file_get_contents("html/body/certificados.html");
+		//var_dump($_GET);
+		//echo "<p>Generar Certificado para la orden de compra con numero de probeta: ".$_GET['numprobeta']."</p>";
+        //return file_get_contents("html/body/certificados.html");
+		
+		$html = '
+		
+		<div id="slide">
+        <!-- <h1>Creación de Certificado</h1> -->
+        <div id="navigation" style="display: none;">
+            <ul>
+                <li><a href="#">1. Orden de Compra</a></li>
+                <li><a href="#">2. Análisis Químico</a></li>
+                <li><a href="#">3. Análisis Mecánico</a></li>
+                <li><a href="#">4. Cargar Imagen</a></li>
+                <li><a href="#">5. Generar Certificado</a></li>
+            </ul>
+        </div>
+
+<div id="wrapper">
+    <div id="steps">
+        <form id="formElem" name="formElem" action="" method="post">
+            <fieldset class="step">
+                <legend>1. Orden de Compra</legend>
+					<p><table><tr>
+						<td>
+							Generando Certificado para la Orden de Compra: '.$_GET["ordencompra"].'
+						</td>
+					</tr>
+					<tr>
+						<td>
+							y con Numero de Probeta: '.$_GET["numprobeta"].'
+						</td>
+					</tr></table></p>
+					
+					<button id="ver_detalles">Ver detalles de la Orden de Compra: </button> 
+					<button id="cambiar_ocb">Seleccionar otra Orden de Compra: </button> 
+            </fieldset>
+            <fieldset class="step">
+                <legend>2. Análisis Químico <legend_comments>Realizado en el espectrómetro, marca SPECTROMAXX, SP-08000777, nº 124621-08</legend_comments></legend>
+                    <p>
+					<label for="_c">% C</label><input type="text" id="_c" name="_c" placeholder="Porcentaje de Carbono" autocomplete="OFF" />
+                    <label for="_mn">&nbsp;&nbsp;% Mn</label><input type="text" id="_mn" name="_mn" placeholder="Porcentaje de Manganeso" autocomplete="OFF" />
+					</p>
+                    
+					<p>
+					<label for="_si">% Si</label><input type="text" id="_si" name="_si" placeholder="Porcentaje de Silicio" autocomplete="OFF" />
+                    <label for="_p">&nbsp;&nbsp;% P</label><input type="text" id="_p" name="_p" placeholder="Porcentaje de Fósforo" autocomplete="OFF" />
+					</p>
+                    
+					<p>
+					<label for="_s">% S</label><input type="text" id="_s" name="_s" placeholder="Porcentaje de Azufre" autocomplete="OFF" />
+                    <label for="_cr">&nbsp;&nbsp;% Cr</label><input type="text" id="_cr" name="_cr" placeholder="Porcentaje de Cromo" autocomplete="OFF" />
+					</p>
+					
+                    <p>
+					<label for="_ni">% Ni</label><input type="text" id="_ni" name="_ni" placeholder="Porcentaje de Níquel" autocomplete="OFF" />
+                    <label for="_mo">&nbsp;&nbsp;% Mo</label><input type="text" id="_mo" name="_mo" placeholder="Porcentaje de Molibdeno" autocomplete="OFF" />
+					</p>
+                    
+					<p>
+					<label for="_cu">% Cu</label><input type="text" id="_cu" name="_cu" placeholder="Porcentaje de Cobre" autocomplete="OFF" />
+                    <label for="_v">&nbsp;&nbsp;% V</label><input type="text" id="_v" name="_v" placeholder="Porcentaje de Vanadio" autocomplete="OFF" />
+					</p>
+					
+                    <p><label for="_ce">C.E.</label><input type="text" id="_ce" name="_ce" placeholder="Ingrese el C.E." autocomplete="OFF" /></p>
+            </fieldset>
+            <fieldset class="step">
+                <legend>3. Análisis Mecánico <legend_comments>Realizado en una máquina universal de ensayos AMSLER, serie nº 9449, capacidad máxima 15 t, según lo especificado en la norma ASTM A 370</legend_comments></legend>
+                    <p><label for="tension_rotura">Tensión de Rotura (Mpa)</label><input type="text" id="tension_rotura" name="tension_rotura" placeholder="Ingrese la Tensión de Rotura" autocomplete="OFF" /></p>
+                    <p><label for="limite_fluencia">Límite de Fluencia (Mpa)</label><input type="text" id="limite_fluencia" name="limite_fluencia" placeholder="Ingrese el Límite de Fluencia" autocomplete="OFF" /></p>
+                    <p><label for="alargamiento">Alargamiento (%)</label><input type="text" id="alargamiento" name="alargamiento" placeholder="Ingrese el porcentaje de Alargamiento" autocomplete="OFF" /></p>
+                    <p><label for="estricción">Estricción (%)</label><input type="text" id="estricción" name="estricción" placeholder="Ingrese el porcentaje de Estricción" autocomplete="OFF" /></p>
+                    <p><label for="resiliencia">Resiliencia (J) Charpy A</label><input type="text" id="resiliencia" name="resiliencia" placeholder="Ingrese Resiliencia (J) Charpy A" autocomplete="OFF" /></p>
+                    <p><label for="dureza">Dureza (Hb) 10/3000</label><input type="text" id="dureza" name="dureza" placeholder="Ingrese la Dureza (Hb) 10/3000" autocomplete="OFF" /></p>
+            </fieldset>
+            <fieldset class="step">
+                <legend>4. Cargar la Imagen</legend>
+                    <p>Imagen....</p>
+
+            </fieldset>
+            <fieldset class="step"></fieldset>
+            <fieldset class="step">
+                <legend>Confirmación de generación de Certificado</legend>
+                <p>Una vez que todos los campos de una solapa estén
+                correctamente cargadas se marcará dicha solapa con un
+                ícono verde.
+                Un ícono rojo en una solapa significa que algún campo
+                falta o no ha sido completado correctamente.
+                En este último paso se confirman todos los anteriores
+                y se genera el certificado.</p>
+                <p class="submit"><button id="registerButton" type="submit">Generar Certificado!</button></p>
+            </fieldset>
+        </form>
+    </div>
+</div>
+</div>';
+
+	return $html;
+		
     }
 	
 	function getPermisos()
