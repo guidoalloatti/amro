@@ -98,7 +98,7 @@ function insertMaterial()
 					"alargamiento="+$("#alargamiento_max").val()+"-"+$("#alargamiento_min").val()+"+"+
 					"estriccion="+$("#estriccion_max").val()+"-"+$("#estriccion_min").val()+"+"+
 					"resiliencia="+$("#resiliencia_max").val()+"-"+$("#resiliencia_min").val()+"+"+
-					"dureza="+$("#dureza_min").val()+"-"+$("#dureza_min").val();
+					"dureza="+$("#dureza_max").val()+"-"+$("#dureza_min").val();
 					
 	$.getJSON(server_url,
 	{	

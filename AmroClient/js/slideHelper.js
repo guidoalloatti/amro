@@ -140,5 +140,7 @@ $(document).ready(function(){
 			alert('Please correct the errors in the Form');
 			return false;
 		}
+		
+		generateCertificate();
 	});
 });

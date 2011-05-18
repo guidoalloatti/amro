@@ -111,8 +111,7 @@ QList <CSVParsingLine> CSVParsingLineMapper::get(QVariantHash filters, QString o
 {
     Query queryObject = Query().
                         Select(selectFields).
-                        From(tableName).
-                        OrderBy(order);
+                        From(tableName);
 
     foreach(QString key, filters.keys()) {
         if (!selectFields.contains(key))
@@ -121,10 +120,14 @@ QList <CSVParsingLine> CSVParsingLineMapper::get(QVariantHash filters, QString o
         queryObject.Where(key + " = :" + key);
     }
 
+    queryObject.OrderBy(order);
+
     QSqlQuery query = queryObject.prepare();
 
     foreach(QString key, filters.keys())
         query.bindValue(":" + key, filters.value(key));
+
+
 
     return makeCSVParsingLines(query);
 }

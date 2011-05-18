@@ -1,3 +1,4 @@
+allOrders = null;
 
 $(document).ready(function() {
 	loadOCPage();
@@ -12,7 +13,7 @@ function loadOCPage()
 {
 	loadClients();
 	loadMaterials();
-	getAllOC();
+	//getAllOC();
 }
 
 function searchOC()
@@ -116,6 +117,7 @@ function searchByOC()
 		email: "pmata@amro.com",
 		password: "123",
 		ordencompra: $("#orden_compra").val(),
+		order: "ordencompra"
 	},
 	function(data) {
 		if(data.lines.length < 1)
@@ -139,7 +141,7 @@ function searchByOC()
 			inner_html += "<td>"+data.lines[i].material_id+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			inner_html += "</tr>";
 		}	
 		$("#ordenes_compra").html(inner_html);
@@ -161,6 +163,7 @@ function searchByProbeta()
 		email: "pmata@amro.com",
 		password: "123",
 		numprobeta: $("#protocolo").val(),
+		order: "numprobeta"
 	},
 	function(data) {
 		if(data.lines.length < 1)
@@ -184,7 +187,7 @@ function searchByProbeta()
 			inner_html += "<td>"+data.lines[i].material_id+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			inner_html += "</tr>";
 		}	
 		$("#ordenes_compra").html(inner_html);
@@ -198,7 +201,8 @@ function getAllOC()
 		target: "CSVParsing",
 		method: "GetOC",
 		email: "pmata@amro.com",
-		password: "123"
+		password: "123",
+		order: "ordencompra"
 	},
 	function(data) {
 		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
@@ -217,7 +221,7 @@ function getAllOC()
 			inner_html += "<td>"+data.lines[i].material_id+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			//inner_html += "<td><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"'>Generar Certificado Para "+data.lines[i].numprobeta+"</a></td>";
 			inner_html += "</tr>";
 			
@@ -227,6 +231,7 @@ function getAllOC()
 		}	
 		$("#ordenes_compra").html(inner_html);
 		
+		allOrders = data.lines;
 		//console.log(data);
 		//html_code += dump(data);
 		//$("#html_change").replaceWith(html_code);				

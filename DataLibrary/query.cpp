@@ -90,6 +90,7 @@ QSqlQuery Query::prepare()
     {
         qDebug() << "ERROR: can't prepare the query" << this->queryString << endl;
         qDebug() << q.lastError().text() << endl;
+        Database::getInstance()->getQSqlDatabase().close();
     }
 
     Q_ASSERT(query_ok);

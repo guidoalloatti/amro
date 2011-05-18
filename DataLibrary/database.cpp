@@ -22,8 +22,10 @@ Database::Database()
         db.setPassword("amr0s3rv3r");
 
         // HACER: ver que hacer en caso de que open falle, podria poner un metodo que me diga si es valida la DB
-        db.open();
-    }
+        if (!db.open())
+            qDebug() << db.lastError();
+    } else
+        qDebug() << "The database is already opened";
 }
 
 Database::~Database()

@@ -133,7 +133,7 @@ class htmlCodeStore {
         <form id="formElem" name="formElem" action="" method="post">
             <fieldset class="step">
                 <legend>1. Orden de Compra</legend>
-					<p><table><tr>
+				<!--	<p><table><tr>
 						<td>
 							Generando Certificado para la Orden de Compra: '.$_GET["ordencompra"].'
 						</td>
@@ -142,8 +142,11 @@ class htmlCodeStore {
 						<td>
 							y con Numero de Probeta: '.$_GET["numprobeta"].'
 						</td>
-					</tr></table></p>
+					</tr></table></p>	-->
+					<p>Generando Certificado para la Orden de Compra: '.$_GET["ordencompra"].'</p>
+					<p>y con Numero de Probeta: '.$_GET["numprobeta"].'</p>
 					
+					<br/>
 					<button id="ver_detalles">Ver detalles de la Orden de Compra: </button> 
 					<button id="cambiar_ocb">Seleccionar otra Orden de Compra: </button> 
             </fieldset>
@@ -187,7 +190,7 @@ class htmlCodeStore {
             </fieldset>
             <fieldset class="step">
                 <legend>4. Cargar la Imagen</legend>
-                    <p>Imagen....</p>
+                    <p><input type="file"/></p>
 
             </fieldset>
             <fieldset class="step"></fieldset>

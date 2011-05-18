@@ -25,7 +25,7 @@ static QString toString(double d)
 
 bool CertificateGenerator::generate(Certificate &c)
 {
-    QFile htmlTemplate("/home/pmata/amro/template.html");
+    QFile htmlTemplate("files/template.html");
 
     if (!htmlTemplate.open(QFile::ReadOnly)) {
         qDebug() << "No se pudo abrir el template html";
@@ -138,11 +138,11 @@ bool CertificateGenerator::generate(Certificate &c)
 
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName("/home/pmata/amro/" + c.getProtN() + ".pdf");
+    printer.setOutputFileName("files/" + c.getProtN() + ".pdf");
 
     view.print(&printer);
 
-    QFile newFile("/home/pmata/amro/" + c.getProtN() + ".html");
+    QFile newFile("files/" + c.getProtN() + ".html");
     newFile.open(QFile::WriteOnly | QFile::Truncate);
 
     QTextStream out(&newFile);
@@ -151,7 +151,7 @@ bool CertificateGenerator::generate(Certificate &c)
     out.flush();
     newFile.close();
 
-    c.setCertificatePath("/home/pmata/amro/" + c.getProtN() + ".pdf");
+    c.setCertificatePath("files/" + c.getProtN() + ".pdf");
 
     return true;
 }
