@@ -1,8 +1,5 @@
-allOrders = null;
-
 $(document).ready(function() {
-	loadOCPage();
-	
+
 	$("#cargar_ocs").click(function(){
 		getAllOC();
 	});
@@ -13,7 +10,7 @@ function loadOCPage()
 {
 	loadClients();
 	loadMaterials();
-	//getAllOC();
+	getAllOC();
 }
 
 function searchOC()
@@ -230,10 +227,11 @@ function getAllOC()
 			
 		}	
 		$("#ordenes_compra").html(inner_html);
-		
-		allOrders = data.lines;
+				
+		globals.currentOrders = data.lines;
 		//console.log(data);
 		//html_code += dump(data);
-		//$("#html_change").replaceWith(html_code);				
+		//$("#html_change").replaceWith(html_code);	
+		alert(globals.currentOrders.length);
 	});
 }	

@@ -68,8 +68,8 @@ function insertClient()
 		phone: $("#phone").val(),
 		website: $("#website").val(),
 		telefax: $("#telefax").val(),
-		seqdigits: $("#seqdigits").val(), 					// Esto especifica cuántos dígitos va a usar para los números de probeta. Ej. AR425 --> 3
-		code: $("#namecode").val(), 						// Codigo del número de probeta, si algún otro cliente tiene el código, tira error.
+		seqdigits: $("#seqdigits").val(), 					// Esto especifica cuï¿½ntos dï¿½gitos va a usar para los nï¿½meros de probeta. Ej. AR425 --> 3
+		code: $("#namecode").val(), 						// Codigo del nï¿½mero de probeta, si algï¿½n otro cliente tiene el cï¿½digo, tira error.
 		email: "pmata@amro.com",
 		password: "123",
 	},

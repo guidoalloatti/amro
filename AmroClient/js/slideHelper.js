@@ -1,6 +1,6 @@
-$(document).ready(function(){
-//$(function() {
-	/*
+//$(document).ready(function(){});
+
+/*
 	numero de fieldsets
 	*/
 	var fieldsetCount = $('#formElem').children().length;
@@ -16,6 +16,10 @@ $(document).ready(function(){
 	*/
 	var stepsWidth	= 0;
     var widths 		= new Array();
+
+function loadCert() {
+//$(function() {
+	
 	$('#steps .step').each(function(i){
         var $step 		= $(this);
 		widths[i]  		= stepsWidth;
@@ -83,54 +87,7 @@ $(document).ready(function(){
 				e.preventDefault();
 			}
 		});
-	});
-
-	/*
-	validamos errores sobre todos los campos de los fieldsets
-	y recuperamos si tiene errores en $('#formElem').data()
-	*/
-	function validateSteps(){
-		var FormErrors = false;
-		for(var i = 1; i < fieldsetCount; ++i){
-			var error = validateStep(i);
-			if(error == -1)
-				FormErrors = true;
-		}
-		$('#formElem').data('errors',FormErrors);
-	}
-
-	/*
-	validamos un fieldset
-	y retornamos -1 si encontramos errores o 1 si es correcto
-	*/
-	function validateStep(step){
-		if(step == fieldsetCount) return;
-
-		var error = 1;
-		var hasError = false;
-		$('#formElem').children(':nth-child('+ parseInt(step) +')').find(':input:not(button)').each(function(){
-			var $this 		= $(this);
-			var valueLength = jQuery.trim($this.val()).length;
-
-			if(valueLength == ''){
-				hasError = true;
-				$this.css('background-color','#FFEDEF');
-			}
-			else
-				$this.css('background-color','#FFFFFF');
-		});
-		var $link = $('#navigation li:nth-child(' + parseInt(step) + ') a');
-		$link.parent().find('.error,.checked').remove();
-
-		var valclass = 'checked';
-		if(hasError){
-			error = -1;
-			valclass = 'error';
-		}
-		$('<span class="'+valclass+'"></span>').insertAfter($link);
-
-		return error;
-	}
+	});	
 
 	/*
 	si hay errores no permitimos al usuario enviar
@@ -143,4 +100,56 @@ $(document).ready(function(){
 		
 		generateCertificate();
 	});
-});
+}
+
+/*
+validamos errores sobre todos los campos de los fieldsets
+y recuperamos si tiene errores en $('#formElem').data()
+*/
+function validateSteps(){
+	var FormErrors = false;
+	for(var i = 1; i < fieldsetCount; ++i){
+		var error = validateStep(i);
+		if(error == -1)
+			FormErrors = true;
+	}
+	$('#formElem').data('errors',FormErrors);
+}
+
+/*
+validamos un fieldset
+y retornamos -1 si encontramos errores o 1 si es correcto
+*/
+function validateStep(step){
+	if(step == fieldsetCount) return;
+
+	var error = 1;
+	var hasError = false;
+	$('#formElem').children(':nth-child('+ parseInt(step) +')').find(':input:not(button)').each(function(){
+		var $this 		= $(this);
+		var valueLength = jQuery.trim($this.val()).length;
+
+		if(valueLength == ''){
+			hasError = true;
+			$this.css('background-color','#FFEDEF');
+			if ($this.attr('id') == '_file' && hasError == false)
+				hasError = false;
+		}
+		else {
+			$this.css('background-color','#FFFFFF');
+			if ($this.attr('id') == '_file') 
+				hasError = false;			
+		}		
+	});
+	var $link = $('#navigation li:nth-child(' + parseInt(step) + ') a');
+	$link.parent().find('.error,.checked').remove();
+
+	var valclass = 'checked';
+	if(hasError){
+		error = -1;
+		valclass = 'error';
+	}
+	$('<span class="'+valclass+'"></span>').insertAfter($link);
+
+	return error;
+}

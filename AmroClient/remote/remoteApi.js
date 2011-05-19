@@ -140,8 +140,8 @@ $(document).ready(function() {
 			phone: "+(54) 156-111111",
 			website: "www.amro.com",
 			telefax: "1111111",
-			seqdigits: "3", // Esto especifica cuántos dígitos va a usar para los números de probeta. Ej. AR425 --> 3
-			code: "AR", // Codigo del número de probeta, si algún otro cliente tiene el código, tira error.
+			seqdigits: "3", // Esto especifica cuï¿½ntos dï¿½gitos va a usar para los nï¿½meros de probeta. Ej. AR425 --> 3
+			code: "AR", // Codigo del nï¿½mero de probeta, si algï¿½n otro cliente tiene el cï¿½digo, tira error.
 			email: "pmata@amro.com",
 			password: "123",
 			signature: "NULL"
@@ -166,8 +166,8 @@ $(document).ready(function() {
 			phone: "+(54) 156-111111",
 			website: "www.amro.com",
 			telefax: "1111111",
-			seqdigits: "3", // Esto especifica cuántos dígitos va a usar para los números de probeta. Ej. AR425 --> 3
-			code: "FB", // Codigo del número de probeta, si algún otro cliente tiene el código, tira error.
+			seqdigits: "3", // Esto especifica cuï¿½ntos dï¿½gitos va a usar para los nï¿½meros de probeta. Ej. AR425 --> 3
+			code: "FB", // Codigo del nï¿½mero de probeta, si algï¿½n otro cliente tiene el cï¿½digo, tira error.
 			email: "pmata@amro.com",
 			password: "123",
 			signature: "NULL",
@@ -379,7 +379,7 @@ $(document).ready(function() {
 			material_id: "4",				
 		},
 		function(data) {
-			html_code += dump(data) + "\n" + "Puede responder también con un 'material_id: xx' queriendo decir que el fallo estuvo en que no existe el material especifico";
+			html_code += dump(data) + "\n" + "Puede responder tambiï¿½n con un 'material_id: xx' queriendo decir que el fallo estuvo en que no existe el material especifico";
 			$("#html_change").replaceWith(html_code);				
 		});
 	}	
@@ -441,7 +441,7 @@ $(document).ready(function() {
 			method: "ParseCA",
 			email: "pmata@amro.com",
 			password: "123",
-			filepath: "/disco/Amro/files/analisis20110412.csv"
+			filepath: "/home/pmata/amro/analisis20110412.csv"
 		},
 		function(data) {
 			html_code += dump(data);

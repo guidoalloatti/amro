@@ -234,7 +234,7 @@ void CSVParsingResponse::getOC(JSONP &output, const QHash <QString, QString> &pa
         foreach (QString key, params.keys())
             if (key == "numprobeta" && !params[key].isEmpty())
                 filters[key] = params.value(key);
-            else if (key == "material_id" || key == "client_id" || key == "ordencompra")
+            else if (key == "material_id" || key == "client_id" || key == "ordencompra" || key == "id")
                 if (!params[key].isEmpty())
                     filters[key] = params.value(key).toUInt();
 

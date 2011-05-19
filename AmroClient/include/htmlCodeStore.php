@@ -14,7 +14,18 @@ class htmlCodeStore {
     {
         $html = file_get_contents("html/header/includes.html");
 		$html .= $this->getTitles();
-		$html.= '</head><body>';
+		switch ($this->pageInvoice)
+        {
+        	case "oc":
+        		$html .= "</head><body onload='loadOCPage();'>";
+        		break;
+        	case "ce":
+        		$html .= "</head><body onload='loadCert();'>";
+        		break;
+        	default:
+        		$html .= '</head><body>';
+        		break;
+        }		
 		return $html;
 	}
 
@@ -147,8 +158,12 @@ class htmlCodeStore {
 					<p>y con Numero de Probeta: '.$_GET["numprobeta"].'</p>
 					
 					<br/>
-					<button id="ver_detalles">Ver detalles de la Orden de Compra: </button> 
-					<button id="cambiar_ocb">Seleccionar otra Orden de Compra: </button> 
+					<button id="ver_detalles">Ver detalles de la Orden de Compra</button>
+					<p id="oc_details" style="visibility:visible;"></p>
+					
+					<button id="cambiar_ocb">Seleccionar otra Orden de Compra </button> 
+					<p id="all_oc" style="visibility:visible;"></p>
+					
             </fieldset>
             <fieldset class="step">
                 <legend>2. Análisis Químico <legend_comments>Realizado en el espectrómetro, marca SPECTROMAXX, SP-08000777, nº 124621-08</legend_comments></legend>
@@ -178,6 +193,12 @@ class htmlCodeStore {
 					</p>
 					
                     <p><label for="_ce">C.E.</label><input type="text" id="_ce" name="_ce" placeholder="Ingrese el C.E." autocomplete="OFF" /></p>
+                                             
+                    <p>
+                    <label for="_file">O seleccionar archivo:</label><input id="_file" type="file"/>
+                    <button id="upload_file">Subir Archivo</button>
+                    </p>
+                    <p id="asdf"></p>
             </fieldset>
             <fieldset class="step">
                 <legend>3. Análisis Mecánico <legend_comments>Realizado en una máquina universal de ensayos AMSLER, serie nº 9449, capacidad máxima 15 t, según lo especificado en la norma ASTM A 370</legend_comments></legend>
