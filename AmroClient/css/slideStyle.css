@@ -1,4 +1,29 @@
 
+
+.SI-FILES-STYLIZED label.cabinet
+{
+    width: 79px;
+    height: 22px;
+    background: url(btn-choose-file.gif) 0 0 no-repeat;
+
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.SI-FILES-STYLIZED label.cabinet input.file
+{
+    position: relative;
+    height: 100%;
+    width: auto;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+
+
+
+
 #slide{
 	-moz-box-shadow:0px 0px 3px #aaa;
     -webkit-box-shadow:0px 0px 3px #aaa;

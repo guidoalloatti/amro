@@ -2,6 +2,14 @@ var server_url = "http://localhost:8080/?callback=?";
 
 $(document).ready(function() {
 
+	$("#selectedCA").hide();
+	$("#addCA").hide();
+
+	$("#checkCAExistence").click(function(event){
+		getCA();
+		event.preventDefault();
+	});
+
 	$("#ver_detalles").click(function(event){
 		getOCDetails();
 		event.preventDefault();
@@ -12,11 +20,12 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
-	$("#upload_file").click(function(event){
-		//uploadCAFile();
-		getCA();
-		event.preventDefault();
+	$("#_file").change(function(e){
+	  $in=$(this);
+	  var file = $in.val();
+	  uploadCAFile(file);		  
 	});
+	
 });
 
 function getUrlVars()
@@ -163,7 +172,7 @@ function drawOC()
 	if (globals.currentOrders == null)
 		return;
 	
-	alert(globals.currentOrders.length);
+	//alert(globals.currentOrders.length);
 	
 	for(var i=0; i < globals.currentOrders.length; i++)
 	{
@@ -190,17 +199,20 @@ function drawOC()
 	$("#all_oc").html(inner_html);
 }
 
-function uploadCAFile()
+function uploadCAFile(file)
 {
+	var shortname = file.match(/[^\/\\]+$/);
+
 	$.getJSON(globals.server_url,
 			{
 				target: "Analysis",
 				method: "ParseCA",
 				email: "pmata@amro.com",
 				password: "123",
-				filepath: "/home/pmata/amro/analisis20110412.csv"
+				filepath: "/home/guido/Escritorio/"+shortname,
 			},
 			function(data) {
+				alert("Archivo Parseado");
 			});
 }
 
@@ -218,34 +230,43 @@ function getCA()
 			},
 			function(data) {
 				if (data.success == true) {
-					inner_html = "<div style='height: 150px; overflow: auto;'>";
-					inner_html += "<table>";
-					inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Id Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
-					
-					globals.currentCA = data.CAnalysis;
-					
-					for(var i=0; i < data.CAnalysis.length; i++)
-					{
-						var line = "even";
-						if( i%2 == 0 ) 
+					if(data.CAnalysis.length > 0)
+					{				
+						inner_html = "<div style='overflow: auto;'>";
+						inner_html += "<table>";
+						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Id Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
+						
+						globals.currentCA = data.CAnalysis;
+						
+						for(var i=0; i < data.CAnalysis.length; i++)
 						{
-							line = "odd";
+							var line = "even";
+							if( i%2 == 0 ) 
+								line = "odd";
+							
+							inner_html += "<tr class='"+line+"'>";
+							inner_html += "<td class='oc'>"+data.CAnalysis[i].numprobeta+"</td>";
+							inner_html += "<td>"+data.CAnalysis[i].material_id+"</td>";
+							inner_html += "<td>"+data.CAnalysis[i].date+"</td>";
+							inner_html += "<td>"+data.CAnalysis[i].id+"</td>";
+							inner_html += "<td align='center'><button id='selected_ca' onclick='loadCAValues("+data.CAnalysis[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
+							inner_html += "</tr>";
 						}
 						
-						inner_html += "<tr class='"+line+"'>";
-						inner_html += "<td class='oc'>"+data.CAnalysis[i].numprobeta+"</td>";
-						inner_html += "<td>"+data.CAnalysis[i].material_id+"</td>";
-						inner_html += "<td>"+data.CAnalysis[i].date+"</td>";
-						inner_html += "<td>"+data.CAnalysis[i].id+"</td>";
-						inner_html += "<td align='center'><button id='selected_ca' onclick='loadCAValues("+data.CAnalysis[i].id+");'>seleccionar</button></td>";
-						inner_html += "</tr>";
+						inner_html += "</table>";
+						inner_html += "</div>";
+						$("#selectedCA").html(inner_html);					
+						$("#selectedCA").show("slow");
 					}
-					
-					inner_html += "</table>";
-					inner_html += "</div>";
-					$("#asdf").html(inner_html);					
+					else
+					{
+						$("#addCA").show("slow");
+					}
 				}
-				
+				else
+				{
+					alert("Error de Consulta con el Servidor.");
+				}
 					
 			});
 }

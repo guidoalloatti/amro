@@ -1,9 +1,14 @@
+
 <b><u>Buscar entre las Ordenes de Compra por:</u></b>
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="o" id="filtro_orden_compra">Orden de Compra
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="p" id="filtro_probeta">Numero de Probeta
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="c" id="filtro_cliente">Cliente
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="l" id="filtro_materiales">Material
 		<input type="button" id="search" value="Buscar" onclick="searchOC();"/>
+		
+		<!--
+		<input type="button" id="csvfile" value="Parsear CSV" onclick="parseCSV();"/>
+		-->
 <hr/>
 <table>
 	<tr>
@@ -16,6 +21,8 @@
 	</tr>
 </table>
 <br/><hr>
+
+<div style="float: left; height: 55%; width: 50%; overflow: auto">
 <table>
 	<tr>
 		<td>
@@ -23,38 +30,12 @@
 			</div>
 		</td>
 	</tr>
-</table
->
+</table>
+</div>
 
-<!--
-  <ul id="example" class="filetree">
-  <li><span class="folder">Ordenes de Compra</span>
-    <ul>
-        <li>
-			<span class="folder">Orden de Compra 1</span>
-            <ul>
-                <li>
-					<span class="file">Material WC</span>
-				</li>
-            </ul>
-        </li>
-        <li><span class="folder">Orden de Compra 2</span>
-            <ul>
-                <li><span class="folder">Material WC</span>
-                    <ul>
-                        <li><span class="file">Detalles 1</span></li>
-                        <li><span class="file">Detalles 2</span></li>
-                    </ul>
-                </li>
-                <li><span class="file">Material AC</span></li>
-            </ul>
-        </li>
-        <li class="closed"><span class="folder">Orden de Compra 3 (closed at start)</span>
-            <ul>
-                <li><span class="file">Material WC</span></li>
-            </ul>
-        </li>
-        <li><span class="folder">Orden de Compra 4</span></li>
-        </ul></ul>
--->		
-<br/><hr>Subir Ordenes de Compra:<input type="file" /><a href='#' id='cargar_ocs' >Mostrar todas las OCs Disponibles</a>
+<div class="csvreportclass" style="float: right; height: 55%; width: 50%; overflow: auto">
+	<ul id="parsingreport" class="filetree"></ul>
+</div>
+
+<br/><hr>Subir Ordenes de Compra:<input type="file" id="csvfile" />
+<a href='#' id='cargar_ocs' >Mostrar todas las OCs Disponibles</a>

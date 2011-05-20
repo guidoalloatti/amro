@@ -4,6 +4,12 @@ $(document).ready(function() {
 		getAllOC();
 	});
 	
+	$("#csvfile").change(function(e){
+	  $in=$(this);
+	  var file = $in.val();
+	  parseCSV(file);		  
+	});
+	
 });
 
 function loadOCPage()
@@ -26,6 +32,7 @@ function searchOC()
 			searchByProbeta();
 			break;
 		case "c":
+			searchByClient();
 			break;
 		case "m":
 			break;
@@ -44,8 +51,22 @@ function searchOC()
 	*/
 }
 
+function showClients(clients)
+{		
+	var inner_html = "<select name='select_cliente' id='select_cliente'><option>Todos los Clientes</option>";
+	for(i = 0; i < clients.length; i++)
+	{
+		inner_html += "<option>"+clients[i].name+"</option>";
+	}
+	inner_html += "</select>";	
+	$("#clientes").replaceWith(inner_html);
+}
+
 function loadClients()
 {
+	if(globals.currentClients != null && globals.currentClients.length > 0)
+		showClients(globals.currentClients);
+	
 	$.getJSON(server_url,
 	{
 		target: "Client",
@@ -54,28 +75,34 @@ function loadClients()
 		password: "123"
 	},
 	function(data) {
-		var inner_html = "<select name='select_cliente' id='select_cliente'><option>Todos los Clientes</option>";
-		for(i = 0; i < data.clients.length; i++)
+		if(data.success == true && data.clients.length > 0)
 		{
-			inner_html += "<option>"+data.clients[i].name+"</option>";
+			globals.currentClients = data.clients;
+			showClients(data.clients);
 		}
-		inner_html += "</select>";	
-			
-		$("#clientes").replaceWith(inner_html);
-		
-		/*
-		inner_html += "<td><a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
-		inner_html += "<td>"+data.clients[i].address+"</td>";
-		inner_html += "<td align='center'><img src='img/edit.png' width='20' heigth='20' alt='Editar' title='Editar' /></td>";
-		inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";	
-		$("#clientes_totales").html("Cantidad de Clientes: "+data.clients.length);
-		$("#cliente_seleccionado").html("<h4>Ninguno...</h4>");
-		*/
+		else
+		{
+			alert("No se pudieron cargar los clientes. Error con el servidor");
+		}
 	});
+}
+
+function showMaterials(materials)
+{		
+	var inner_html = "<select name='select_material' id='select_material'><option>Todos los Materiales</option>";
+	for(i = 0; i < materials.length; i++)
+	{
+		inner_html += "<option>"+materials[i].name+"</option>";
+	}
+	inner_html += "</select>";	
+	$("#materiales").replaceWith(inner_html);
 }
 
 function loadMaterials()
 {
+	if(globals.currentMaterials != null && globals.currentMaterials.length > 0)
+		showClients(globals.currentMaterials);
+	
 	$.getJSON(server_url,
 	{
 		target: "Material",
@@ -84,19 +111,16 @@ function loadMaterials()
 		password: "123"
 	},
 	function(data) {
-		var inner_html = "<select name='select_material' id='select_material'><option>Todos los Materiales</option>";
-		for(i = 0; i < data.materials.length; i++)
+		if(data.success == true && data.materials.length > 0)
 		{
-			inner_html += "<option>"+data.materials[i].name+"</option>";
+			globals.currentMaterials = data.materials;
+			showMaterials(data.materials);
 		}
-		inner_html += "</select>";	
-			
-		$("#materiales").replaceWith(inner_html);
-			
-		//$("#clientes_totales").html("Cantidad de Clientes: "+data.clients.length);
-		//$("#cliente_seleccionado").html("<h4>Ninguno...</h4>");
+		else
+		{
+			alert("No se pudieron cargar los materiales. Error con el servidor");
+		}
 	});
-
 }
 
 function searchByOC()
@@ -219,19 +243,48 @@ function getAllOC()
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
 			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
-			//inner_html += "<td><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"'>Generar Certificado Para "+data.lines[i].numprobeta+"</a></td>";
 			inner_html += "</tr>";
-			
-			//inner_html += data.lines[i].ordencompra+"\n";
-			//inner_html += data.lines[i].numprobeta;
-			
 		}	
 		$("#ordenes_compra").html(inner_html);
 				
 		globals.currentOrders = data.lines;
-		//console.log(data);
-		//html_code += dump(data);
-		//$("#html_change").replaceWith(html_code);	
-		alert(globals.currentOrders.length);
+		//alert(globals.currentOrders.length);
 	});
 }	
+
+function parseCSV(file)
+{
+	
+	//console.log( $("#cargar_ocs").val() );
+	//return;
+
+	var shortname = file.match(/[^\/\\]+$/);
+		
+	$.getJSON("http://localhost:8080/?callback=?",
+	{
+		target: "CSVParsing",
+		method: "ParseCSV",
+		email: "pmata@amro.com",
+		password: "123",
+		//filepath: "/home/pmata/amro/"+ shortname
+		filepath: "/home/guido/Escritorio/"+ shortname,
+		
+	},
+	function(data) {
+		if (data.errors == 'undefined')
+			return;
+		
+		inner_html = '<li><span class="folder">Errores</span><ul>';
+		for (var v in data.errors) {
+			inner_html += '<li class="closed"><span class="folder">Linea: ' + v + '</span><ul>';
+			inner_html += '<li><span class="file">' + data.errors[v] + '</span></li></ul>';
+		}
+		inner_html += '</ul></li>'; // Errores
+		
+		$("#parsingreport").html(inner_html);
+		$("#parsingreport").treeview();	
+	});
+}	
+
+
+

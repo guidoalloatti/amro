@@ -132,7 +132,7 @@ function validateStep(step){
 		if(valueLength == ''){
 			hasError = true;
 			$this.css('background-color','#FFEDEF');
-			if ($this.attr('id') == '_file' && hasError == false)
+			if ($this.attr('id') == '_file')
 				hasError = false;
 		}
 		else {

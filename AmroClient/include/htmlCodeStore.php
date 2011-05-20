@@ -144,16 +144,7 @@ class htmlCodeStore {
         <form id="formElem" name="formElem" action="" method="post">
             <fieldset class="step">
                 <legend>1. Orden de Compra</legend>
-				<!--	<p><table><tr>
-						<td>
-							Generando Certificado para la Orden de Compra: '.$_GET["ordencompra"].'
-						</td>
-					</tr>
-					<tr>
-						<td>
-							y con Numero de Probeta: '.$_GET["numprobeta"].'
-						</td>
-					</tr></table></p>	-->
+
 					<p>Generando Certificado para la Orden de Compra: '.$_GET["ordencompra"].'</p>
 					<p>y con Numero de Probeta: '.$_GET["numprobeta"].'</p>
 					
@@ -192,14 +183,14 @@ class htmlCodeStore {
                     <label for="_v">&nbsp;&nbsp;% V</label><input type="text" id="_v" name="_v" placeholder="Porcentaje de Vanadio" autocomplete="OFF" />
 					</p>
 					
-                    <p><label for="_ce">C.E.</label><input type="text" id="_ce" name="_ce" placeholder="Ingrese el C.E." autocomplete="OFF" /></p>
+					<p><label for="_ce">C.E.</label><input type="text" id="_ce" name="_ce" placeholder="Ingrese el C.E." autocomplete="OFF" /></p>
+                    
+					<p><button id="checkCAExistence">Chequear Existencia de Analisis Quimico</button></p>
+					<p id="addCA"><label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/></p>
                                              
-                    <p>
-                    <label for="_file">O seleccionar archivo:</label><input id="_file" type="file"/>
-                    <button id="upload_file">Subir Archivo</button>
-                    </p>
-                    <p id="asdf"></p>
-            </fieldset>
+                    <p id="selectedCA"></p>
+            
+			</fieldset>
             <fieldset class="step">
                 <legend>3. Análisis Mecánico <legend_comments>Realizado en una máquina universal de ensayos AMSLER, serie nº 9449, capacidad máxima 15 t, según lo especificado en la norma ASTM A 370</legend_comments></legend>
                     <p><label for="tension_rotura">Tensión de Rotura (Mpa)</label><input type="text" id="tension_rotura" name="tension_rotura" placeholder="Ingrese la Tensión de Rotura" autocomplete="OFF" /></p>

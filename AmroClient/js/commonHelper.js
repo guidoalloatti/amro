@@ -1,10 +1,18 @@
+
 var globals = {
 		currentOrders: null,
 		server_url: "http://localhost:8080/?callback=?",
-		currentCA: null
+		currentCA: null,
+		currentMaterials: null,
+		currentClients: null,
+		currentOC: null
 };
 
 $(document).ready(function() {
+
+	//SI.Files.stylizeAll();
+	//SI.Files.stylizeById('test_file');
+	
 	$("#mark_all").click(function(){
 		$("input[type='checkbox']:not([disabled='disabled'])").attr('checked', true);
 	});

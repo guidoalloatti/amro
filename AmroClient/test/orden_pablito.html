@@ -1,0 +1,53 @@
+<h3><u>Filtrar por los siguientes parametros</u></h3>
+Numero de Probeta: <input id="protocolo" />
+Cliente:<select id="option_cliente">
+    <!-- <option value="0">Todos</option>
+    <option value="1">Thorsa</option>
+    <option value="2">Cliente 2</option>
+    <option value="3">Cliente 3</option> -->
+</select>
+Material:<select id="option_material">
+   <!--  <option value="0">Todos</option>
+    <option value="1">Material 1</option>
+    <option value="2">Material 2</option>
+    <option value="3">Material 3</option> -->
+</select>
+<input type="button" id="search" value="Buscar" /><br/>
+Ordenar por:
+<form id="ordercontrol" style="padding-top: 5px;" onclick="performSearch();">
+<input type="radio" name="oc_order" value="by_oc" checked="checked"/> Orden de Compra
+<input type="radio" name="oc_order" value="by_numprob"/> Número de Probeta
+<input type="radio" name="oc_order" value="by_client" /> Cliente
+</form> 
+<br/><hr>
+<div class="octreeclass" style="float: left; height: 70%; width: 50%; overflow: auto">
+  <ul id="example" class="filetree">
+  <!-- <li><span class="folder">Ordenes de Compra</span>
+    <ul>
+        <li><span class="folder">Orden de Compra 1</span>
+            <ul>
+                <li><span class="file">Material WC</span></li>
+            </ul>
+        </li>
+        <li><span class="folder">Orden de Compra 2</span>
+            <ul>
+                <li><span class="folder">Material WC</span>
+                    <ul>
+                        <li><span class="file">Detalles 1</span></li>
+                        <li><span class="file">Detalles 2</span></li>
+                    </ul>
+                </li>
+                <li><span class="file">Material AC</span></li>
+            </ul>
+        </li>
+        <li class="closed"><span class="folder">Orden de Compra 3 (closed at start)</span>
+            <ul>
+                <li><span class="file">Material WC</span></li>
+            </ul>
+        </li>
+        <li><span class="folder">Orden de Compra 4</span></li>
+        </ul> --></ul></div>
+        <div class="csvreportclass" style="float: right; height: 70%; width: 50%; overflow: auto">
+        <ul id="parsingreport" class="filetree"></ul>
+        </div>
+        <br/><hr>Subir Ordenes de Compra:<br/><input type="file" id="csvfile" name="datafile" size="40"/>
