@@ -5,7 +5,9 @@ var globals = {
 		currentCA: null,
 		currentMaterials: null,
 		currentClients: null,
-		currentOC: null
+		currentOC: null,
+		currentMA: null,
+		currentUsers: null
 };
 
 $(document).ready(function() {

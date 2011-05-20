@@ -354,7 +354,8 @@ void AnalysisResponse::getMA(JSONP &output, const QHash <QString, QString> &para
         if (params.contains("id"))
             filters["id"] = params.value("id").toUInt();
 
-        mas = MechanicalAnalysisMapper().get(filters);
+        QString order = params.value("order", "id").toUtf8();
+        mas = MechanicalAnalysisMapper().get(filters, order);
 
         success = true;
         output.add("MAnalysis", serializeMAnalysis(mas));
