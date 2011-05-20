@@ -246,6 +246,8 @@ function generateCertificate()
 	
 	var reviewer = $("#select_reviewer").val();
 	var approver = $("#select_approver").val();
+	
+	var observations = $("#observations").val();
 
 	$.getJSON(server_url,
 	{	
@@ -262,7 +264,9 @@ function generateCertificate()
 		reviewer_id: reviewer,
 		material_id: vars.material,
 		client_id: vars.client,
-		description: description
+		description: description,
+		observations: observations,
+		termicopath: "imagen_espectro.png"
 	},
 	function(data) {
 		if (data.success == true)
