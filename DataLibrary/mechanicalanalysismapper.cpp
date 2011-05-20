@@ -108,7 +108,7 @@ bool MechanicalAnalysisMapper::update(const MechanicalAnalysis &ma)
 }
 
 
-QList <MechanicalAnalysis> MechanicalAnalysisMapper::get(QVariantHash filters)
+QList <MechanicalAnalysis> MechanicalAnalysisMapper::get(QVariantHash filters, QString order)
 {
     Query queryObject = Query().
                         Select(selectFields).
@@ -120,6 +120,8 @@ QList <MechanicalAnalysis> MechanicalAnalysisMapper::get(QVariantHash filters)
 
         queryObject.Where(key + " = :" + key);
     }
+
+    queryObject.OrderBy(order, false);
 
     QSqlQuery query = queryObject.prepare();
 

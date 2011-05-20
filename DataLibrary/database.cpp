@@ -17,6 +17,7 @@ Database::Database()
         QSqlDatabase db;
         db = QSqlDatabase::addDatabase("QMYSQL", name);
         db.setHostName("localhost");
+        db.setPort(3306);
         db.setDatabaseName("amro");
         db.setUserName("amro");
         db.setPassword("amr0s3rv3r");

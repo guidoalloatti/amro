@@ -3,7 +3,7 @@
 /*
 	numero de fieldsets
 	*/
-	var fieldsetCount = $('#formElem').children().length;
+	var fieldsetCount;// = $('#formElem').children().length;
 
 	/*
 	posicion actual de fieldset / navigation link
@@ -19,6 +19,7 @@
 
 function loadCert() {
 //$(function() {
+	fieldsetCount = $('#formElem').children().length;
 	
 	$('#steps .step').each(function(i){
         var $step 		= $(this);
@@ -64,7 +65,7 @@ function loadCert() {
         $('#steps').stop().animate({
             marginLeft: '-' + widths[current-1] + 'px'
         },500,function(){
-			if(current == fieldsetCount)
+			if(current == fieldsetCount - 1)
 				validateSteps();
 			else
 				validateStep(prev);
@@ -94,12 +95,29 @@ function loadCert() {
 	*/
 	$('#registerButton').bind('click',function(){
 		if($('#formElem').data('errors')){
-			alert('Please correct the errors in the Form');
+			alert('Por favor corregir los errores en las solapas marcadas');
 			return false;
 		}
 		
 		generateCertificate();
+		event.preventDefault();
 	});
+	
+	/* 
+	 * Para que compruebe la validación del último paso sin tener que
+	 * pasar a otro step.
+	 */
+	$('#formElem').children(':nth-child(' + parseInt(fieldsetCount-1) + ')').find(':input:not(button)').each(function(){
+		var $this = $(this);
+		$this.change(function(event){
+			validateSteps();
+			event.preventDefault();
+		});
+	});	
+		
+	loadAllClients();
+	loadAllMaterials();
+	loadAllUsers();
 }
 
 /*
@@ -121,25 +139,31 @@ validamos un fieldset
 y retornamos -1 si encontramos errores o 1 si es correcto
 */
 function validateStep(step){
-	if(step == fieldsetCount) return;
-
+	if(step == fieldsetCount) 
+		return;
+	
 	var error = 1;
 	var hasError = false;
 	$('#formElem').children(':nth-child('+ parseInt(step) +')').find(':input:not(button)').each(function(){
 		var $this 		= $(this);
 		var valueLength = jQuery.trim($this.val()).length;
-
-		if(valueLength == ''){
+		
+		if($this.attr('id') != '_file' && valueLength == ''){
 			hasError = true;
-			$this.css('background-color','#FFEDEF');
-			if ($this.attr('id') == '_file')
-				hasError = false;
+			$this.css('background-color','#FFEDEF');			
 		}
 		else {
-			$this.css('background-color','#FFFFFF');
-			if ($this.attr('id') == '_file') 
-				hasError = false;			
-		}		
+			$this.css('background-color','#FFFFFF');					
+		}
+		
+		if ($this)
+		
+		if (step == 5 && ($this.attr('id') == 'select_reviewer' || $this.attr('id') == 'select_approver'))
+			if ($this.val() == 0) {
+				hasError = true;
+				$this.css('background-color','#FFEDEF');
+			} else
+				$this.css('background-color','#FFFFFF');
 	});
 	var $link = $('#navigation li:nth-child(' + parseInt(step) + ') a');
 	$link.parent().find('.error,.checked').remove();

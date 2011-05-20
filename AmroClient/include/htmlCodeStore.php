@@ -150,10 +150,10 @@ class htmlCodeStore {
 					
 					<br/>
 					<button id="ver_detalles">Ver detalles de la Orden de Compra</button>
-					<p id="oc_details" style="visibility:visible;"></p>
+					<p id="oc_details"></p>
 					
 					<button id="cambiar_ocb">Seleccionar otra Orden de Compra </button> 
-					<p id="all_oc" style="visibility:visible;"></p>
+					<p id="all_oc"></p>
 					
             </fieldset>
             <fieldset class="step">
@@ -196,16 +196,21 @@ class htmlCodeStore {
                     <p><label for="tension_rotura">Tensión de Rotura (Mpa)</label><input type="text" id="tension_rotura" name="tension_rotura" placeholder="Ingrese la Tensión de Rotura" autocomplete="OFF" /></p>
                     <p><label for="limite_fluencia">Límite de Fluencia (Mpa)</label><input type="text" id="limite_fluencia" name="limite_fluencia" placeholder="Ingrese el Límite de Fluencia" autocomplete="OFF" /></p>
                     <p><label for="alargamiento">Alargamiento (%)</label><input type="text" id="alargamiento" name="alargamiento" placeholder="Ingrese el porcentaje de Alargamiento" autocomplete="OFF" /></p>
-                    <p><label for="estricción">Estricción (%)</label><input type="text" id="estricción" name="estricción" placeholder="Ingrese el porcentaje de Estricción" autocomplete="OFF" /></p>
+                    <p><label for="estricción">Estricción (%)</label><input type="text" id="estriccion" name="estricción" placeholder="Ingrese el porcentaje de Estricción" autocomplete="OFF" /></p>
                     <p><label for="resiliencia">Resiliencia (J) Charpy A</label><input type="text" id="resiliencia" name="resiliencia" placeholder="Ingrese Resiliencia (J) Charpy A" autocomplete="OFF" /></p>
                     <p><label for="dureza">Dureza (Hb) 10/3000</label><input type="text" id="dureza" name="dureza" placeholder="Ingrese la Dureza (Hb) 10/3000" autocomplete="OFF" /></p>
+                    
+                    <p id="showSave"></p>                    
+                    
+                    <p><button id="checkMAExistence">Buscar Análisis Mecánico ya cargado</button></p>
+                    <p id="allMA"></p>
             </fieldset>
             <fieldset class="step">
                 <legend>4. Cargar la Imagen</legend>
-                    <p><input type="file"/></p>
+                    <p><input id="ttloader" type="file"/></p>
+                    <p id="image_watch"></p>
 
             </fieldset>
-            <fieldset class="step"></fieldset>
             <fieldset class="step">
                 <legend>Confirmación de generación de Certificado</legend>
                 <p>Una vez que todos los campos de una solapa estén
@@ -215,8 +220,12 @@ class htmlCodeStore {
                 falta o no ha sido completado correctamente.
                 En este último paso se confirman todos los anteriores
                 y se genera el certificado.</p>
+                <p><label for="observations">Observaciones</label><input type="text" id="observations" name="observations" placeholder="Ingrese alguna observación" autocomplete="OFF" /></p>
+                <p><label for="reviewer" id="reviewer">Revisa</label><select name="select_reviewer" id="select_reviewer"><option value="0">Seleccionar</option></select></p>
+                <p><label for="approver" id="approver">Aprueba</label><select name="select_approver" id="select_approver"><option value="0">Seleccionar</option></select></p>
                 <p class="submit"><button id="registerButton" type="submit">Generar Certificado!</button></p>
             </fieldset>
+            <fieldset class="step"></fieldset>            
         </form>
     </div>
 </div>

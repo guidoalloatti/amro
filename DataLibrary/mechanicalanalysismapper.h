@@ -15,7 +15,7 @@ public:
     bool insert(const MechanicalAnalysis &ma);
     bool update(const MechanicalAnalysis &ma);
     bool erase(const MechanicalAnalysis &ma);
-    QList <MechanicalAnalysis> get(QVariantHash filters);
+    QList <MechanicalAnalysis> get(QVariantHash filters, QString order);
 };
 
 #endif // MECHANICALANALYSISMAPPER_H
