@@ -6,10 +6,16 @@
  *    * oc (Ordenes de Compra)
  */
 
+/*
 echo "User: ".$_SESSION['user']."<br/>
 	  Pass: ".$_SESSION['pass']."<br/>
 	  Invoice: ".$_GET["invoice_url"]."<br/>";
- 
+	var_dump($_SESSION);
+*/
+
+if(!isset($_SESSION))
+	session_start();
+
  if( ($_SESSION['user'] === null || 
 	  $_SESSION['pass'] === null) &&
 	  $_GET["invoice_url"] != "lo")

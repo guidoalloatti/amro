@@ -66,7 +66,8 @@ function doLogin(user, pass, key)
 	http_request.open("GET", url, true);
 	http_request.send(null);
 
- }
+
+}
  
  function handle_json()
  {

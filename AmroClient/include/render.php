@@ -63,6 +63,9 @@ class Render
 			case "lo":
 				$this->body = $this->htmlCode->getLoginBody();
 				break;
+			case "logout":
+				$this->body = $this->htmlCode->doLogoutBody();
+				break;
             default:
 				$this->body = $this->htmlCode->getDefaults();
                 break;

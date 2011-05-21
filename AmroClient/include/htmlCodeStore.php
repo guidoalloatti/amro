@@ -103,10 +103,23 @@ class htmlCodeStore {
 
     function getFooter()
     {
+		$lastLoginTimestamp = $_SESSION['lastLoginDate'][$_SESSION['user']];
+		$logedTimestamp = time() - $_SESSION['lastLoginDate'][$_SESSION['user']];
+		
+		$lastLoginDate = date("H:i:s d/m", $lastLoginTimestamp);
+		
+		$logedDateHours = floor($logedTimestamp/3600);
+		$logedDateMinutes = round(($logedTimestamp%3600)/60);
+		
+		$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<a href='main.php?invoice_url=logout'>Desloguear</a>)"; 
+		$sesionActivaMensaje =  "Sesion Activa por ".$logedDateHours." horas y ".$logedDateMinutes." minutos";
+		$sesionEmpezadaMensaje = "Logueado a las ".$lastLoginDate;
+		
+		
 		if($_SESSION['user'] === null || $_SESSION['pass'] === null)
 			$html = "<hr/><b>Ningun</b> Usuario Logueado<hr/></body></html>";
 		else	
-			$html = "<hr/>Usuario Logueado: ".$_SESSION['user']."(<a href='#'>Desloguear</a>) :: Logueado a las ".$_SESSION['lastLoginDate']." :: Sesion Activa por ".$_SESSION['lastLoginDate']."<a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
+			$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
         return $html;
     }
 
@@ -275,6 +288,16 @@ class htmlCodeStore {
 	function getLoginBody()
 	{
 		return file_get_contents("html/body/mainlogin.html");
+	}
+	
+	function doLogoutBody()
+	{
+		session_destroy();
+		unset($_SESSION['lastLoginDate'][$_SESSION['user']]);
+		unset($_SESSION['user']);
+		unset($_SESSION['pass']);
+		
+		return file_get_contents("html/body/logout.html");
 	}
 	
 	function getDefaults()
