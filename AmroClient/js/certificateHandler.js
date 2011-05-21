@@ -242,19 +242,12 @@ function generateCertificate()
 	"resiliencia="+$("#resiliencia").val()+"+"+
 	"dureza="+$("#dureza").val();
 	
-	/*var oc = null;
-	for (var i=0; i < globals.allOrders.length; i++) {
-		if (globals.allOrders[i].id = vars.id)
-			oc = globals.allOrders[i];
-	}*/
-	//var ocs = getOCDetails();
-	//if (ocs.length > 1)
-	//	return;
-	
-	//var oc = ocs[0];
+	var description = decodeURIComponent(vars.desc);
 	
 	var reviewer = $("#select_reviewer").val();
 	var approver = $("#select_approver").val();
+	
+	var observations = $("#observations").val();
 
 	$.getJSON(server_url,
 	{	
@@ -271,7 +264,9 @@ function generateCertificate()
 		reviewer_id: reviewer,
 		material_id: vars.material,
 		client_id: vars.client,
-		description: ""
+		description: description,
+		observations: observations,
+		termicopath: "imagen_espectro.png"
 	},
 	function(data) {
 		if (data.success == true)
@@ -323,7 +318,7 @@ function drawOC()
 		inner_html += "<td>"+materialNameSearch(globals.currentOrders[i].material_id)+"</td>";
 		inner_html += "<td>"+globals.currentOrders[i].description+"</td>";
 		inner_html += "<td>"+globals.currentOrders[i].id+"</td>";
-		inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+globals.currentOrders[i].numprobeta+"&ordencompra="+globals.currentOrders[i].ordencompra+"&id="+globals.currentOrders[i].id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero "+globals.currentOrders[i].numprobeta+"' width='25px'/></a></td>";
+		inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+globals.currentOrders[i].numprobeta+"&ordencompra="+globals.currentOrders[i].ordencompra+"&id="+globals.currentOrders[i].id+"&material="+globals.currentOrders[i].material_id+"&client="+globals.currentOrders[i].client_id+"&desc="+encodeURIComponent(globals.currentOrders[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+globals.currentOrders[i].numprobeta+"' width='25px'/></a></td>";
 		inner_html += "</tr>";
 	}
 	

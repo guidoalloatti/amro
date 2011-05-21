@@ -162,7 +162,7 @@ function searchByOC()
 			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			inner_html += "</tr>";
 		}	
 		$("#ordenes_compra").html(inner_html);
@@ -208,7 +208,7 @@ function searchByProbeta()
 			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			inner_html += "</tr>";
 		}	
 		$("#ordenes_compra").html(inner_html);
@@ -242,7 +242,7 @@ function getAllOC()
 			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
 			inner_html += "<td>"+data.lines[i].description+"</td>";
 			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
 			inner_html += "</tr>";
 		}	
 		$("#ordenes_compra").html(inner_html);
