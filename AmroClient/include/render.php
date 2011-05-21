@@ -39,7 +39,6 @@ class Render
     {
 		$this->body = $this->htmlCode->getBody();
 		
-		
         switch($this->pageInvoice)
         {
             case "pr":
@@ -61,14 +60,9 @@ class Render
 				$abmManager = new abmManager();
 				$this->body = $abmManager->getAbmHtml();
 				break;
-					
-				/*switch($this->module)
-				{
-					case "cliente":
-						break;
-					default:
-						break;
-				}*/
+			case "lo":
+				$this->body = $this->htmlCode->getLoginBody();
+				break;
             default:
 				$this->body = $this->htmlCode->getDefaults();
                 break;

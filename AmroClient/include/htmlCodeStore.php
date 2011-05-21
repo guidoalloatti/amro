@@ -103,8 +103,10 @@ class htmlCodeStore {
 
     function getFooter()
     {
-        $html = "<hr/>Usuario Logueado: Guido (<a href='#'>Desloguear</a>) :: Logueado a las 12:20:35 :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/>
-            </body></html>";
+		if($_SESSION['user'] === null || $_SESSION['pass'] === null)
+			$html = "<hr/><b>Ningun</b> Usuario Logueado<hr/></body></html>";
+		else	
+			$html = "<hr/>Usuario Logueado: ".$_SESSION['user']."(<a href='#'>Desloguear</a>) :: Logueado a las ".$_SESSION['lastLoginDate']." :: Sesion Activa por ".$_SESSION['lastLoginDate']."<a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
         return $html;
     }
 
@@ -270,6 +272,10 @@ class htmlCodeStore {
 		}
 	}
 
+	function getLoginBody()
+	{
+		return file_get_contents("html/body/mainlogin.html");
+	}
 	
 	function getDefaults()
 	{
