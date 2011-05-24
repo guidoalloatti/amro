@@ -26,6 +26,9 @@ class abmManager
 			case "material":
 				$this->getAbmMaterialHtml();
 				break;
+			case "ttermico":
+				$this->getAbmTtermicoHtml();
+				break;
 			default:
 				echo "No se encontro el ABM";
 				break;
@@ -345,7 +348,33 @@ class abmManager
 		<a href='#' id='recargar_lista_clientes'>Regargar Lista de Clientes</a> ::
 		<a href='#' id='nuevo_cliente'>Nuevo Cliente</a><br/>
 		<div id='html_code'></div>";
-	}	
+	}
+
+	function getAbmTtermicoHtml()
+	{
+		$this->html = "<body onload='prepareTTAbm();'> <h3>Listado de Análisis Químicos Realizados <div id='ca_totales'>Cantidad de Clientes: 0</div></h3>
+		<table width='80%'>
+			<tr id='show_tt'>
+				<td>
+					<div id='all_tt' style='height: 200px; overflow:auto;'></div>
+				</td>
+				<td id='show_tt_image' style='height:500px; width:800px'>
+				</td>		
+			</tr>
+			<tr>
+			<button id='select_ca_button'>Asociar T. Térmico con Análisis Químico</button> 
+			</tr>
+			<tr id='link_tt'>
+				<td>
+					<div id='all_ca' style='height: 200px; overflow:auto;'></div>
+				</td>
+				<td>
+					<div id='tt_viewer' style='height: 200px; overflow:auto;'></div>
+				</td>
+			</tr>
+		</table>		
+		";
+	}
 	
 }
 ?>

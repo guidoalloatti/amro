@@ -17,6 +17,7 @@ public:
     bool erase(const Certificate &c);
     QList <Certificate> get(quint32 id);
     QList <Certificate> get();
+    quint32 getNextId();
 };
 
 #endif // CERTIFICATEMAPPER_H

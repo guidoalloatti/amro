@@ -64,4 +64,9 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
+	$("#btn_ttermico_blue").click(function() { // Abm Tratamiento Termico
+		var url = "main.php?invoice_url=abm&module=ttermico";
+        $(location).attr('href',url);
+    });
+	
 });

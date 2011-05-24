@@ -210,3 +210,20 @@ QList <Certificate> CertificateMapper::get()
 
     return makeCertificates(query);
 }
+
+quint32 CertificateMapper::getNextId()
+{
+    QSqlQuery q =
+            Query().Select("id").
+            From(tableName).
+            OrderBy("id", false).
+            prepare();
+
+
+    bool s = q.exec();
+    if (!s)
+        return 0;
+
+    q.next();
+    return q.value(0).toUInt() + 1;
+}

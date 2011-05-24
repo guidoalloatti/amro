@@ -11,6 +11,9 @@
 #include <QString>
 #include <QList>
 #include <QDate>
+#include <QObject>
+
+
 
 enum Status {PASSED, FAILED};
 
@@ -78,5 +81,7 @@ private:
 
     friend class CertificateMapper;
 };
+
+Q_DECLARE_METATYPE(Certificate);
 
 #endif // CERTIFICATE_H

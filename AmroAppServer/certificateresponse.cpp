@@ -38,7 +38,15 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
     while (!users.empty() && users[0].hasPrivileges("CERTIFICATE_INSERT"))
     {
         Certificate c;
-        c.setProtN(params.value("protn", "").toUtf8());
+
+        quint32 nextId = CertificateMapper().getNextId();
+
+        if (nextId == 0) {
+            output.add("error", "Database error");
+            break;
+        }
+
+        c.setProtN(params.value("protn", "").toUtf8() + "-" + QString().setNum(nextId));
         c.setOrdenCompra(params.value("ordencompra", "").toUtf8());
         c.setObservations(params.value("observations", "").toUtf8());
         c.setDescription(params.value("description", "").toUtf8());
@@ -151,7 +159,7 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
          generateCertificate() debe setear los campos state y certificatePath antes
          de insertar el certificado en la BD */
         QString err = "Generation Error";
-        if (!CertificateGenerator().generate(c))  {
+        if (!CertificateGenerator().generate(c)) {
             output.add("certificate", err);
             break;
         }

@@ -59,12 +59,21 @@ class htmlCodeStore {
 					<meta content="permisos" name="keywords">
 					<link rel="icon" href="/favicon.gif" type="image/gif">
 					';
+                break;
             case "pr":
                 $html.='
 					<title>Menu Principal</title>
 					<meta content="menu" name="keywords">
 					<link rel="icon" href="/favicon.gif" type="image/gif">
 					';
+                break;
+			case "ab":
+				$html.='
+					<title>Altas, Bajas y Modificaciones</title>
+					<meta content="menu" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+					break;
 			case "abm":
 				$html.='
 					<title>Altas, Bajas y Modificaciones</title>

@@ -1,48 +1,80 @@
-#include "certificategenerator.h"
+#include "certificateprinter.h"
 
-#include <QDebug>
-#include <QApplication>
-#include <QFile>
 #include <QPrinter>
-#include <QWebView>
+#include <QDebug>
+#include <QDir>
+#include <QWebFrame>
 #include <QWebElementCollection>
 #include <QWebElement>
-#include <QWebFrame>
+#include <QString>
+
 #include <QDir>
 
-#include"certificateprinter.h"
+#include "certificategenerator.h"
 
-CertificateGenerator::CertificateGenerator()
+CertificatePrinter* CertificatePrinter::pinstance = 0;
+
+CertificatePrinter* CertificatePrinter::getPrinter()
 {
-    this->requestStatus = true;
-}
-
-bool CertificateGenerator::generate(Certificate &c)
-{
-    CertificatePrinter *printer = CertificatePrinter::getPrinter();
-
-    connect(this, SIGNAL(requestGeneration(Certificate)), printer, SLOT(generate(Certificate)));
-    emit requestGeneration(c);
-
-    this->moveToThread(QApplication::instance()->thread());
-
-    connect(printer, SIGNAL(requestDone(bool)), this, SLOT(requestIsCompleted(bool)));
-
-    mutex.lock();
-    while (!requestCompleted) {
-        mutex.unlock();
-        sleep(1);
-        mutex.lock();
+    if (pinstance == NULL) {
+        pinstance  = new CertificatePrinter;
     }
 
-    mutex.unlock();
-    //return completedStatus;
+    return pinstance;
+}
 
-    /*QFile htmlTemplate("files/template.html");
+
+CertificatePrinter::CertificatePrinter()
+{
+    view = new QWebView;
+}
+
+void CertificatePrinter::print(bool ok)
+{
+    qDebug() << "En printer " << ok;
+
+    if (!ok) {
+        emit requestDone(false);
+        return;
+    }
+
+    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+
+    QString certId = view->page()->mainFrame()->findFirstElement("#protn").toPlainText();
+    QString path = view->page()->mainFrame()->baseUrl().toLocalFile() + certId + ".pdf";
+    printer.setOutputFileName(path);
+
+    view->print(&printer);
+    view->hide();
+    emit requestDone(true);
+}
+
+QWebView* CertificatePrinter::CertificatePrinter::getView()
+{
+    return this->view;
+}
+
+
+static QString toString(double d)
+{
+    QString s;
+
+    s.sprintf("%.2f", d);
+
+    qDebug() << s;
+
+    return s;
+}
+
+void CertificatePrinter::generate(Certificate c)
+{
+    QFile htmlTemplate("files/template.html");
 
     if (!htmlTemplate.open(QFile::ReadOnly)) {
         qDebug() << "No se pudo abrir el template html";
-        return false;
+        emit requestDone(false);
+        return;
     }
 
     QByteArray content = htmlTemplate.readAll();
@@ -50,24 +82,20 @@ bool CertificateGenerator::generate(Certificate &c)
     if (content.isEmpty()) {
         qDebug() << "No se pudo leer el contenido del template html";
         htmlTemplate.close();
-        return false;
+        emit requestDone(false);
+        return;
     }
 
     QString html(content);
 
     htmlTemplate.close();
 
-    QWebView view;
-
     QString str = QDir::currentPath();
-    QUrl url(str + "/file/");
-    view.setHtml(html, url);
-    view.hide();*/
-    //view.load(QUrl("file:///disco/Amro/template.html"));
+    //qDebug() << "file://" + str + "/files/";
+    QUrl url("file://" + str + "/files/");
+    view->setHtml(html, url);
 
-    /*QWebFrame *main = view.page()->mainFrame();
-
-    main->setHtml(html, url);
+    QWebFrame *main = view->page()->mainFrame();
 
     QWebElementCollection labels = main->findAllElements("label");
     QList <QWebElement> allLabels = labels.toList();
@@ -152,36 +180,20 @@ bool CertificateGenerator::generate(Certificate &c)
 
     }
 
-    //qDebug() << main->toHtml();*/
-
-
-    /*QPrinter printer(QPrinter::HighResolution);
-    printer.setOutputFormat(QPrinter::PdfFormat);
-    printer.setOutputFileName("files/" + c.getProtN() + ".pdf");
-
-    view.print(&printer);*/
-
-    /*QFile newFile("files/" + c.getProtN() + ".html");
+    QFile newFile("files/" + c.getProtN() + ".html");
     newFile.open(QFile::WriteOnly | QFile::Truncate);
 
     QTextStream out(&newFile);
     out.setCodec("iso-8859-1");
     out << main->toHtml();
     out.flush();
-    newFile.close();*/
+    newFile.close();
 
     c.setCertificatePath("files/" + c.getProtN() + ".pdf");
 
-    return requestStatus;
-}
+    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
 
-void CertificateGenerator::requestIsCompleted(bool status)
-{
-    qDebug() << "En request is completed";
+    //view->load("files/" + c.getProtN() + ".html");
 
-    mutex.lock();
-    this->requestCompleted = true;
-    this->requestStatus = status;
-    mutex.unlock();
 }
 

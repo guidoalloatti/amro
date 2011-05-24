@@ -350,6 +350,11 @@ function getCA()
 {
 	var vars = getUrlVars();
 	
+	if (vars.numprobeta == undefined) {
+		alert("Elija una orden de compra con su respectivo Nº de probeta para poder realizar la busqueda");
+		return;
+	}
+	
 	$.getJSON(globals.server_url,
 			{
 				target: "Analysis",
@@ -362,9 +367,9 @@ function getCA()
 				if (data.success == true) {
 					if(data.CAnalysis.length > 0)
 					{				
-						inner_html = "<div style='overflow: auto;'>";
+						inner_html = "<div style='height: 300px; overflow: auto;'>";
 						inner_html += "<table>";
-						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Id Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
+						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 						
 						globals.currentCA = data.CAnalysis;
 						
