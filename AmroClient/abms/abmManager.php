@@ -360,7 +360,7 @@ class abmManager
 				</td>
 				<td width='600px'>
 					<p id='new_tt'></p>
-					<p id='tt_viewer'></p>
+					<p id='tt_viewer' align='center'></p>
 				</td>		
 			</tr>
 			<tr width='1200px'>

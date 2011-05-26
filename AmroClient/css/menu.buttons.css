@@ -209,12 +209,13 @@ button.common:active span {
 }
 
 #abm_tt p{
-    /*float:left;*/
+    float:left;
     clear:both;
     margin:1px 0px;
     background-color:#f4f4f4;
     border:1px solid #fff;
     width:99%;
+    height: 99%;
     display: none;
     padding:2px;
     margin-left:2px;
