@@ -294,7 +294,7 @@ function getOCs()
 
 function drawOC()
 {
-	inner_html = "<div style='height: 150px; overflow: auto;'>";
+	inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 	inner_html += "<table>";
 	inner_html += "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
 	
@@ -339,10 +339,15 @@ function uploadCAFile(file)
 				method: "ParseCA",
 				email: "pmata@amro.com",
 				password: "123",
-				filepath: "/home/guido/Escritorio/"+shortname
+				filepath: "/home/pmata/amro/"+shortname
 			},
 			function(data) {
-				alert("Archivo Parseado");
+				if (data.success == true) {
+					alert("Archivo parseado exitósamente");
+					$("#addCA").hide("slow");
+				} else
+					alert("Error parseado archivo");
+				
 			});
 }
 
@@ -367,7 +372,7 @@ function getCA()
 				if (data.success == true) {
 					if(data.CAnalysis.length > 0)
 					{				
-						inner_html = "<div style='height: 300px; overflow: auto;'>";
+						inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 						inner_html += "<table>";
 						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 						
@@ -394,7 +399,7 @@ function getCA()
 						$("#selectedCA").show("slow");
 					}
 					else
-					{
+					{						
 						$("#addCA").show("slow");
 					}
 				}
@@ -449,7 +454,7 @@ function getMA()
 				if (data.success == true) {
 					if(data.MAnalysis.length > 0)
 					{				
-						inner_html = "<div style='overflow: auto;'>";
+						inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 						inner_html += "<table>";
 						inner_html += "<tr class='oc'><th class='oc'>Fecha</th><th class='oc'>Material</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 						

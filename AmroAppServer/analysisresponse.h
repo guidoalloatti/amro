@@ -8,6 +8,7 @@ class AnalysisResponse: public Response
     QString method;
 
     static void parseCA(JSONP &output, const QHash <QString, QString> &params);
+    static void addTTtoCA(JSONP &output, const QHash <QString, QString> &params);
     static void deleteCA(JSONP &output, const QHash <QString, QString> &params);
     static void checkCA(JSONP &output, const QHash <QString, QString> &params);
 

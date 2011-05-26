@@ -353,23 +353,27 @@ class abmManager
 	function getAbmTtermicoHtml()
 	{
 		$this->html = "<body onload='prepareTTAbm();'> <h3>Listado de Análisis Químicos Realizados <div id='ca_totales'>Cantidad de Clientes: 0</div></h3>
-		<table width='80%'>
-			<tr id='show_tt'>
-				<td>
-					<div id='all_tt' style='height: 200px; overflow:auto;'></div>
+		<table id='abm_tt' width='1200px'>
+			<tr id='show_tt' width='1200px'>
+				<td  width='600px'>
+					<p id='all_tt'></p>
 				</td>
-				<td id='show_tt_image' style='height:500px; width:800px'>
+				<td width='600px'>
+					<p id='new_tt'></p>
+					<p id='tt_viewer'></p>
 				</td>		
 			</tr>
-			<tr>
-			<button id='select_ca_button'>Asociar T. Térmico con Análisis Químico</button> 
+			<tr width='1200px'>
+				<td>
+					<p id='ca_selection'><button id='select_ca_button'>Asociar T. Térmico con Análisis Químico</button></p>
+				</td> <td></td>
 			</tr>
-			<tr id='link_tt'>
-				<td>
-					<div id='all_ca' style='height: 200px; overflow:auto;'></div>
+			<tr id='link_tt'  width='1200px'>
+				<td  width='600px'>
+					<p id='all_ca'></p>
 				</td>
-				<td>
-					<div id='tt_viewer' style='height: 200px; overflow:auto;'></div>
+				<td  width='600px'>
+					<p id='selected_params' align='center'></p>
 				</td>
 			</tr>
 		</table>		

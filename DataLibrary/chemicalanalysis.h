@@ -3,6 +3,7 @@
 
 #include "material.h"
 #include "chemicalmeasure.h"
+#include "termicaltreatment.h"
 #include "query.h"
 
 class DATALIBSHARED_EXPORT ChemicalAnalysis
@@ -15,14 +16,14 @@ public:
     void setMaterial(Material m);
     void setDate(QDate date);
     void setMeasures(ChemicalMeasure cm);
-    void setTTDate(QDate date);
+    void setTermicalTreatment(TermicalTreatment tt);
 
     QString getNumProbeta() const;
     quint32 getId() const;
     Material getMaterial() const;
     QDate getDate() const;
     ChemicalMeasure getMeasures() const;
-    QDate GetTTDate() const;
+    TermicalTreatment GetTermicalTreatment() const;
 
 private:
     quint32 id;
@@ -30,7 +31,7 @@ private:
     QDate date;
     Material material;
     ChemicalMeasure measures;
-    QDate TTDate;
+    TermicalTreatment termicalTreatment;
 
     friend class ChemicalAnalysisMapper;
 };

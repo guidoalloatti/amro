@@ -4,6 +4,7 @@
 #include "../DataLibrary/materialmapper.h"
 #include "../DataLibrary/mechanicalanalysismapper.h"
 #include "../DataLibrary/chemicalanalysismapper.h"
+#include "../DataLibrary/termicaltreatmentmapper.h"
 
 #include <QFile>
 #include <QStringList>
@@ -12,6 +13,7 @@ AnalysisResponse::AnalysisResponse()
 {
     methodTable["ParseCA"] = &AnalysisResponse::parseCA;
     methodTable["DeleteCA"] = &AnalysisResponse::deleteCA;
+    methodTable["AttachTT"] = &AnalysisResponse::addTTtoCA;
     methodTable["CheckCA"] = &AnalysisResponse::checkCA;
     methodTable["LoadMA"] = &AnalysisResponse::loadMA;
     methodTable["DeleteMA"] = &AnalysisResponse::deleteMA;
@@ -99,7 +101,7 @@ static bool parseCSV(QFile *file, QVariantHash &error)
         ca.setDate(newDate);
 
         // Hasta ahora es esta fecha, luego se va a poder cambiar a través de un abm
-        ca.setTTDate(newDate);
+        //ca.setTTDate(newDate);
 
         QVariantHash measures;
         foreach(QString measure, measuresIndexMapper.keys()) {
@@ -168,6 +170,51 @@ void AnalysisResponse::deleteCA(JSONP &output, const QHash <QString, QString> &p
     output.add("success", success);
 }
 
+void AnalysisResponse::addTTtoCA(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "AttachTT");
+
+    QString email = params.value("email", "").toUtf8();
+    QString password = params.value("password", "").toUtf8();
+
+    bool success = false;
+
+    if (hasPermission(email, password, "TT_CA_ATTACH"))
+    {
+        TermicalTreatment termicalTreatment;
+
+        QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(params.value("ttreatment_id", "0").toUInt());
+        if (tts.length() == 1) {
+            termicalTreatment = tts.first();
+        } else {
+            output.add("error", "bad tt id");
+            return;
+        }
+
+        ChemicalAnalysis ca;
+
+        QVariantHash filters;
+        filters["id"] = params.value("id", "0").toUInt();
+
+        QList <ChemicalAnalysis> cas;
+        cas = ChemicalAnalysisMapper().get(filters);
+        if (cas.length() == 1)
+            ca = cas.first();
+        else {
+            output.add("error", "chemical analysis does not exist");
+            return;
+        }
+
+        ca.setTermicalTreatment(termicalTreatment);
+
+        success = ChemicalAnalysisMapper().update(ca);
+    } else
+        output.add("permissions", "denied");
+
+    output.add("success", success);
+}
+
+
 QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
 {
     QVariantList serializedAnalysys;
@@ -179,7 +226,8 @@ QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
         analysysProperties["numprobeta"] = ca.getNumProbeta();
         analysysProperties["material_id"] = ca.getMaterial().getId();
         analysysProperties["date"] = ca.getDate();
-        analysysProperties["ttdate"] = ca.GetTTDate();
+        //analysysProperties["ttdate"] = ca.GetTTDate();
+        analysysProperties["ttreatment_id"] = ca.GetTermicalTreatment().getId();
         analysysProperties["chemicalanalysis"] = ca.getMeasures().print();
 
         serializedAnalysys << analysysProperties;

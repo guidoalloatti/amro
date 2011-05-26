@@ -6,7 +6,7 @@
 #include "certificateresponse.h"
 #include "analysisresponse.h"
 #include "csvparsingresponse.h"
-
+#include "termicaltreatmentresponse.h"
 
 Response* ResponseFactory::createResponse(QString target)
 {
@@ -22,6 +22,8 @@ Response* ResponseFactory::createResponse(QString target)
         return new CSVParsingResponse();
     else if (target == "Analysis")
         return new AnalysisResponse();
+    else if (target == "TTreatment")
+        return new TermicalTreatmentResponse();
     else
         return NULL;
 }
