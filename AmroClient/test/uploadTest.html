@@ -1,0 +1,15 @@
+
+
+<form enctype="multipart/form-data" action="uploader.php" method="POST">
+<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+Choose a file to upload: <input name="uploadedfile" type="file" /><br />
+<input type="submit" value="Upload File" />
+</form>
+
+<!--
+enctype="multipart/form-data" - Necessary for our to-be-created PHP file to function properly.
+action="uploader.php" - The name of our PHP page that will be created, shortly.
+method="POST" - Informs the browser that we want to send information to the server using POST.
+input type="hidden" name="MA... - Sets the maximum allowable file size, in bytes, that can be uploaded. This safety mechanism is easily bypassed and we will show a solid backup solution in PHP. We have set the max file size to 100KB in this example.
+input name="uploadedfile" - uploadedfile is how we will access the file in our PHP script.
+-->

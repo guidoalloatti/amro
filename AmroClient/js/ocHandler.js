@@ -35,6 +35,7 @@ function searchOC()
 			searchByClient();
 			break;
 		case "m":
+			searchByMaterial();
 			break;
 		default:
 			getAllOC();
@@ -215,6 +216,57 @@ function searchByProbeta()
 	});
 }
 	
+/*	
+function searchByMaterial()
+{
+	if($("#material").val() == "")
+	{
+		inner_html = "No se definio el valor de busqueda por material.";
+		$("#ordenes_compra").html(inner_html);
+		return;
+	}
+	
+	for(
+	
+	$.getJSON(globals.server_url,
+	{
+		target: "CSVParsing",
+		method: "GetOC",
+		email: "pmata@amro.com",
+		password: "123",
+		numprobeta: $("#protocolo").val(),
+		order: "numprobeta"
+	},
+	function(data) {
+		if(data.lines.length < 1)
+		{
+			inner_html = "No se encontro ninguna orden de compra con valor de protocolo "+$("#orden_compra").val();
+			$("#ordenes_compra").html(inner_html);
+			return;
+		}	
+			
+		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
+		for(var i=0; i < data.lines.length; i++)
+		{
+			var line = "even";
+			if( i%2 == 0 ) 
+				line = "odd";
+
+			inner_html += "<tr class='"+line+"'>";
+ 			inner_html += "<td class='oc'>"+data.lines[i].ordencompra+"</td>";
+			inner_html += "<td>"+data.lines[i].numprobeta+"</td>";
+			inner_html += "<td>"+clientNameSearch(data.lines[i].client_id)+"</td>";
+			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
+			inner_html += "<td>"+data.lines[i].description+"</td>";
+			inner_html += "<td>"+data.lines[i].id+"</td>";
+			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
+			inner_html += "</tr>";
+		}	
+		$("#ordenes_compra").html(inner_html);
+	});
+}	
+*/
+	
 function getAllOC()
 {
 	$.getJSON(globals.server_url,
@@ -279,28 +331,23 @@ function materialNameSearch(id)
 function parseCSV(file)
 {
 	var shortname = file.match(/[^\/\\]+$/);
-		
 	$.getJSON("http://localhost:8080/?callback=?",
 	{
 		target: "CSVParsing",
 		method: "ParseCSV",
 		email: "pmata@amro.com",
 		password: "123",
-		//filepath: "/home/pmata/amro/"+ shortname
 		filepath: "/home/guido/Escritorio/"+ shortname
-		
 	},
 	function(data) {
 		if (data.errors == 'undefined')
 			return;
-		
 		inner_html = '<li><span class="folder">Errores</span><ul>';
 		for (var v in data.errors) {
 			inner_html += '<li class="closed"><span class="folder">Linea: ' + v + '</span><ul>';
 			inner_html += '<li><span class="file">' + data.errors[v] + '</span></li></ul>';
 		}
-		inner_html += '</ul></li>'; // Errores
-		
+		inner_html += '</ul></li>';
 		$("#parsingreport").html(inner_html);
 		$("#parsingreport").treeview();	
 	});
