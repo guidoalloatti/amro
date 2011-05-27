@@ -2,6 +2,7 @@
 #include "clientmapper.h"
 #include "materialmapper.h"
 #include "usermapper.h"
+#include "termicaltreatmentmapper.h"
 
 #include "database.h"
 #include <QtSql>
@@ -9,7 +10,7 @@
 #include "query.h"
 
 static const QString selectFields("id, protn, numprobeta, client_id, material_id, approver_id, reviewer_id, performer_id, chemicalanalysis, "
-                                  "mechanicalanalysis, ordencompra, description, observations, date, termicopath, certificatepath, state");
+                                  "mechanicalanalysis, ordencompra, description, observations, date, ttreatment_id, certificatepath, state");
 
 CertificateMapper::CertificateMapper()
 {
@@ -78,7 +79,14 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
             c.description = q.value(11).toString();
             c.observations = q.value(12).toString();
             c.date = q.value(13).toDate();
-            c.tTermicoPath = q.value(14).toString();
+
+            //c.tTermicoPath = q.value(14).toString();
+            QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(q.value(14).toUInt());
+            if (tts.length() == 1)
+                c.tTreatment = tts.first();
+            else
+                continue;
+
             c.certificatePath = q.value(15).toString();
             c.state = Status(q.value(16).toUInt());
 
@@ -94,7 +102,7 @@ bool CertificateMapper::insert(const Certificate &c)
             Query().
             Insert(tableName).
             Values("DEFAULT, :protn, :numprobeta, :client_id, :material_id, :approver_id, :reviewer_id, :performer_id, :chemicalanalysis, "
-                   ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :termicopath, :certificatepath, :state").
+                   ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :ttreatment_id, :certificatepath, :state").
             prepare();
 
     QByteArray serializedCAnalysis;
@@ -120,7 +128,8 @@ bool CertificateMapper::insert(const Certificate &c)
     q.bindValue(":description", c.getDescription());
     q.bindValue(":observations", c.getObservations());
     q.bindValue(":date", c.getDate().toString(Qt::ISODate));
-    q.bindValue(":termicopath", c.getTermicoPath());
+    //q.bindValue(":termicopath", c.getTermicoPath());
+    q.bindValue(":ttreatment_id", c.getTermicalTreatment().getId());
     q.bindValue("certificatepath", c.getCertificatePath());
     q.bindValue(":state", c.getState());
 
@@ -151,7 +160,7 @@ bool CertificateMapper::update(const Certificate &c)
             Query().
             Update(tableName).
             Set("DEFAULT, :protn, :numprobeta, :client_id, :material_id, :approver_id, :reviewer_id, :performer_id, :chemicalanalysis, "
-                ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :termicopath, :certificatepath, :state").
+                ":mechanicalanalysis, :ordencompra, :description, :observations, :date, :ttreatment_id, :certificatepath, :state").
             Where("id = :id").
             prepare();
 
@@ -178,7 +187,8 @@ bool CertificateMapper::update(const Certificate &c)
     q.bindValue(":description", c.getDescription());
     q.bindValue(":observations", c.getObservations());
     q.bindValue(":date", c.getDate().toString(Qt::ISODate));
-    q.bindValue(":termicopath", c.getTermicoPath());
+    //q.bindValue(":termicopath", c.getTermicoPath());
+    q.bindValue("ttreatment_id", c.getTermicalTreatment().getId());
     q.bindValue("certificatepath", c.getCertificatePath());
     q.bindValue("state", c.getState());
 
@@ -209,4 +219,21 @@ QList <Certificate> CertificateMapper::get()
                       prepare();
 
     return makeCertificates(query);
+}
+
+quint32 CertificateMapper::getNextId()
+{
+    QSqlQuery q =
+            Query().Select("id").
+            From(tableName).
+            OrderBy("id", false).
+            prepare();
+
+
+    bool s = q.exec();
+    if (!s)
+        return 0;
+
+    q.next();
+    return q.value(0).toUInt() + 1;
 }

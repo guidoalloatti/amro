@@ -26,6 +26,9 @@ class abmManager
 			case "material":
 				$this->getAbmMaterialHtml();
 				break;
+			case "ttermico":
+				$this->getAbmTtermicoHtml();
+				break;
 			default:
 				echo "No se encontro el ABM";
 				break;
@@ -345,7 +348,109 @@ class abmManager
 		<a href='#' id='recargar_lista_clientes'>Regargar Lista de Clientes</a> ::
 		<a href='#' id='nuevo_cliente'>Nuevo Cliente</a><br/>
 		<div id='html_code'></div>";
-	}	
+	}
+
+	function getAbmTtermicoHtml()
+	{
+		$this->html = "<body onload='prepareTTAbm();'> <h3>Carga y visualización de Tratamientos Termicos y asociación con Análisis Químicos realizados </h3>
+		<table id='abm_tt'>
+			<tr>
+				<td width='420px' id='all_tt_cell'>
+					<table width='420px'>
+						<tr>
+							<td>
+								<p id='all_tt_title' align='center'>
+									<label style='font-weight:bold;'>Tratamientos Térmicos</label>
+								</p>
+							</td>
+						</tr>
+						<tr id='show_tt' width='400px'>
+							<td>
+								<p id='all_tt'></p>
+							</td>
+						</tr>
+						<tr width='420px'>
+							<td>
+								<p id='ca_selection'>
+									<button id='select_ca_button'>Asociar con Análisis Químico</button>
+									<button style='float: right;' id='new_tt_button'>Ingresar Nuevo T. Térmico</button>
+								</p>
+							</td>				
+						</tr>
+					</table>
+				</td>
+				
+				<td width='430px' id='link_tt_cell'>
+					<table  width='430px'>
+						<tr>
+							<td>
+								<p id='link_tt_title' align='center'>
+									<label style='font-weight:bold;'>Asociar Análisis Químico</label>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id='all_ca'></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id='selected_params' align='center'></p>
+							</td>
+						</tr>
+					</table>
+				</td>			
+				
+				<td width='420px' id='new_tt_cell'>
+					<table width='420px'>
+						<tr>
+							<td>
+								<p align='center' id='new_tt_title'>
+									<label style='font-weight:bold;'>Nuevo Tratamiento Térmico</label>
+								</p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id='new_tt_date'>
+									<label>Ingrese una fecha*:</label><br/>
+									<label>dd</label><input type='text' id='tt_day' size='2'/><label>/ mm</label><input id='tt_month' type='text' size='2'/><label>/ yyyy</label><input id='tt_year' type='text' size='2'/><br/>
+									* Si no ingresa nada se tomará la fecha de hoy.
+								</p>
+								<p id='new_tt_image'>
+									<label>Seleccione una nueva imagen:</label><input id='tt_image_path' type='file'/>
+								</p>
+								<p id='new_tt_obs'><label>Ingrese observación:</label><textarea id='tt_obs' cols='20' rows='5'></textarea></p>
+								<p id='new_tt_submit' align='center'><button onclick='newTT(); event.preventDefault();'>Crear</button></p>
+							</td>
+						</tr>						
+					</table>
+				</td>
+				
+				<td width='420px' id='tt_viewer_cell'>
+					<table  width='420px'>
+						<tr>
+							<td>
+								<p id='tt_viewer_title' align='center'></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id='tt_viewer_img' align='center'></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id='tt_viewer_obs' align='center'></p>
+							</td>
+						</tr>
+					</table>
+				</td>			
+			</tr>
+		</table>
+		";
+	}
 	
 }
 ?>

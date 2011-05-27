@@ -118,6 +118,7 @@ function loadCert() {
 	loadAllClients();
 	loadAllMaterials();
 	loadAllUsers();
+	getTT();
 }
 
 /*

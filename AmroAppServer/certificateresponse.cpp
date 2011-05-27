@@ -3,6 +3,7 @@
 #include "../DataLibrary/usermapper.h"
 #include "../DataLibrary/materialmapper.h"
 #include "../DataLibrary/clientmapper.h"
+#include "../DataLibrary/termicaltreatmentmapper.h"
 
 #include "certificategenerator.h"
 
@@ -38,13 +39,30 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
     while (!users.empty() && users[0].hasPrivileges("CERTIFICATE_INSERT"))
     {
         Certificate c;
-        c.setProtN(params.value("protn", "").toUtf8());
+
+        quint32 nextId = CertificateMapper().getNextId();
+
+        if (nextId == 0) {
+            output.add("error", "Database error");
+            break;
+        }
+
+        c.setProtN(params.value("protn", "").toUtf8() + "-" + QString().setNum(nextId));
         c.setOrdenCompra(params.value("ordencompra", "").toUtf8());
         c.setObservations(params.value("observations", "").toUtf8());
         c.setDescription(params.value("description", "").toUtf8());
-        c.setImagePath(params.value("termicopath", "").toUtf8());
+        //c.setImagePath(params.value("termicopath", "").toUtf8());
 
-        quint32 client_id = params.value("client_id", "").toUInt();
+        quint32 tt_id = params.value("ttreatment_id", "0").toUInt();
+        QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(tt_id);
+        if (tts.length() == 1)
+            c.setTermicalTreatment(tts.first());
+        else {
+            output.add("ttermico_id", tt_id);
+            break;
+        }
+
+        quint32 client_id = params.value("client_id", "0").toUInt();
         QList <Client> clients = ClientMapper().get(client_id);
         if (clients.length() == 1)
             c.setClient(clients.first());
@@ -151,7 +169,7 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
          generateCertificate() debe setear los campos state y certificatePath antes
          de insertar el certificado en la BD */
         QString err = "Generation Error";
-        if (!CertificateGenerator().generate(c))  {
+        if (!CertificateGenerator().generate(c)) {
             output.add("certificate", err);
             break;
         }
@@ -211,7 +229,7 @@ QVariantList serializeCertificates(QList <Certificate> certificates)
         certificateProperties["numprobeta"] = c.getNumProbeta();
         certificateProperties["state"] = c.getState(),
         certificateProperties["client_id"] = c.getClient().getId();
-        certificateProperties["date"] = c.getDate();
+        certificateProperties["date"] = c.getDate().toString("dd-MM-yyyy");
         certificateProperties["description"] = c.getDescription();
 
 
@@ -227,6 +245,7 @@ QVariantList serializeCertificates(QList <Certificate> certificates)
         certificateProperties["performer_id"] = c.getPerformer().getId();
         certificateProperties["approver_id"] = c.getApprover().getId();
         certificateProperties["reviewer_id"] = c.getReviewer().getId();
+        certificateProperties["ttreatment_id"] = c.getTermicalTreatment().getId();
 
         certificateProperties["chemicalanalysis"] = c.getChemicalAnalysis().print();
         certificateProperties["mechanicalanalysis"] = c.getMechanicalAnalysis().print();

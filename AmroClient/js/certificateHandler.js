@@ -9,9 +9,17 @@ $(document).ready(function() {
 	$("#oc_details").hide();
 	$("#showSave").hide();
 	$("#image_watch").hide();	
+	$("#ttermico_selected").hide();
+	$("#ttermico_selected").parent().hide();
+	$("#show_ttermico_asoc").hide();
 	
 	$("#checkMAExistence").click(function(event){
 		getMA();
+		event.preventDefault();
+	});
+	
+	$("#create_tt_button").click(function(event){
+		window.location = "main.php?invoice_url=abm&module=ttermico"; 
 		event.preventDefault();
 	});
 	
@@ -135,7 +143,7 @@ function showReviewers(users)
 	var inner_html = "<option value='0'>Seleccionar</option>";
 	for(i = 0; i < users.length; i++)
 	{
-		inner_html += "<option value='"+users[i].id+"'>"+users[i].name+"</option>";
+		inner_html += "<option value='"+users[i].id+"'>"+users[i].name+ " " +users[i].surname+"</option>";
 	}
 	inner_html += "</select>";	
 	$("#select_reviewer").html(inner_html);
@@ -146,7 +154,7 @@ function showApprovers(users)
 	var inner_html = "<option value='0'>Seleccionar</option>";
 	for(i = 0; i < users.length; i++)
 	{
-		inner_html += "<option value='"+users[i].id+"'>"+users[i].name+"</option>";
+		inner_html += "<option value='"+users[i].id+"'>"+users[i].name+ " " +users[i].surname+"</option>";
 	}
 	inner_html += "</select>";	
 	$("#select_approver").html(inner_html);
@@ -248,6 +256,8 @@ function generateCertificate()
 	var approver = $("#select_approver").val();
 	
 	var observations = $("#observations").val();
+	
+	var ttreatment = $("#ttermico_selected").val();
 
 	$.getJSON(server_url,
 	{	
@@ -266,7 +276,7 @@ function generateCertificate()
 		client_id: vars.client,
 		description: description,
 		observations: observations,
-		termicopath: "imagen_espectro.png"
+		ttreatment_id: ttreatment
 	},
 	function(data) {
 		if (data.success == true)
@@ -294,7 +304,7 @@ function getOCs()
 
 function drawOC()
 {
-	inner_html = "<div style='height: 150px; overflow: auto;'>";
+	inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 	inner_html += "<table>";
 	inner_html += "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
 	
@@ -339,16 +349,26 @@ function uploadCAFile(file)
 				method: "ParseCA",
 				email: "pmata@amro.com",
 				password: "123",
-				filepath: "/home/guido/Escritorio/"+shortname
+				filepath: "/home/pmata/amro/"+shortname
 			},
 			function(data) {
-				alert("Archivo Parseado");
+				if (data.success == true) {
+					alert("Archivo parseado exitósamente");
+					$("#addCA").hide("slow");
+				} else
+					alert("Error parseado archivo");
+				
 			});
 }
 
 function getCA()
 {
 	var vars = getUrlVars();
+	
+	if (vars.numprobeta == undefined) {
+		alert("Elija una orden de compra con su respectivo Nº de probeta para poder realizar la busqueda");
+		return;
+	}
 	
 	$.getJSON(globals.server_url,
 			{
@@ -362,9 +382,9 @@ function getCA()
 				if (data.success == true) {
 					if(data.CAnalysis.length > 0)
 					{				
-						inner_html = "<div style='overflow: auto;'>";
+						inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 						inner_html += "<table>";
-						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Id Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
+						inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 						
 						globals.currentCA = data.CAnalysis;
 						
@@ -389,7 +409,7 @@ function getCA()
 						$("#selectedCA").show("slow");
 					}
 					else
-					{
+					{						
 						$("#addCA").show("slow");
 					}
 				}
@@ -407,8 +427,7 @@ function loadCAValues(id)
 		getCA();
 		return;
 	}
-	
-
+		
 	for (var i=0; i < globals.currentCA.length; i++) {
 		if (globals.currentCA[i].id == id) {
 			$("#_c").val(globals.currentCA[i].chemicalanalysis.c[0]);
@@ -422,6 +441,9 @@ function loadCAValues(id)
 			$("#_cu").val(globals.currentCA[i].chemicalanalysis.cu[0]);
 			$("#_v").val(globals.currentCA[i].chemicalanalysis.v[0]);
 			$("#_ce").val(globals.currentCA[i].chemicalanalysis.ce[0]);
+			
+			if (globals.currentCA[i].ttreatment_id)
+				loadTTfromCA(globals.currentCA[i].ttreatment_id);
 		}		
 	}
 	
@@ -444,7 +466,7 @@ function getMA()
 				if (data.success == true) {
 					if(data.MAnalysis.length > 0)
 					{				
-						inner_html = "<div style='overflow: auto;'>";
+						inner_html = "<div style='max-height: 150px; overflow: auto;'>";
 						inner_html += "<table>";
 						inner_html += "<tr class='oc'><th class='oc'>Fecha</th><th class='oc'>Material</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 						
@@ -544,5 +566,111 @@ function checkSaveOpportunity() {
 	}
 }
 
+function selectTR(id)
+{
+	alert("asd");
+	$("#ttermico_selected").val(id);
+}
 
+function showTT(ttermicos)
+{
+	var inner_html = "<div align='center' style='height: 300px; overflow:auto;'>";
+	inner_html += "<table style='width:280px;'>";
+	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Seleccionar</th></tr>";
+	
+	for(var i=0; i < ttermicos.length; i++)
+	{
+		var line = "even";
+		if( i%2 == 0 ) 
+			line = "odd";
+		
+		inner_html += "<tr class='"+line+"'>";
+		inner_html += "<td class='oc'>"+ttermicos[i].id+"</td>";
+		inner_html += "<td>"+ttermicos[i].date+"</td>";
+		//inner_html += "<td>"+ttermicos[i].observations+"</td>";
+		inner_html += "<td align='center'><button float='center' id='view_tt' onclick='viewTT("+ttermicos[i].id+"); selectTR("+ttermicos[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
+		inner_html += "</tr>";
+	}
+	
+	inner_html += "</table>";
+	inner_html += "</div>";
+	$("#all_tt").html(inner_html);
+	$("#all_tt_title").show("slow");
+	$("#all_tt").show("slow");
+	$("#ca_selection").show("slow");
+	//$("#new_tt").show("slow");
+}
+
+
+
+function getTT()
+{
+	if(globals.currentTTermicos != null && globals.currentTTermicos.length > 0)
+		showTTermicos(globals.currentTTermicos);
+	
+	$.getJSON(server_url,
+	{
+		target: "TTreatment",
+		method: "GetTT",
+		email: "pmata@amro.com",
+		password: "123"
+	},
+	function(data) {
+		if(data.success == true && data.tts.length > 0)
+		{
+			globals.currentTTermicos = data.tts;
+			showTT(data.tts);
+		}
+		else
+		{
+			alert("No se pudieron cargar los tratamientos térmicos. Error con el servidor");
+		}
+	});
+}
+
+function showSelectedTT(tt)
+{
+	var inner_html = "<div align='center'>";
+	inner_html += "<table style='width:280px;'><caption style='font-weight:bold;'>Tratamiento Térmico Asociado a Análisis Químico Seleccionado</caption>";
+	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Seleccionar</th></tr>";
+	
+	inner_html += "<tr class='odd'>";
+	inner_html += "<td class='oc'>"+tt.id+"</td>";
+	inner_html += "<td>"+tt.date+"</td>";
+	inner_html += "<td align='center'><button float='center' id='view_tt' onclick='viewTT("+tt.id+"); selectTR("+tt.id+"); event.preventDefault(); '>seleccionar</button></td>";
+	inner_html += "</tr>";
+		
+	inner_html += "</table>";
+	inner_html += "</div>";
+	
+	$("#show_ttermico_asoc").html(inner_html);	
+	$("#show_ttermico_asoc").show("slow");
+}
+
+function loadTTfromCA(id)
+{
+	if(globals.currentTTermicos != null && globals.currentTTermicos.length > 0) {
+		for (var i = 0;  i < globals.currentTTermicos.length; i++)
+			if (globals.currentTTermicos[i].id == id)
+				showSelectedTT(globals.currentTTermicos[i]);
+		
+		return;
+	}
+		
+	
+	$.getJSON(server_url,
+	{
+		target: "TTreatment",
+		method: "GetTT",
+		email: "pmata@amro.com",
+		password: "123",
+		id: id
+	},
+	function(data) {
+		if(data.success == true && data.tts.length == 1)
+		{
+			showSelectedTT(data.tts[0]);
+		}		
+	});
+}
 

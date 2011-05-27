@@ -201,3 +201,13 @@ void Certificate::setMechanicalMinValue(QString p, double value)
 {
     this->mechanicalAnalysis.setMinValue(p, value);
 }
+
+TermicalTreatment Certificate::getTermicalTreatment() const
+{
+    return this->tTreatment;
+}
+
+void Certificate::setTermicalTreatment(TermicalTreatment tt)
+{
+    this->tTreatment = tt;
+}

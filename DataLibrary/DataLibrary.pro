@@ -33,7 +33,9 @@ SOURCES += main.cpp \
     chemicalanalysis.cpp \
     chemicalanalysismapper.cpp \
     mechanicalanalysis.cpp \
-    mechanicalanalysismapper.cpp
+    mechanicalanalysismapper.cpp \
+    termicaltreatment.cpp \
+    termicaltreatmentmapper.cpp
 
 HEADERS += \
     datalib.h \
@@ -59,4 +61,6 @@ HEADERS += \
     chemicalanalysis.h \
     chemicalanalysismapper.h \
     mechanicalanalysis.h \
-    mechanicalanalysismapper.h
+    mechanicalanalysismapper.h \
+    termicaltreatment.h \
+    termicaltreatmentmapper.h

@@ -102,7 +102,7 @@ function showMaterials(materials)
 function loadMaterials()
 {
 	if(globals.currentMaterials != null && globals.currentMaterials.length > 0)
-		showClients(globals.currentMaterials);
+		showMaterials(globals.currentMaterials);
 	
 	$.getJSON(server_url,
 	{

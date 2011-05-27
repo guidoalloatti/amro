@@ -3,15 +3,16 @@
 
 #include "requestlistener.h"
 #include "../DataLibrary/certificate.h"
+#include "certificateprinter.h"
 
 int main(int argc, char *argv[])
 {
     //QCoreApplication a(argc, argv);
     QApplication a(argc, argv);
 
-    Certificate c;
-    QString err;
-    c.generateCertificate(err);
+    qRegisterMetaType<Certificate>("Certificate");
+
+    CertificatePrinter *printer = CertificatePrinter::getPrinter();
 
     RequestListener rl;
 

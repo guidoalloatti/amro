@@ -1,11 +1,12 @@
 #include "chemicalanalysismapper.h"
 
 #include "materialmapper.h"
+#include "termicaltreatmentmapper.h"
 
 #include "database.h"
 #include <QtSql>
 
-static const QString selectFields("id, numprobeta, material_id, date, ttdate, chemicalanalysis");
+static const QString selectFields("id, numprobeta, material_id, date, ttreatment_id, chemicalanalysis");
 
 ChemicalAnalysisMapper::ChemicalAnalysisMapper()
 {
@@ -34,7 +35,9 @@ QList <ChemicalAnalysis> ChemicalAnalysisMapper::makeChemicalAnalysis(QSqlQuery 
 
             ca.date = q.value(3).toDate();
 
-            ca.TTDate = q.value(4).toDate();
+            QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(q.value(4).toUInt());
+            if (tts.length() == 1)
+                ca.termicalTreatment = tts.first();
 
             QDataStream cds(QByteArray().fromPercentEncoding(q.value(5).toByteArray()));
             QVariantHash chemicalData;
@@ -55,7 +58,7 @@ bool ChemicalAnalysisMapper::insert(const ChemicalAnalysis &ca)
     QSqlQuery q =
             Query().
             Insert(tableName).
-            Values("DEFAULT, :numprobeta, :material_id, :date, :ttdate, :chemicalanalysis").
+            Values("DEFAULT, :numprobeta, :material_id, :date, :ttreatment_id, :chemicalanalysis").
             prepare();
 
     QByteArray serializedCAnalysis;
@@ -67,7 +70,7 @@ bool ChemicalAnalysisMapper::insert(const ChemicalAnalysis &ca)
     q.bindValue(":numprobeta", ca.getNumProbeta());
     q.bindValue(":material_id", ca.getMaterial().getId());
     q.bindValue(":date", ca.getDate());
-    q.bindValue(":ttdate", ca.GetTTDate());
+    q.bindValue(":ttreatment_id", ca.GetTermicalTreatment().getId());
 
     bool s = q.exec();
 
@@ -95,7 +98,7 @@ bool ChemicalAnalysisMapper::update(const ChemicalAnalysis &ca)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("material_id = :material_id, date = :date, ttdate = :ttdate, chemicalanalysis = :chemicalanalysis").
+            Set("material_id = :material_id, date = :date, ttreatment_id = :ttreatment_id, chemicalanalysis = :chemicalanalysis").
             Where("numprobeta = :numprobeta").
             And("id = :id").
             prepare();
@@ -109,7 +112,7 @@ bool ChemicalAnalysisMapper::update(const ChemicalAnalysis &ca)
     q.bindValue(":numprobeta", ca.getNumProbeta());
     q.bindValue(":material_id", ca.getMaterial().getId());
     q.bindValue(":date", ca.getDate());
-    q.bindValue(":ttdate", ca.GetTTDate());
+    q.bindValue(":ttreatment_id", ca.GetTermicalTreatment().getId());
     q.bindValue(":id", ca.getId());
 
     return q.exec();
