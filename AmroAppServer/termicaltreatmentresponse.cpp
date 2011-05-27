@@ -55,6 +55,7 @@ void TermicalTreatmentResponse::newTTreatment(JSONP &output, const QHash <QStrin
 
         tt.setDate(date);
         tt.setImagePath(params.value("path", "").toUtf8());
+        tt.setObservations(params.value("observations", "").toUtf8());
 
         success = TermicalTreatmentMapper().insert(tt);
     } else
@@ -135,8 +136,9 @@ QVariantList serializeTTs(QList <TermicalTreatment> termicalTreatments)
         QVariantHash ttProperties;
 
         ttProperties["id"] = tt.getId();
-        ttProperties["date"] = tt.getDate();
+        ttProperties["date"] = tt.getDate().toString("dd-MM-yyyy");
         ttProperties["path"] = tt.getImagePath();
+        ttProperties["observations"] = tt.getObservations();
 
         serializedTTs << ttProperties;
     }

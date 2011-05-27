@@ -5,17 +5,29 @@ $(document).ready(function() {
 	$("#link_tt").hide();
 	$("#all_tt").hide();	
 	
-	$("#new_tt").hide();
+	//$("#new_tt").hide();
+	//$("#new_tt_obs").hide();
 	
-	$("#selected_params").hide();
+	$("#new_tt_cell").hide();
+	$("#tt_viewer_cell").hide();
+	$("#link_tt_cell").hide();
 	
-	
-	//$("#tt_image").hide();
-	
-
+	$("#selected_params").hide();	
 	
 	$("#ca_selection").hide();
 	$("#all_ca").hide();	
+	
+	$("#new_tt_button").click(function(event){
+		$("#link_tt_cell").hide();
+		$("#tt_viewer_cell").hide();
+		$("#new_tt_cell").show("slow");
+		$("#new_tt_title").show("slow");
+		$("#new_tt_date").show("slow");
+		$("#new_tt_image").show("slow");
+		$("#new_tt_obs").show("slow");
+		$("#new_tt_submit").show("slow");
+		event.preventDefault();
+	});
 
 	$("#select_ca_button").click(function(event){
 		inner_html = "<div style='height: 200px; overflow:auto;'>";
@@ -27,6 +39,13 @@ $(document).ready(function() {
 		inner_html += "</div>";		
 		
 		$("#selected_params").html(inner_html);
+		
+		$("#new_tt_cell").hide();
+		$("#tt_viewer_cell").hide();
+		
+		$("#link_tt_cell").show("slow");
+		
+		$("#link_tt_title").show("slow");		
 		$("#link_tt").show("slow");		
 		
 		$("#link_tt_button").hide();
@@ -45,6 +64,39 @@ function prepareTTAbm()
 	prepareCA();
 }
 
+function viewTT(id)
+{
+	var tt = null;
+	
+	for (var i = 0; i < globals.currentTTermicos.length; i++) 
+		if (globals.currentTTermicos[i].id == id)
+			tt = globals.currentTTermicos[i];
+	
+	if (tt == null)
+		return;
+	
+	var html = "<div style='align: center;'><img src='img/imagen_espectro.png' style='align: center; width: 400px; height: 300px;'></img></div>";
+	$("#tt_viewer_img").html(html);
+	
+	html = "<label style='float:center; font-weight:bold;'>Tratamiento Térmico " + tt.id + "</label>";
+	$("#tt_viewer_title").html(html);
+	
+	html = "<table>" +
+			"<tr>" +
+			"<td>Observaciones</td>" +
+			"</tr>" +
+			"<tr>" +
+			"<td align='center' style='background: #lightgray; font-weight:bold; align: center;'>"+ tt.observations + "</td>" +
+			"</tr>" +
+			"</table>";
+	$("#tt_viewer_obs").html(html);
+	
+	$("#tt_viewer_cell").show("slow");
+	$("#tt_viewer_title").show("slow");
+	$("#tt_viewer_img").show("slow");
+	$("#tt_viewer_obs").show("slow");
+}
+
 function selectTT(id)
 {
 	var tt = null;
@@ -57,12 +109,13 @@ function selectTT(id)
 		return;
 	
 	var inner_html = "<table>";
-	inner_html += "<caption>Tratamientos Térmico Seleccionado</caption>";
-	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Descripción</th><th class='oc'>Id</th><th class='oc'>Borrar</th><th class='oc'>Seleccionar</th></tr>";
-	inner_html += "<tr class='even'>";
+	inner_html += "<caption style='font-weight:bold;'>Tratamientos Térmico Seleccionado</caption>";
+	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Observaciones</th><th class='oc'>Ver</th></tr>";
+	inner_html += "<tr class='odd'>";
 	inner_html += "<td class='oc'>"+tt.id+"</td>";
 	inner_html += "<td>"+tt.date+"</td>";
 	inner_html += "<td>"+tt.observations+"</td>";
+	inner_html += "<td align='center'><button id='view_tt' onclick='viewTT("+tt.id+"); event.preventDefault(); '>mostrar</button></td>";
 	inner_html += "</tr>";
 	inner_html += "</table><br/>";
 	
@@ -74,14 +127,14 @@ function selectTT(id)
 		$("#link_tt_button").show("slow");
 	
 	selectedTT = tt;	
-	
-	var html = "<div style='align: center;'><img src='img/imagen_espectro.png' style='align: center; width: 400px; height: 300px;'></img></div>";
-	$("#tt_viewer").html(html);
-	$("#tt_viewer").show("slow");		
 }
 
 function deleteTT(id)
 {
+	var del = confirm("¿Esta seguro que desea borrar el Tratamiento Térmico con ID " + id + "?");
+	if (!del)
+		return;
+		
 	$.getJSON(server_url,
 			{
 				target: "TTreatment",
@@ -104,11 +157,13 @@ function deleteTT(id)
 			
 } 
 
+
+
 function showTTermicos(ttermicos)
 {
-	var inner_html = "<div style='max-height: 200px; overflow:auto;'>";
-	inner_html += "<table>";
-	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Observaciones</th><th class='oc'>Borrar</th><th class='oc'>Seleccionar</th></tr>";
+	var inner_html = "<div align='center' style='height: 300px; overflow:auto;'>";
+	inner_html += "<table style='width:400px;'><caption style='font-weight:bold;'>Tratamientos Térmicos</caption>";
+	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Mostrar</th><th class='oc'>Borrar</th><th class='oc'>Seleccionar</th></tr>";
 	
 	for(var i=0; i < ttermicos.length; i++)
 	{
@@ -119,7 +174,8 @@ function showTTermicos(ttermicos)
 		inner_html += "<tr class='"+line+"'>";
 		inner_html += "<td class='oc'>"+ttermicos[i].id+"</td>";
 		inner_html += "<td>"+ttermicos[i].date+"</td>";
-		inner_html += "<td>"+ttermicos[i].observations+"</td>";
+		//inner_html += "<td>"+ttermicos[i].observations+"</td>";
+		inner_html += "<td align='center'><button id='view_tt' onclick='viewTT("+ttermicos[i].id+"); event.preventDefault(); '>mostrar</button></td>";
 		inner_html += "<td align='center'><button id='delete_tt' onclick='deleteTT("+ttermicos[i].id+"); event.preventDefault(); '>borrar</button></td>";
 		inner_html += "<td align='center'><button id='selected_tt' onclick='selectTT("+ttermicos[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
 		inner_html += "</tr>";
@@ -127,11 +183,11 @@ function showTTermicos(ttermicos)
 	
 	inner_html += "</table>";
 	inner_html += "</div>";
-	$("#all_tt").html(inner_html);	
+	$("#all_tt").html(inner_html);
+	$("#all_tt_title").show("slow");
 	$("#all_tt").show("slow");
 	$("#ca_selection").show("slow");
-	$("#tt_viewer").show("slow");
-	$("#new_tt").show("slow");
+	//$("#new_tt").show("slow");
 }
 
 
@@ -173,7 +229,7 @@ function selectCA(id)
 		return;
 	
 	var inner_html = "<table>";
-	inner_html += "<caption>Análisis Químico Seleccionado</caption>";
+	inner_html += "<caption style='font-weight:bold;'>Análisis Químico Seleccionado</caption>";
 	inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th>";
 	inner_html += "<tr class='odd'>";
 	inner_html += "<td class='oc'>"+ca.numprobeta+"</td>";
@@ -199,7 +255,7 @@ function prepareCA()
 	if(globals.currentCA != null && globals.currentCA.length > 0)
 		showCA(globals.currentCA);
 	
-	$.getJSON(server_url,
+	$.getJSON(globals.server_url,
 	{
 		target: "Analysis",
 		method: "CheckCA",
@@ -210,8 +266,8 @@ function prepareCA()
 		if (data.success == true) {
 			if(data.CAnalysis.length > 0)
 			{				
-				var inner_html = "<div style='max-height: 200px; overflow: auto;'>";
-				inner_html += "<table>";
+				var inner_html = "<div align='center' style='height: 300px; overflow: auto;'>";
+				inner_html += "<table><caption style='font-weight:bold;'>Análisis Químicos</caption>";
 				inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 				
 				globals.currentCA = data.CAnalysis;
@@ -255,7 +311,7 @@ function linkTT()
 		return;
 	}
 	
-	$.getJSON(server_url,
+	$.getJSON(globals.server_url,
 			{
 				target: "Analysis",
 				method: "AttachTT",
@@ -271,4 +327,55 @@ function linkTT()
 					alert("La operación falló, error en el servidor");
 			}
 		);		
+}
+
+function newTT()
+{
+	var year = $("#tt_year").val();
+	var day = $("#tt_day").val();
+	var month = $("#tt_month").val();
+	
+	var dateRegex = /^\d?\d$/;
+	var yearDateRegex = /^\d{4}$/;
+	
+	if ((year != "" && day != "" && month != "") &&
+		(!dateRegex.test(day) || !dateRegex.test(month) || !yearDateRegex.test(year))) {
+		alert("Formato de fecha no válido");
+		return;
+	}
+	
+	var image = $("#tt_image_path").val();
+	
+	if (image == "") {
+		alert("Ingresar una imagen de tratamiento térmico");
+		return;
+	}
+	
+	var observations = $("#tt_obs").val();
+	
+	$.getJSON(globals.server_url,
+			{
+				target: "TTreatment",
+				method: "NewTT",
+				email: "pmata@amro.com",
+				password: "123",
+				year: year,
+				day: day,
+				month: month,
+				path: image,
+				observations: observations
+			},
+			function(data) {
+				if (data.success == true) {
+					alert("La operación fue realizada con éxito.");
+					
+					prepareTT();
+				} else {
+					if (data.date != undefined) 
+						alert("La operación falló, fecha no válida");
+					else
+						alert("La operación falló, falla en la base de datos");
+				}
+			}
+		);	
 }

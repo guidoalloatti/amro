@@ -239,7 +239,7 @@ span.error{
     -webkit-border-radius: 10px;
     border-radius: 10px;
     color: #ffffff;
-    display: block;
+    /*display: block;*/
     cursor:pointer;
     clear:both;
     padding: 0px 5px 0px 5px;

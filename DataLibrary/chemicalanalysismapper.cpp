@@ -98,7 +98,7 @@ bool ChemicalAnalysisMapper::update(const ChemicalAnalysis &ca)
     QSqlQuery q =
             Query().
             Update(tableName).
-            Set("material_id = :material_id, date = :date, ttdate = :ttreatment_id, chemicalanalysis = :chemicalanalysis").
+            Set("material_id = :material_id, date = :date, ttreatment_id = :ttreatment_id, chemicalanalysis = :chemicalanalysis").
             Where("numprobeta = :numprobeta").
             And("id = :id").
             prepare();

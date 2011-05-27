@@ -173,10 +173,10 @@ class htmlCodeStore {
 					<p>y con Numero de Probeta: '.$_GET["numprobeta"].'</p>
 					
 					<br/>
-					<button id="ver_detalles">Ver detalles de la Orden de Compra</button>
+					<button style="display: block;" id="ver_detalles">Ver detalles de la Orden de Compra</button>
 					<p id="oc_details"></p>
 					
-					<button id="cambiar_ocb">Seleccionar otra Orden de Compra </button> 
+					<button style="display: block;" id="cambiar_ocb">Seleccionar otra Orden de Compra </button> 
 					<p id="all_oc"></p>
 					
             </fieldset>
@@ -231,8 +231,54 @@ class htmlCodeStore {
             </fieldset>
             <fieldset class="step">
                 <legend>4. Cargar la Imagen</legend>
-                    <p><input id="ttloader" type="file"/></p>
-                    <p id="image_watch"></p>
+                    <p><input type="text" id="ttermico_selected"/></p>
+                    <p id="show_ttermico_asoc"></p>                  
+                    <table width="810px" id="abm_tt">
+                    	<tr>                    		
+                    		<td>
+                    		<table width="300px">
+								<tr>
+									<td>
+										<p style="width: 300px;" id="all_tt_title" align="center">
+											<label style="float:center; font-weight:bold;">Otros Tratamientos Térmicos</label>
+										</p>
+									</td>
+								</tr>
+								<tr id="show_tt" width="300px">
+									<td width="300px">
+		                    			<p style="width: 300px;" id="all_tt"></p>
+		                    		</td> 
+								</tr>
+								<tr width="300px">
+									<td align="center">
+										<p align="center" style="width: 300px;" id="ca_selection">
+											<button style="float:center;" id="create_tt_button">Crear Nuevo T. Térmico</button>
+										</p>
+									</td>				
+								</tr>
+							</table>
+							</td>
+                    		<td>
+                    			<table  width="480px">
+									<tr>
+										<td>
+											<p style="width: 480px;" id="tt_viewer_title" align="center"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p style="width: 480px;" id="tt_viewer_img" align="center"></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p style="width: 480px;" id="tt_viewer_obs" align="center"></p>
+										</td>
+									</tr>
+								</table>                    		
+                    		</td>
+                    	</tr>
+                    </table>
 
             </fieldset>
             <fieldset class="step">

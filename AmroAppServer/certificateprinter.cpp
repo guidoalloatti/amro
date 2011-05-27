@@ -154,9 +154,9 @@ void CertificatePrinter::generate(Certificate c)
             label.setPlainText(c.getObservations());
         else if (label.attribute("id") == "termico") {
             if (c.getState() == PASSED)
-                label.setPlainText("Normalizado");
+                label.setPlainText(c.getTermicalTreatment().getDate().toString("dd/MM/yyyy") + "--> Normalizado");
             else
-                label.setPlainText("Fallo");
+                label.setPlainText(c.getTermicalTreatment().getDate().toString("dd/MM/yyyy") + "--> Falló");
 
         } else if (label.attribute("id") == "fecha")
             label.setPlainText(c.getDate().toString("dd/MM/yyyy"));
@@ -170,7 +170,8 @@ void CertificatePrinter::generate(Certificate c)
 
     foreach(QWebElement image, allImages) {
         if (image.attribute("id") == "ttimage")
-            image.setAttribute("src", c.getTermicoPath());
+            //image.setAttribute("src", c.getTermicoPath());
+            image.setAttribute("src", c.getTermicalTreatment().getImagePath());
         else if (image.attribute("id") == "realizo_image")
             image.setAttribute("src", c.getPerformer().getSignature());
         else if (image.attribute("id") == "aprobo_image")

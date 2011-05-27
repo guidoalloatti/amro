@@ -225,7 +225,7 @@ QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
         analysysProperties["id"] = ca.getId();
         analysysProperties["numprobeta"] = ca.getNumProbeta();
         analysysProperties["material_id"] = ca.getMaterial().getId();
-        analysysProperties["date"] = ca.getDate();
+        analysysProperties["date"] = ca.getDate().toString("dd-MM-yyyy");
         //analysysProperties["ttdate"] = ca.GetTTDate();
         analysysProperties["ttreatment_id"] = ca.GetTermicalTreatment().getId();
         analysysProperties["chemicalanalysis"] = ca.getMeasures().print();
@@ -250,6 +250,8 @@ void AnalysisResponse::checkCA(JSONP &output, const QHash <QString, QString> &pa
         QList <ChemicalAnalysis> cas;
         QVariantHash filters;
 
+
+
         int year = params.value("year", "0").toUInt();
         int month = params.value("month", "0").toUInt();
         int day = params.value("day", "0").toUInt();
@@ -262,6 +264,9 @@ void AnalysisResponse::checkCA(JSONP &output, const QHash <QString, QString> &pa
 
         if (params.contains("numprobeta"))
             filters["numprobeta"] = params.value("numprobeta");
+
+        qDebug() << "22";
+
 
         cas = ChemicalAnalysisMapper().get(filters);
 
@@ -366,7 +371,7 @@ QVariantList serializeMAnalysis(QList <MechanicalAnalysis> analysis)
 
         analysysProperties["id"] = ma.getId();
         analysysProperties["material_id"] = ma.getMaterial().getId();
-        analysysProperties["date"] = ma.getDate();
+        analysysProperties["date"] = ma.getDate().toString("dd-MM-yyyy");
         analysysProperties["mechanicalanalysis"] = ma.getMeasures().print();
 
         serializedAnalysys << analysysProperties;

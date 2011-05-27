@@ -7,6 +7,7 @@
 #include "chemicalmeasure.h"
 #include "mechanicalmeasure.h"
 #include "material.h"
+#include "termicaltreatment.h"
 
 #include <QString>
 #include <QList>
@@ -42,6 +43,7 @@ public:
     void setNumProbeta(QString numProbeta);
     void setChemicalMaxValue(QString p, double value);
     void setChemicalMinValue(QString p, double value);
+    void setTermicalTreatment(TermicalTreatment tt);
 
     void setMechanicalMaxValue(QString p, double value);
     void setMechanicalMinValue(QString p, double value);
@@ -65,6 +67,7 @@ public:
     bool generateCertificate(QString &err);
     QString getCertificatePath() const;
     QString getTermicoPath() const;
+    TermicalTreatment getTermicalTreatment() const;
 
 private:
     quint32 id;
@@ -78,6 +81,7 @@ private:
     QDate date;
     QString tTermicoPath, certificatePath;
     Status state;
+    TermicalTreatment tTreatment;
 
     friend class CertificateMapper;
 };
