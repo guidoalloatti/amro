@@ -48,6 +48,11 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
+	$("#btn_orange_1").click(function() { // Gestion Certificados
+	    var url = "main.php?invoice_url=cm";
+        $(location).attr('href',url);
+    });
+	
 	// Click en botones de ABM
 	$("#btn_cliente_green").click(function() { // Abm Clientes
 		var url = "main.php?invoice_url=abm&module=cliente";

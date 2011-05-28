@@ -237,3 +237,30 @@ quint32 CertificateMapper::getNextId()
     q.next();
     return q.value(0).toUInt() + 1;
 }
+
+QList <Certificate> CertificateMapper::get(QVariantHash filters, QString order)
+{
+    Query queryObject = Query().
+                        Select(selectFields).
+                        From(tableName);
+
+    if (!selectFields.contains(order))
+        return QList<Certificate>();
+
+    foreach(QString key, filters.keys()) {
+        if (!selectFields.contains(key))
+            return QList<Certificate>();
+
+        queryObject.Where(key + " = :" + key);
+    }
+
+    queryObject.OrderBy(order, false);
+
+    QSqlQuery query = queryObject.prepare();
+
+    foreach(QString key, filters.keys())
+        query.bindValue(":" + key, filters.value(key));
+
+    return makeCertificates(query);
+}
+

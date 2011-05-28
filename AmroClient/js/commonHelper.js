@@ -1,5 +1,5 @@
-//	console.log("Creando las globales");
 var globals = {
+
 	currentOrders: null,
 	server_url: "http://localhost:8080/?callback=?",
 	currentCA: null,
@@ -9,6 +9,8 @@ var globals = {
 	currentMA: null,
 	currentUsers: null,
 	currentTTermicos: null,
+	currentUsers: null,
+	currentCerts: null
 	logedUser: null,
 	logedPass: null,
 };
