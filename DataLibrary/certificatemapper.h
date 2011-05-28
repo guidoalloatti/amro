@@ -18,6 +18,7 @@ public:
     QList <Certificate> get(quint32 id);
     QList <Certificate> get();
     quint32 getNextId();
+    QList <Certificate> get(QVariantHash filters, QString order);
 };
 
 #endif // CERTIFICATEMAPPER_H

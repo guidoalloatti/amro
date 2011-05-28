@@ -47,6 +47,9 @@ class Render
             case "oc":
                 $this->body = $this->htmlCode->getManageOCBody();
                 break;
+            case "cm":
+                $this->body = $this->htmlCode->getManageCertBody();
+                break;
             case "ce":
                 $this->body = $this->htmlCode->getCertificados();
                 break;

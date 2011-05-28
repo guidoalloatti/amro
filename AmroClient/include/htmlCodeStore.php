@@ -22,6 +22,9 @@ class htmlCodeStore {
         	case "ce":
         		$html .= "</head><body onload='loadCert();'>";
         		break;
+        	case "cm":
+        		$html .= "</head><body onload='loadCertPage();'>";
+        		break;
         	default:
         		$html .= '</head><body>';
         		break;
@@ -67,6 +70,13 @@ class htmlCodeStore {
 					<link rel="icon" href="/favicon.gif" type="image/gif">
 					';
                 break;
+            case "cm":
+                $html.='
+					<title>Administración de Certificados</title>
+					<meta content="certificados" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+                break;
 			case "ab":
 				$html.='
 					<title>Altas, Bajas y Modificaciones</title>
@@ -98,6 +108,9 @@ class htmlCodeStore {
 		{
 			case "oc":
 				$pageDescription = "Gestión de Ordenes de Compra";
+				break;
+			case "cm":
+				$pageDescription = "Gestión de Certificados";
 				break;
 			default:
 				$pageDescription = $this->pageInvoice;
@@ -141,6 +154,11 @@ class htmlCodeStore {
     function getManageOCBody()
     {
         return file_get_contents("html/body/orden_compra.html");
+    }
+    
+	function getManageCertBody()
+    {
+        return file_get_contents("html/body/show_certificates.html");
     }
 
     function getCertificados()

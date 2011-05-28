@@ -270,10 +270,44 @@ void CertificateResponse::getCertificate(JSONP &output, const QHash <QString, QS
     if (hasPermission(email, password, "CERTIFICATE_LIST"))
     {
         QList <Certificate> certificates;
-        if (params.keys().contains("id"))
+
+        QVariantHash filters;
+
+        int year = params.value("year", "0").toUInt();
+        int month = params.value("month", "0").toUInt();
+        int day = params.value("day", "0").toUInt();
+
+        if (year && month && day)
+            filters["date"] = QDate(year, month, day);
+
+        if (params.contains("material_id"))
+            filters["material_id"] = params.value("material_id").toUInt();
+
+        if (params.contains("client_id"))
+            filters["client_id"] = params.value("client_id").toUInt();
+
+        if (params.contains("performer_id"))
+            filters["performer_id"] = params.value("performer_id").toUInt();
+
+        if (params.contains("numprobeta"))
+            filters["numprobeta"] = params.value("numprobeta").toUtf8();
+
+        if (params.contains("ordencompra"))
+            filters["ordencompra"] = params.value("ordencompra").toUInt();
+
+        if (params.contains("protn"))
+            filters["protn"] = params.value("protn").toUtf8();
+
+        if (params.contains("id"))
+            filters["id"] = params.value("id").toUInt();
+
+        QString order = params.value("order", "id").toUtf8();
+        certificates = CertificateMapper().get(filters, order);
+
+        /*if (params.keys().contains("id"))
             certificates = CertificateMapper().get(params.value("id").toUInt());
         else
-            certificates = CertificateMapper().get();
+            certificates = CertificateMapper().get();*/
 
         success = true;
         output.add("certificates", serializeCertificates(certificates));

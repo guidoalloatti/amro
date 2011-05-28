@@ -8,7 +8,9 @@ var globals = {
 		currentOC: null,
 		currentMA: null,
 		currentUsers: null,
-		currentTTermicos: null
+		currentTTermicos: null,
+		currentUsers: null,
+		currentCerts: null
 };
 
 $(document).ready(function() {
