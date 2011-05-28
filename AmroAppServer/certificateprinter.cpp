@@ -31,8 +31,6 @@ CertificatePrinter::CertificatePrinter()
 
 void CertificatePrinter::print(bool ok)
 {
-    qDebug() << "En printer " << ok;
-
     if (!ok) {
         emit requestDone(false);
         return;
@@ -42,7 +40,8 @@ void CertificatePrinter::print(bool ok)
     printer.setOutputFormat(QPrinter::PdfFormat);
 
     QString certId = view->page()->mainFrame()->findFirstElement("#protn").toPlainText();
-    QString path = view->page()->mainFrame()->baseUrl().toLocalFile() + certId + ".pdf";
+    //QString path = view->page()->mainFrame()->baseUrl().toLocalFile() + certId + ".pdf";
+    QString path = "../AmroClient/files/certificados/" + certId + ".pdf";
     printer.setOutputFileName(path);
 
     view->print(&printer);
@@ -92,7 +91,8 @@ void CertificatePrinter::generate(Certificate c)
 
     QString str = QDir::currentPath();
     //qDebug() << "file://" + str + "/files/";
-    QUrl url("file://" + str + "/files/");
+    //QUrl url("file://" + str + "/files/");
+    QUrl url("../AmroClient/files/Uploads/");
     view->setHtml(html, url);
 
     QWebFrame *main = view->page()->mainFrame();
@@ -181,7 +181,7 @@ void CertificatePrinter::generate(Certificate c)
 
     }
 
-    QFile newFile("files/" + c.getProtN() + ".html");
+    QFile newFile("../AmroClient/files/certificados/" + c.getProtN() + ".html");
     newFile.open(QFile::WriteOnly | QFile::Truncate);
 
     QTextStream out(&newFile);
@@ -190,7 +190,7 @@ void CertificatePrinter::generate(Certificate c)
     out.flush();
     newFile.close();
 
-    c.setCertificatePath("files/" + c.getProtN() + ".pdf");
+    c.setCertificatePath("../AmroClient/files/certificados/" + c.getProtN() + ".pdf");
 
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
 
