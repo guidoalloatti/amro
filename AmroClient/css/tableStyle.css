@@ -8,6 +8,21 @@ table.oc
 
 }
 
+td.rounded
+{
+	 border: solid 10px gray;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 0 50px 50px 0;
+}
+
+table.rounded
+{
+	width: 90%;
+	border: solid 5px lightgray;
+	-moz-border-radius: 0 50px 50px 0;
+     border-radius: 0 50px 50px 0;	
+}
+
 tr.odd
 {
 	background: #lightgray;

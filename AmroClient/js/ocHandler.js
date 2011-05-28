@@ -222,56 +222,7 @@ function searchOCByProbeta()
 	});
 }
 	
-/*
-function searchOCByMaterial()
-{
-	if($("#material").val() == "")
-	{
-		inner_html = "No se definio el valor de busqueda por material.";
-		$("#ordenes_compra").html(inner_html);
-		return;
-	}
-	
-	for(
-	
-	$.getJSON(globals.server_url,
-	{
-		target: "CSVParsing",
-		method: "GetOC",
-		email: "pmata@amro.com",
-		password: "123",
-		numprobeta: $("#protocolo").val(),
-		order: "numprobeta"
-	},
-	function(data) {
-		if(data.lines.length < 1)
-		{
-			inner_html = "No se encontro ninguna orden de compra con valor de protocolo "+$("#orden_compra").val();
-			$("#ordenes_compra").html(inner_html);
-			return;
-		}	
-			
-		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
-		for(var i=0; i < data.lines.length; i++)
-		{
-			var line = "even";
-			if( i%2 == 0 ) 
-				line = "odd";
 
-			inner_html += "<tr class='"+line+"'>";
- 			inner_html += "<td class='oc'>"+data.lines[i].ordencompra+"</td>";
-			inner_html += "<td>"+data.lines[i].numprobeta+"</td>";
-			inner_html += "<td>"+clientNameSearch(data.lines[i].client_id)+"</td>";
-			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
-			inner_html += "<td>"+data.lines[i].description+"</td>";
-			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
-			inner_html += "</tr>";
-		}	
-		$("#ordenes_compra").html(inner_html);
-	});
-}	
-*/
 	
 function getAllOC()
 {
@@ -281,7 +232,7 @@ function getAllOC()
 		method: "GetOC",
 		email: user,			//"pmata@amro.com",
 		password: pass,			//"123",
-		order: "ordencompra"
+		order: "ordencompra",	
 	},
 	function(data) {
 		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
@@ -343,7 +294,7 @@ function parseCSV(file)
 		method: "ParseCSV",
 		email: user,		//"pmata@amro.com",
 		password: pass,		//"123",
-		filepath: "/home/guido/Escritorio/"+ shortname
+		filepath: globals.pathToUpload+shortname,	//"/home/guido/Escritorio/"+ shortname
 	},
 	function(data) {
 		if (data.errors == 'undefined')

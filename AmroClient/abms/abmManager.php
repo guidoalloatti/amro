@@ -217,7 +217,9 @@ class abmManager
 									<td><input type='file' id='signature' /></td>
 								</tr>	
 								<tr>
-									<td><a href='main.php?invoice_url=pe&userid=1'>Gestionar Permisos del Usuario</a></td>
+									<td><div id='gestionarPermisosUsuario'></div> 
+								</td>
+									<!-- <a href='main.php?invoice_url=pe&userid=1'>Gestionar Permisos del Usuario</a> -->
 								</tr>
 								
 							</table>

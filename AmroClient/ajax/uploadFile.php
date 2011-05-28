@@ -1,6 +1,6 @@
 <?php
 
-$upload_path = "uploads/";
+$upload_path = "up/";
 
 /*
 if ($_FILES["file"]["error"] > 0)

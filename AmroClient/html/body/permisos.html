@@ -1,84 +1,87 @@
-Usuario:
-			<select name="option_usuarios">
-				<option value="1">Admin</option>
-				<option value="2">Pepe</option>
-				<option value="3">Usuario 2</option>
-			</select><hr/>
+			<div id="usuarios_dropdown"></div>
+			<!--
+			<a href="#" id="cannotChangeUser">No puede cambiar usuario</a>
+			<a href="#" id="canChangeUser">Puede cambiar usuario</a>
+			-->
+			<a href="#" id="getUserPermissions">Obtener los Permisos del usuario</a>
+			<input type="checkbox"  name="ADMIN" id="ADMIN" value="0">El usuario es Admin
+			<hr/>
+			
 
-			<table width="90%" border="0" cellpadding="15" cellspacing="15">
+			<!-- <table width="90%" border="0" cellpadding="15" cellspacing="15"> -->
+			<table class="rounded"> 
 				<tr>
-					<td style="border: 2px" bgcolor="lightgreen">
+					<td class="rounded" style="border: 2px" bgcolor="lightgreen">
 						<h3><u>Permisos de Usuario</u></h3>
-							<h5><input type="checkbox"  name="create_user" id="create_user_checkbox" value="0">Crear Usuario
-							<br/><input type="checkbox"  name="list_user" id="list_user_checkbox" value="0">Listar Usuarios
-							<br/><input type="checkbox"  name="delete_user" id="delete_user_checkbox" value="0">Eliminar Usuarios
-							<br/><input type="checkbox"  name="edit_user" id="edit_user_checkbox" value="0">Modificar Usuarios
+							<h5><input type="checkbox"  name="USER_INSERT" id="USER_INSERT" value="0">Crear Usuario
+							<br/><input type="checkbox"  name="USER_LIST" id="USER_LIST" value="0">Listar Usuarios
+							<br/><input type="checkbox"  name="USER_DELETE" id="USER_DELETE" value="0">Eliminar Usuarios
+							<br/><input type="checkbox"  name="USER_UPDATE" id="USER_UPDATE" value="0">Modificar Usuarios
 						</h5>
 					</td>
-					<td style="border: 2px" bgcolor="lightgreen">
+					<td class="rounded" style="border: 2px" bgcolor="lightgreen">
 						<h3><u>Permisos de Clientes</u></h3>
-							<h5><input type="checkbox"  name="create_client" id="create_client_checkbox" value="0">Crear Cliente
-							<br/><input type="checkbox"  name="list_client" id="list_client_checkbox" value="0">Listar Clientes
-							<br/><input type="checkbox"  name="delete_client" id="delete_client_checkbox" value="0">Eliminar Clientes
-							<br/><input type="checkbox"  name="edit_client" id="edit_client_checkbox" value="0">Modificar Clientes
+							<h5><input type="checkbox"  name="CLIENT_INSERT" id="CLIENT_INSERT" value="0">Crear Cliente
+							<br/><input type="checkbox"  name="CLIENT_LIST" id="CLIENT_LIST" value="0">Listar Clientes
+							<br/><input type="checkbox"  name="CLIENT_DELETE" id="CLIENT_DELETE" value="0">Eliminar Clientes
+							<br/><input type="checkbox"  name="CLIENT_UPDATE" id="CLIENT_UPDATE" value="0">Modificar Clientes
 						</h5>
 					</td>
-					<td width="250px" style="border: 2px" bgcolor="lightgreen">
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightgreen">
 						<h3><u>Permisos de Ordenes de Compras</u></h3>
-							<h5><input type="checkbox"  name="create_oc" id="create_oc_checkbox" value="0">Crear Orden de Compra
-							<br/><input type="checkbox"  name="list_oc" id="list_oc_checkbox" value="0">Listar Orden de Compra
-							<br/><input type="checkbox"  name="delete_oc" id="delete_oc_checkbox" value="0">Eliminar Orden de Compra
-							<br/><input type="checkbox"  name="edit_oc" id="edit_oc_checkbox" value="0">Modificar Orden de Compra
+							<!-- <input type="checkbox"  name="create_oc" id="create_oc_checkbox" value="0">Crear Orden de Compra -->
+							<h5><input type="checkbox"  name="GET_OC" id="GET_OC" value="0">Listar Orden de Compra
+							<br/><input type="checkbox"  name="OC_DELETE" id="OC_DELETE" value="0">Eliminar Orden de Compra
+							<!-- <br/><input type="checkbox"  name="edit_oc" id="edit_oc_checkbox" value="0">Modificar Orden de Compra -->
 						</h5>
 					</td>
 				</tr>
-					<td width="250px" style="border: 2px" bgcolor="lightblue">
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightblue">
 						<h3><u>Permisos de Materiales</u></h3>
-							<h5><input type="checkbox"  name="create_user" id="create_user_checkbox" value="0">Crear Material
-							<br/><input type="checkbox"  name="list_user" id="list_user_checkbox" value="0">Listar Material
-							<br/><input type="checkbox"  name="delete_user" id="delete_user_checkbox" value="0">Eliminar Material
-							<br/><input type="checkbox"  name="edit_user" id="edit_user_checkbox" value="0">Modificar Material
+							<h5><input type="checkbox"  name="MATERIAL_INSERT" id="MATERIAL_INSERT" value="0">Crear Material
+							<br/><input type="checkbox"  name="MATERIAL_LIST" id="MATERIAL_LIST" value="0">Listar Material
+							<br/><input type="checkbox"  name="MATERIAL_DELETE" id="MATERIAL_DELETE" value="0">Eliminar Material
+							<br/><input type="checkbox"  name="MATERIAL_UPDATE" id="MATERIAL_UPDATE" value="0">Modificar Material
 						</h5>
 					</td>
-					<td width="250px" style="border: 2px" bgcolor="lightblue">
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightblue">
 						<h3><u>Permisos de Certificados</u></h3>
-							<h5><input type="checkbox"  name="create_certificate" id="create_certificate_checkbox" value="0">Crear Certificados
-							<br/><input type="checkbox"  name="list_certificate" id="list_certificate_checkbox" value="0">Listar Certificados
-							<br/><input type="checkbox"  name="delete_certificate" id="delete_certificate_checkbox" value="0">Eliminar Certificados
+							<h5><input type="checkbox"  name="CERTIFICATE_INSERT" id="CERTIFICATE_INSERT" value="0">Crear Certificados
+							<br/><input type="checkbox"  name="CERTIFICATE_LIST" id="CERTIFICATE_LIST" value="0">Listar Certificados
+							<br/><input type="checkbox"  name="CERTIFICATE_DELETE" id="CERTIFICATE_DELETE" value="0">Eliminar Certificados
 							<!-- <br/>Modificar Certificados <input type="checkbox"  name="edit_certificate" id="edit_certificate_checkbox" value="0"> -->
 						</h5>
 					</td>
-					<td width="250px" style="border: 2px" bgcolor="lightblue">
-						<h3><u>Tratamiento Termico</u></h3>
-							<h5><input type="checkbox"  name="create_tt" id="create_tt" value="0">Crear Tratamiento Termico
-							<br/><input type="checkbox"  name="list_tt" id="list_tt" value="0">Listar Tratamiento Termico
-							<br/><input type="checkbox"  name="delete_tt" id="delete_tt" value="0">Eliminar Tratamiento Termico
-							<br/><input type="checkbox"  name="edit_tt" id="edit_tt" value="0">Modificar Tratamiento Termico
-							<br/><input type="checkbox"  name="add_tt_db" id="add_tt_db" value="0">Agregar Tratamiento Termico a AQ en la BD
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightblue">
+						<h3><u>Permisos de Tratamiento Termico</u></h3>
+							<h5><input type="checkbox"  name="TT_INSERT" id="TT_INSERT" value="0">Crear Tratamiento Termico
+							<br/><input type="checkbox"  name="TT_LIST" id="TT_LIST" value="0">Listar Tratamiento Termico
+							<br/><input type="checkbox"  name="TT_DELETE" id="TT_DELETE" value="0">Eliminar Tratamiento Termico
+							<br/><input type="checkbox"  name="TT_UPDATE" id="TT_UPDATE" value="0">Modificar Tratamiento Termico
+							<br/><input type="checkbox"  name="TT_CA_ATTACH" id="TT_CA_ATTACH" value="0">Agregar Tratamiento Termico a AQ en la BD
 						</h5>
 					</td>
 				</tr>
 				<tr>
-					<td width="250px" style="border: 2px" bgcolor="lightcyan">
-						<h3><u>Analisis Mecanicos</u></h3>
-							<h5><input type="checkbox"  name="load_am" id="load_am" value="0">Permite cargar un analisis mecanico en el sistema
-							<br/><input type="checkbox"  name="delete_am" id="delete_am" value="0">Permite borrar un analisis mecanico previamente cargado
-							<br/><input type="checkbox"  name="list_am" id="list_am" value="0">Permite consultar un analisis mecanico existente
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightcyan">
+						<h3><u>Permisos de Analisis Mecanicos</u></h3>
+							<h5><input type="checkbox"  name="LOAD_MA" id="LOAD_MA" value="0">Permite cargar un analisis mecanico en el sistema
+							<br/><input type="checkbox"  name="MA_DELETE" id="MA_DELETE" value="0">Permite borrar un analisis mecanico previamente cargado
+							<br/><input type="checkbox"  name="GET_MA" id="GET_MA" value="0">Permite consultar un analisis mecanico existente
 						</h5>
 					</td>
-					<td width="250px" style="border: 2px" bgcolor="lightcyan">
-						<h3><u>Analisis Quimicos, etc</u></h3>
-							<h5><input type="checkbox"  name="list_aq" id="list_aq" value="0">Permite consultar analisis quimico ya parseados
-							<br/><input type="checkbox"  name="delete_aq" id="delete_aq" value="0">Permite borrar un registro de analisis quimico previamente cargado
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightcyan">
+						<h3><u>Permisos de  Analisis Quimicos</u></h3>
+							<h5><input type="checkbox"  name="GET_CA" id="GET_CA" value="0">Permite consultar analisis quimico ya parseados
+							<br/><input type="checkbox"  name="CA_DELETE" id="CA_DELETE" value="0">Permite borrar un registro de analisis quimico previamente cargado
 							<!-- <br/><input type="checkbox"  name="all_privileges" id="all_privileges" value="0">Usuarios administrador. Tiene todos los permisos -->
-							<br/><input type="checkbox"  name="list_tt" id="list_tt" value="0">Permite obtener un grupo de datos de un certificado
-							<br/><input type="checkbox"  name="list_tt" id="list_tt" value="0">Permite borrar un registro de las ordenes de compra
+							<!-- <br/><input type="checkbox"  name="" id="" value="0">Permite obtener un grupo de datos de un certificado -->
 						</h5>
 					</td>
-					<td width="250px" style="border: 2px" bgcolor="lightcyan">
-						<h3><u>Parseo de Archivos CSV</u></h3>
-							<h5><input type="checkbox"  name="csv_aq" id="csv_aq" value="0">Permite enviar un archivo CSV con AQ al servidor para que sea parseado
-							<br/><input type="checkbox"  name="csv_cert" id="csv_cert" value="0">Permite enviar un archivo CSV al servidor con informacion para generar un certificado
+					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightcyan">
+						<h3><u>Permisos de Parseo de Archivos CSV</u></h3>
+							<h5><input type="checkbox"  name="PARSE_CA" id="PARSE_CA" value="0">Permite enviar un archivo CSV con AQ al servidor para que sea parseado
+							<br/><input type="checkbox"  name="PARSE_CSV" id="PARSE_CSV" value="0">Permite enviar un archivo CSV al servidor con informacion para generar un certificado
 						</h5>
 					</td>
 				</tr>	

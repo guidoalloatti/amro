@@ -37,5 +37,18 @@
 	<ul id="parsingreport" class="filetree"></ul>
 </div>
 
-<br/><hr>Subir Ordenes de Compra:<input type="file" id="csvfile" />
+
+<br/><hr>
+<!-- 
+Subir Ordenes de Compra:<input type="file" id="csvfile" />
 <a href='#' id='cargar_ocs' >Mostrar todas las OCs Disponibles</a>
+-->
+
+<form action="ajax/uploadFile.php" method="post" enctype="multipart/form-data">
+	<label for="file">Subir Archivo:</label>
+	<input type="file" name="file" id="file" /> 
+	<br/>
+	<input type="submit" name="submit" value="Submit" />
+</form>
+
+

@@ -119,6 +119,7 @@ function getUser(id, name)
 			$("#signature").val(data.users[0].signature);
 			$("#usuario_seleccionado_name").html(data.users[0].name);
 			$("#usuario_seleccionado_id").html(data.users[0].id);
+			$("#gestionarPermisosUsuario").html("<a href='main.php?invoice_url=pe&userid="+data.users[0].id+"'>Gestionar Permisos del Usuario</a>");
 		}	
 	});
 }

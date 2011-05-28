@@ -126,6 +126,9 @@ class htmlCodeStore {
 			case "cm":
 				$pageDescription = "Gestión de Certificados";
 				break;
+			case "pe":
+				$pageDescription = "Gestión de Permisos de Usuario";
+				break;
 			default:
 				$pageDescription = $this->pageInvoice;
 				break;
