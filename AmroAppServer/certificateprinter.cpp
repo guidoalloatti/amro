@@ -7,10 +7,12 @@
 #include <QWebElementCollection>
 #include <QWebElement>
 #include <QString>
-
-#include <QDir>
+#include <QLocale>
 
 #include "certificategenerator.h"
+
+QString client_path = "../AmroClient/certificados/";
+
 
 CertificatePrinter* CertificatePrinter::pinstance = 0;
 
@@ -27,10 +29,13 @@ CertificatePrinter* CertificatePrinter::getPrinter()
 CertificatePrinter::CertificatePrinter()
 {
     view = new QWebView;
+    dir.cd(client_path);
 }
 
 void CertificatePrinter::print(bool ok)
 {
+    qDebug() << "En printer" << ok;
+
     if (!ok) {
         emit requestDone(false);
         return;
@@ -41,7 +46,7 @@ void CertificatePrinter::print(bool ok)
 
     QString certId = view->page()->mainFrame()->findFirstElement("#protn").toPlainText();
     //QString path = view->page()->mainFrame()->baseUrl().toLocalFile() + certId + ".pdf";
-    QString path = "../AmroClient/files/certificados/" + certId + ".pdf";
+    QString path = client_path + certId + ".pdf";
     printer.setOutputFileName(path);
 
     view->print(&printer);
@@ -66,6 +71,7 @@ static QString toString(double d)
     return s;
 }
 
+
 void CertificatePrinter::generate(Certificate c)
 {
     QFile htmlTemplate("files/template.html");
@@ -89,10 +95,12 @@ void CertificatePrinter::generate(Certificate c)
 
     htmlTemplate.close();
 
-    QString str = QDir::currentPath();
+    QString pwd = dir.path();
     //qDebug() << "file://" + str + "/files/";
-    //QUrl url("file://" + str + "/files/");
-    QUrl url("../AmroClient/files/Uploads/");
+    //QUrl url("file:///home/pmata/amro/AmroClientServer/AmroClient/certificados/");
+    //QUrl url(client_path);
+    QUrl url("file://" + pwd + "/");
+    qDebug() << url;
     view->setHtml(html, url);
 
     QWebFrame *main = view->page()->mainFrame();
@@ -181,7 +189,7 @@ void CertificatePrinter::generate(Certificate c)
 
     }
 
-    QFile newFile("../AmroClient/files/certificados/" + c.getProtN() + ".html");
+    QFile newFile(client_path + c.getProtN() + ".html");
     newFile.open(QFile::WriteOnly | QFile::Truncate);
 
     QTextStream out(&newFile);
@@ -190,11 +198,12 @@ void CertificatePrinter::generate(Certificate c)
     out.flush();
     newFile.close();
 
-    c.setCertificatePath("../AmroClient/files/certificados/" + c.getProtN() + ".pdf");
+    c.setCertificatePath("certificados/" + c.getProtN() + ".pdf");
 
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
 
-    //view->load("files/" + c.getProtN() + ".html");
+    //view->load(client_path + "files/" + c.getProtN() + ".html");
+    //view->show();
 
 }
 

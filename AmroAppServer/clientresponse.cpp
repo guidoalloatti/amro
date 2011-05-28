@@ -94,6 +94,8 @@ void ClientResponse::updateClient(JSONP &output, const QHash <QString, QString> 
     if (hasPermission(email, password, "CLIENT_UPDATE"))
     {
         Client c;
+        qDebug() << params.value("name").toUtf8() + "  " << params.value("name").toLatin1();
+
         c.setId(params.value("id", "").toUInt());
         c.setName(params.value("name", "").toUtf8());
         c.setAddress(params.value("address", "").toUtf8());

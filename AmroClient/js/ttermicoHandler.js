@@ -87,7 +87,7 @@ function viewTT(id)
 	if (tt == null)
 		return;
 	
-	var html = "<div style='align: center;'><img src='img/imagen_espectro.png' style='align: center; width: 400px; height: 300px;'></img></div>";
+	var html = "<div style='align: center;'><img src='"+tt.path+"' style='align: center; width: 400px; height: 300px;'></img></div>";
 	$("#tt_viewer_img").html(html);
 	
 	html = "<label style='float:center; font-weight:bold;'>Tratamiento Térmico " + tt.id + "</label>";

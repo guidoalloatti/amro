@@ -19,7 +19,7 @@ RequestHandler::RequestHandler(int socketDescriptor)
 
 // HACER: ver bien el flujo de los datos en esta funcion
 void RequestHandler::run()
-{
+{    
     QTcpSocket socket;
     if (!socket.setSocketDescriptor(socketDescriptor))
         return;
@@ -42,7 +42,9 @@ void RequestHandler::run()
     QPair <QString, QString> p;
 
     foreach (p, url.queryItems()) {
-        QByteArray decoded = QByteArray::fromPercentEncoding(p.second.toUtf8());
+        QByteArray decoded = QByteArray::fromPercentEncoding(QByteArray::fromPercentEncoding(p.second.toUtf8()));
+        //QByteArray decoded = QByteArray::fromPercentEncoding(p.second.toUtf8());
+        //qDebug() << decoded + " " + QString(decoded).toUtf8();
         params[p.first] = decoded.simplified();
     }
 

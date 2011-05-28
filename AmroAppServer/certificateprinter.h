@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QWebView>
+#include <QDir>
 
 #include "../DataLibrary/certificate.h"
 
@@ -11,6 +12,7 @@ class CertificatePrinter : public QObject
     Q_OBJECT
 
     QWebView *view;
+    QDir dir;
 
     static CertificatePrinter *pinstance;
 
