@@ -83,18 +83,17 @@ function insertClient()
 
 function updateClient()
 {
-
 	if($("#cliente_seleccionado_id").html() == "")
 	{
 		alert("No esta definido el id del cliente.");
 		return;
 	}
-
+	
 	$.getJSON(server_url,
 	{
 		target: "Client",
 		method: "UpdateClient",
-		name: $("#name").val(),
+		name: encodeURIComponent($("#name").val()),
 		address: $("#address").val(),
 		city: $("#city").val(),
 		zip: $("#zip").val(),
