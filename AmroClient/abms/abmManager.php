@@ -36,10 +36,9 @@ class abmManager
 		return $this->html;
 	}
 	
-	
 	function getAbmMaterialHtml()
 	{
-		$this->html = "<body onload='getMaterialList();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
+		$this->html = "<body onload='materialStart();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='material_list' VALIGN='top'>
@@ -175,7 +174,7 @@ class abmManager
 	
 	function getAbmUsuarioHtml()
 	{	
-		$this->html = "<body onload='getUserList();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
+		$this->html = "<body onload='userStart();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='usuario_list' VALIGN='top'>
@@ -240,7 +239,7 @@ class abmManager
 	function getAbmClienteHtml()
 	{
 		
-		$this->html = "<body onload='getClientList();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
+		$this->html = "<body onload='clientStart();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
 				<td width='20%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
@@ -352,7 +351,7 @@ class abmManager
 
 	function getAbmTtermicoHtml()
 	{
-		$this->html = "<body onload='prepareTTAbm();'> <h3>Carga y visualización de Tratamientos Termicos y asociación con Análisis Químicos realizados </h3>
+		$this->html = "<body onload='tratamientoTermicoStart();'> <h3>Carga y visualización de Tratamientos Termicos y asociación con Análisis Químicos realizados </h3>
 		<table id='abm_tt'>
 			<tr>
 				<td width='420px' id='all_tt_cell'>

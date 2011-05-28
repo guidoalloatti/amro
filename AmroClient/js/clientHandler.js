@@ -1,10 +1,12 @@
 // Global Variables Definitions
 //var server_url = "http://192.168.1.101:8080/?callback=?";
 var server_url = "http://localhost:8080/?callback=?";
+var user = $.cookie("user");
+var pass = $.cookie("pass");
 
+
+// On Ready
 $(document).ready(function() {
-
-	//getClientList();
 
 	$("#guardar_cliente").click(function(){
 		insertClient();
@@ -25,9 +27,16 @@ $(document).ready(function() {
 	$("#actualizar_cliente").click(function(){
 		updateClient();
 	});
-	
-	
+
 });
+
+ function clientStart()
+ {
+	if(user == null || pass == null)
+		doGetSessionVars();
+	getClientList();
+}
+
 
 function pep()
 {
@@ -70,10 +79,10 @@ function insertClient()
 		telefax: $("#telefax").val(),
 		seqdigits: $("#seqdigits").val(), 					// Esto especifica cu�ntos d�gitos va a usar para los n�meros de probeta. Ej. AR425 --> 3
 		code: $("#namecode").val(), 						// Codigo del n�mero de probeta, si alg�n otro cliente tiene el c�digo, tira error.
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,										// "pmata@amro.com",
+		password: pass, 									// "123",
 	},
-	function(data) {s
+	function(data) {
 		getClientList();
 	});
 }
@@ -102,8 +111,8 @@ function updateClient()
 		seqdigits: $("#seqdigits").val(),
 		code: $("#namecode").val(),
 		id: $("#cliente_seleccionado_id").html(),
-		email: "pmata@amro.com",
-		password: "123",
+		email: user, 								//"pmata@amro.com",
+		password: pass, 							//"123",
 	},
 	function(data) {
 	});
@@ -111,6 +120,7 @@ function updateClient()
 
 function getClientList()
 {
+	//console.log("getClientList"+user+pass);
 	getClients();
 }
 
@@ -122,8 +132,8 @@ function getClient(id, name)
 		method: "GetClient",
 		name: name,
 		id: id,
-		email: "pmata@amro.com",
-		password: "123"
+		email: user, 							//"pmata@amro.com",
+		password: pass, 						//"123"
 	},
 	function(data) {
 		if(data.clients.length > 1)
@@ -162,8 +172,8 @@ function getClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user, 				//"pmata@amro.com",
+		password: pass, 			//"123"
 	},
 	function(data) {
 		var inner_html = "<table><tr><th>Cliente</th><th>Direccion</th><!--<th>Editar</th>--><th>Eliminar</th></tr><tr>"
@@ -175,12 +185,10 @@ function getClients()
 			//inner_html += "<td align='center'><img src='img/edit.png' width='20' heigth='20' alt='Editar' title='Editar' /></td>";
 			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";
 		}
-		$("#client_list").html(inner_html);
-		
+		$("#client_list").html(inner_html);		
 		$("#clientes_totales").html("Cantidad de Clientes: "+data.clients.length);
 		$("#cliente_seleccionado").html("<h4>Ninguno...</h4>");
-		
-		
+
 	});
 }
 
@@ -190,8 +198,8 @@ function deleteClient(id, name)
 	{
 		target: "Client",
 		method: "DeleteClient",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,				// "pmata@amro.com",
+		password: pass, 			// "123",
 		id: id,
 	},
 	function(data) {

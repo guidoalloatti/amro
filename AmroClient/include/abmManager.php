@@ -1,5 +1,7 @@
 <?php
 
+/*
+
 if(isset($_GET["module"]))
 	$module = $_GET["module"];
 else 
@@ -40,5 +42,5 @@ if($module == "cliente")
 	echo "</table></table>";
 
 }
-
+*/
 ?>

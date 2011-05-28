@@ -1,5 +1,10 @@
+// Global Vars
 var selectedCA = null;
 var selectedTT = null;
+var server_url = "http://localhost:8080/?callback=?";
+var user = $.cookie("user");
+var pass = $.cookie("pass");
+
 
 $(document).ready(function() {
 	$("#link_tt").hide();
@@ -57,6 +62,13 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 });
+
+function tratamientoTermicoStart()
+{
+	if(user == null || pass == null)
+		doGetSessionVars();
+	prepareTTAbm();	
+}
 
 function prepareTTAbm()
 {
@@ -139,8 +151,8 @@ function deleteTT(id)
 			{
 				target: "TTreatment",
 				method: "DeleteTT",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,				// "pmata@amro.com",
+				password: pass,				// "123",
 				id: id					
 			},
 			function(data) {
@@ -201,8 +213,8 @@ function prepareTT()
 	{
 		target: "TTreatment",
 		method: "GetTT",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,				// "pmata@amro.com",
+		password: pass,				//"123"
 	},
 	function(data) {
 		if(data.success == true && data.tts.length > 0)
@@ -259,8 +271,8 @@ function prepareCA()
 	{
 		target: "Analysis",
 		method: "CheckCA",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,					//"pmata@amro.com",
+		password: pass					//"123"
 	},
 	function(data) {
 		if (data.success == true) {
@@ -315,8 +327,8 @@ function linkTT()
 			{
 				target: "Analysis",
 				method: "AttachTT",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,			// "pmata@amro.com",
+				password: pass,			// "123",
 				ttreatment_id: selectedTT.id,
 				id: selectedCA.id
 			},
@@ -357,8 +369,8 @@ function newTT()
 			{
 				target: "TTreatment",
 				method: "NewTT",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,			// "pmata@amro.com",
+				password: pass,			// "123",
 				year: year,
 				day: day,
 				month: month,

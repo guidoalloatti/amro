@@ -1,4 +1,7 @@
 var server_url = "http://localhost:8080/?callback=?";
+var user = $.cookie("user");
+var pass = $.cookie("pass");
+
 
 $(document).ready(function() {
 
@@ -71,8 +74,8 @@ function loadAllClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,      	// "pmata@amro.com",
+		password: pass		// "123"
 	},
 	function(data) {
 		if(data.success == true && data.clients.length > 0)
@@ -96,8 +99,8 @@ function loadAllMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,      // "pmata@amro.com",
+		password: pass,	  // "123",
 	},
 	function(data) {
 		if(data.success == true && data.materials.length > 0)
@@ -121,8 +124,8 @@ function loadAllUsers()
 	{
 		target: "User",
 		method: "GetUser",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,      	// "pmata@amro.com",
+		password: pass, 	// "123"
 	},
 	function(data) {
 		if(data.success == true && data.users.length > 0)
@@ -205,8 +208,8 @@ function getOCDetails(callback)
 			{
 				target: "CSVParsing",
 				method: "GetOC",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,      	// "pmata@amro.com",
+				password: pass,     // "123",
 				id: vars.id,
 				order: "ordencompra"
 			},
@@ -265,8 +268,8 @@ function generateCertificate()
 		method: "NewCertificate",
 		identificacion: vars.numprobeta,
 		protn: vars.numprobeta,
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,      	// "pmata@amro.com",
+		password: pass,     // "123",
 		ordencompra: vars.ordencompra,
 		chemicalanalysis: quimicos,
 		mechanicalanalysis: mecanicos,
@@ -292,8 +295,8 @@ function getOCs()
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,      		// "pmata@amro.com",
+		password: pass,      	// "123",
 		order: "ordencompra"
 	},
 	function(data) {
@@ -347,8 +350,8 @@ function uploadCAFile(file)
 			{
 				target: "Analysis",
 				method: "ParseCA",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,      	// "pmata@amro.com",
+				password: pass,     // "123",
 				filepath: "/home/pmata/amro/"+shortname
 			},
 			function(data) {
@@ -374,8 +377,8 @@ function getCA()
 			{
 				target: "Analysis",
 				method: "CheckCA",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,      	// "pmata@amro.com",
+				password: pass,     // "123",
 				numprobeta: vars.numprobeta
 			},
 			function(data) {
@@ -458,8 +461,8 @@ function getMA()
 			{
 				target: "Analysis",
 				method: "GetMA",
-				email: "pmata@amro.com",
-				password: "123",
+				email: user,      	// "pmata@amro.com",
+				password: pass,     // "123",
 				order: "id"
 			},
 			function(data) {
@@ -536,8 +539,8 @@ function loadMA()
 	$.getJSON(globals.server_url,	{
 		target: "Analysis",
 		method: "LoadMA",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,      	// "pmata@amro.com",
+		password: pass,     // "123",
 		mechanicalanalysis: mecanico,
 		material_id: material				
 	},
@@ -549,7 +552,8 @@ function loadMA()
 	});
 }	
 
-function checkSaveOpportunity() {
+function checkSaveOpportunity() 
+{
 	var filled = true;
 	$('#formElem').children(':nth-child(3)').find(':input:not(button)').each(function(){
 		var $this 		= $(this);
@@ -601,8 +605,6 @@ function showTT(ttermicos)
 	//$("#new_tt").show("slow");
 }
 
-
-
 function getTT()
 {
 	if(globals.currentTTermicos != null && globals.currentTTermicos.length > 0)
@@ -612,8 +614,8 @@ function getTT()
 	{
 		target: "TTreatment",
 		method: "GetTT",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,      	// "pmata@amro.com",
+		password: pass,		// "123"
 	},
 	function(data) {
 		if(data.success == true && data.tts.length > 0)
@@ -662,8 +664,8 @@ function loadTTfromCA(id)
 	{
 		target: "TTreatment",
 		method: "GetTT",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,      	// "pmata@amro.com",
+		password: pass,     //  "123",
 		id: id
 	},
 	function(data) {

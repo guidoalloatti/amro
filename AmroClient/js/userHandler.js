@@ -1,10 +1,10 @@
 // Global Variables Definitions
-var server_url = "http://192.168.1.101:8080/?callback=?";
-//var server_url = server_url;
+var server_url = "http://192.168.1.101:8080/?callback=?"; // globals.server_url; // 
+var user = $.cookie("user");
+var pass = $.cookie("pass");
+
 
 $(document).ready(function() {
-
-	//getUserList();
 
 	$("#guardar_usuario").click(function(){
 		insertUsuario();
@@ -29,6 +29,13 @@ $(document).ready(function() {
 	
 });
 
+function userStart()
+{
+	if(user == null || pass == null)
+		doGetSessionVars();
+	getUserList();
+}
+
 // Funciones de Manejo de Usuarios
 function newUsuario()
 {
@@ -37,7 +44,6 @@ function newUsuario()
 	$("#signature").val("");
 	$("#email").val("");
 	$("#password").val("");
-	
 }
 	
 function loadUser(name, id)
@@ -99,8 +105,8 @@ function getUser(id, name)
 		method: "GetUser",
 		name: name,
 		id: id,
-		email: "pmata@amro.com",
-		password: "123"
+		email: user, 			// "pmata@amro.com",
+		password: pass, 		// "123"
 	},
 	function(data) {
 		if(data.users.length > 1)
@@ -110,7 +116,6 @@ function getUser(id, name)
 			$("#name").val(data.users[0].name);
 			$("#surname").val(data.users[0].surname);
 			$("#email").val(data.users[0].email);
-			//$("#password").val(data.users[0].password);
 			$("#signature").val(data.users[0].signature);
 			$("#usuario_seleccionado_name").html(data.users[0].name);
 			$("#usuario_seleccionado_id").html(data.users[0].id);
@@ -132,15 +137,14 @@ function getUsers()
 	{
 		target: "User",
 		method: "GetUser",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user, 			// "pmata@amro.com",
+		password: pass, 		// "123"
 	},
 	function(data) {
 		var inner_html = "<table><tr><th>Usuario</th><th>Eliminar</th></tr><tr>"
 		for(i = 0; i < data.users.length; i++)
 		{	
 			inner_html += "<td><a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
-			//inner_html += "<td>"+data.users[i].address+"</td>";
 			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td></tr>";
 		}
 		$("#usuario_list").html(inner_html);
@@ -155,8 +159,8 @@ function deleteUser(id, name)
 	{
 		target: "User",
 		method: "DeleteUser",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user, 			// "pmata@amro.com",
+		password: pass,			// "123",
 		id: id,
 	},
 	function(data) {

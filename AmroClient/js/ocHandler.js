@@ -1,3 +1,7 @@
+var server_url = "http://localhost:8080/?callback=?";
+var user = $.cookie("user");
+var pass = $.cookie("pass");
+
 $(document).ready(function() {
 
 	$("#cargar_ocs").click(function(){
@@ -14,6 +18,8 @@ $(document).ready(function() {
 
 function loadOCPage()
 {
+	if(user == null || pass == null)
+		doGetSessionVars();
 	loadClients();
 	loadMaterials();
 	getAllOC();
@@ -72,8 +78,8 @@ function loadClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,		//"pmata@amro.com",
+		password: pass,		//"123"
 	},
 	function(data) {
 		if(data.success == true && data.clients.length > 0)
@@ -108,8 +114,8 @@ function loadMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,		//"pmata@amro.com",
+		password: pass,		//"123"
 	},
 	function(data) {
 		if(data.success == true && data.materials.length > 0)
@@ -136,8 +142,8 @@ function searchByOC()
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,		//"pmata@amro.com",
+		password: pass,		//"123",
 		ordencompra: $("#orden_compra").val(),
 		order: "ordencompra"
 	},
@@ -182,8 +188,8 @@ function searchByProbeta()
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,			//"pmata@amro.com",
+		password: pass,			//"123",
 		numprobeta: $("#protocolo").val(),
 		order: "numprobeta"
 	},
@@ -273,8 +279,8 @@ function getAllOC()
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,			//"pmata@amro.com",
+		password: pass,			//"123",
 		order: "ordencompra"
 	},
 	function(data) {
@@ -335,8 +341,8 @@ function parseCSV(file)
 	{
 		target: "CSVParsing",
 		method: "ParseCSV",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,		//"pmata@amro.com",
+		password: pass,		//"123",
 		filepath: "/home/guido/Escritorio/"+ shortname
 	},
 	function(data) {

@@ -3,10 +3,12 @@
 class htmlCodeStore {
 
     public $pageInvoice;
-
-    function __construct($page_invoice)
+	public $module;
+	
+    function __construct($page_invoice, $module)
     {
         $this->pageInvoice = $page_invoice;
+		$this->module = $module;
     }
 
     /* All Pages Commons */
@@ -96,8 +98,20 @@ class htmlCodeStore {
     {
 		switch ($this->pageInvoice)
 		{
+			case "pr":
+				$pageDescription = "Menu Principal";
+				break;
 			case "oc":
 				$pageDescription = "Gestión de Ordenes de Compra";
+				break;
+			case "ce":
+				$pageDescription = "Gestión de Certificados";
+				break;
+			case "abm":
+				$pageDescription = "Gestión del Recurso <b><u>".$this->module."</u></b> del Sistema";
+				break; 
+			case "ab":
+				$pageDescription = "Seleccion de Recurso a Modificar ";
 				break;
 			default:
 				$pageDescription = $this->pageInvoice;

@@ -17,7 +17,7 @@ class Render
     {
 		$this->module = $module;
         $this->pageInvoice = $pageInvoice;
-        $this->htmlCode = new htmlCodeStore($pageInvoice);
+        $this->htmlCode = new htmlCodeStore($pageInvoice, $module);
     }
 
     private function getIncludes()

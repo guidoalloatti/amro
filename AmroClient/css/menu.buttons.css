@@ -24,9 +24,10 @@ border: none;
 
 /* Green Button */
 button.green {
-background: transparent url( img/green_right.png ) no-repeat scroll right top;
-background: green transparent no-repeat scroll right top;
-clear: left;
+	width: 500px;
+	background: transparent url( img/green_right.png ) no-repeat scroll right top;
+	background: green transparent no-repeat scroll right top;
+	clear: left;
     font-size: 0.8em;
 }
 
@@ -46,9 +47,10 @@ background-position: 0% -30px;
 
 /* Red Button */
 button.red {
-background: transparent url( img/red_right.png ) no-repeat scroll right top;
-clear: left;
-font-size: 0.8em;
+	width: 500px;
+	background: transparent url( img/red_right.png ) no-repeat scroll right top;
+	clear: left;
+	font-size: 0.8em;
 }
 
 button.red span {
@@ -66,9 +68,10 @@ background-position: 0% -30px;
 
 /* Gray Button */
 button.gray {
-background: transparent url( img/gray_right.png ) no-repeat scroll right top;
-clear: left;
-font-size: 0.8em;
+	width: 500px;
+	background: transparent url( img/gray_right.png ) no-repeat scroll right top;
+	clear: left;
+	font-size: 0.8em;
 }
 
 button.gray span {
@@ -86,9 +89,10 @@ background-position: 0% -30px;
 
 /* Blue Button */
 button.blue {
-background: transparent url( img/blue_right.png ) no-repeat scroll right top;
-clear: left;
-font-size: 0.8em;
+	width: 500px;
+	background: transparent url( img/blue_right.png ) no-repeat scroll right top;
+	clear: left;
+	font-size: 0.8em;
 }
 
 button.blue span {
@@ -106,9 +110,10 @@ background-position: 0% -30px;
 
 /* Orange Button */
 button.orange {
-background: transparent url( img/orange_right.png ) no-repeat scroll right top;
-clear: left;
-font-size: 0.8em;
+	width: 500px;
+	background: transparent url( img/orange_right.png ) no-repeat scroll right top;
+	clear: left;
+	font-size: 0.8em;
 }
 
 button.orange span {
@@ -126,9 +131,10 @@ background-position: 0% -30px;
 
 /* Yellow Button */
 button.yellow {
-background: transparent url( img/yellow_right.png ) no-repeat scroll right top;
-clear: left;
-font-size: 0.8em;
+	width: 500px;
+	background: transparent url( img/yellow_right.png ) no-repeat scroll right top;
+	clear: left;
+	font-size: 0.8em;
 }
 
 button.yellow span {

@@ -1,10 +1,11 @@
 // Global Variables Definitions
 //var server_url = "http://192.168.1.101:8080/?callback=?";
+//var server_url = server_url;
 var server_url = "http://localhost:8080/?callback=?";
+var user = $.cookie("user");
+var pass = $.cookie("pass");
 
 $(document).ready(function() {
-
-	//getMaterialList();
 
 	$("#guardar_material").click(function(){
 		insertMaterial();
@@ -26,8 +27,14 @@ $(document).ready(function() {
 		updateMaterial();
 	});
 	
-	
 });
+
+function materialStart()
+{
+	if(user == null || pass == null)
+		doGetSessionVars();
+	getMaterialList();
+}
 
 // Funciones de Manejo de Clientes
 function newMaterial()
@@ -107,8 +114,8 @@ function insertMaterial()
 		name: $("#name").val(),
 		chlimits: quimicos,
 		mlimits: mecanicos,
-		email: "pmata@amro.com",
-		password: "123",
+		email: user, 			// "pmata@amro.com",
+		password: pass,			// "123",
 		//id: id,
 	},
 	function(data) {
@@ -152,8 +159,8 @@ function updateMaterial()
 		name: $("#name").val(),
 		chlimits: quimicos,
 		mlimits: mecanicos,
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,			// "pmata@amro.com",
+		password: pass,			//"123",
 		id: $("#material_seleccionado_id").html(),
 	},
 	function(data) {
@@ -174,8 +181,8 @@ function getMaterial(id, name)
 		method: "GetMaterial",
 		name: name,
 		id: id,
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,			// "pmata@amro.com",
+		password: pass,			// "123"
 	},
 	function(data) {
 		if(data.materials.length > 1)
@@ -242,8 +249,8 @@ function getMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,			// "pmata@amro.com",
+		password: pass,			// "123"
 	},
 	function(data) {
 		var inner_html = "<table><tr><th>Material</th><th>Eliminar</th></tr><tr>"
@@ -265,8 +272,8 @@ function deleteMaterial(id, name)
 	{
 		target: "Material",
 		method: "DeleteMaterial",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,				// "pmata@amro.com",
+		password: pass,				// "123",
 		id: id,
 	},
 	function(data) {

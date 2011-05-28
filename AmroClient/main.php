@@ -13,17 +13,30 @@ echo "User: ".$_SESSION['user']."<br/>
 	var_dump($_SESSION);
 */
 
+$testLogin = true;
+
 if(!isset($_SESSION))
 	session_start();
 
+if($testLogin)
+{
+	//echo "Seteando loginVars";
+	$time = time();
+	$_SESSION['user'] = "pmata@amro.com";
+	$_SESSION['pass'] = "123";
+	$_SESSION['lastLoginDate'][$_GET['user']] = $time;
+}
+	
+/*
  if( ($_SESSION['user'] === null || 
 	  $_SESSION['pass'] === null) &&
 	  $_GET["invoice_url"] != "lo")
  {
-	echo "Se debe loguear para poder ingresar al sistema.<br/><a href='main.php?invoice_url=lo'>Ir al login</a>";
- }
- else
- {
+ */
+//	echo "Se debe loguear para poder ingresar al sistema.<br/><a href='main.php?invoice_url=lo'>Ir al login</a>";
+ //}
+ //else
+ //{
 	if(!isset($_GET["invoice_url"]))
 		$invoice_url = "pr";
 	else
@@ -38,5 +51,5 @@ if(!isset($_SESSION))
 	$myRender = new Render($invoice_url, $module);
 	$myRender->getPage();
 	$myRender->renderPage();
-}
+//}
 ?>

@@ -16,7 +16,6 @@ $user = $_GET['user'];
 $pass = $_GET['pass'];
 $time = time();
 
-
 $_SESSION['user'] = $user;
 $_SESSION['pass'] = $pass;
 $_SESSION['lastLoginDate'][$_GET['user']] = $time;

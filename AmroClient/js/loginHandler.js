@@ -6,10 +6,12 @@ var user;
 var key;
 
 $(document).ready(function() {
-
 	$("#loginButton").click(function(){
 		if(checkValues())
-			checkLogin()
+			{
+				fakeLogin();
+				//checkLogin()
+			}
 		else
 			$("#error_box").html("<b>Atencion:</b> Usuario o password no especificados");
 	});
@@ -22,6 +24,13 @@ function checkValues()
 	if( $("#user").val() == "" || $("#pass").val() == "" )
 		canLogin = false;
 	return canLogin;
+}
+
+function fakeLogin()
+{
+	globals.logedUser = $("#user").val();
+	globals.logedPass = $("#pass").val();
+	window.location.replace("main.php?invoice_url=pr");
 }
 
 function checkLogin()
@@ -65,8 +74,6 @@ function doLogin(user, pass, key)
 	http_request.onreadystatechange = handle_json;
 	http_request.open("GET", url, true);
 	http_request.send(null);
-
-
 }
  
  function handle_json()
@@ -76,14 +83,14 @@ function doLogin(user, pass, key)
 			var json_data = http_request.responseText; 
 			var the_object = eval("(" + json_data + ")");
 			
-			console.log("http_request.readyState: "+http_request.readyState);
-			console.log("The Object: "+the_object);
-			console.log("Json Data: "+json_data);	
-			
 			window.location.replace("main.php?invoice_url=pr");
 			
-			//window.location.href = "main.php?invoice_url=pr";
-			//alert(the_object);
+			//globals.logedUser = $("#user").val();
+			//globals.logedPass = $("#pass").val();
+			//console.log("http_request.readyState: "+http_request.readyState);
+			//console.log("The Object: "+the_object);
+			//console.log("Json Data: "+json_data);	
+			//console.log("Usuario y Password Seteado en globals: "+globals.logedUser+" | "+globals.logedPass);
 			
 		} else {
 			alert("Ocurrio un problema con la URL.");
