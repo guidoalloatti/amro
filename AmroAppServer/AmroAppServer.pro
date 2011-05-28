@@ -32,7 +32,10 @@ SOURCES += main.cpp \
     certificateresponse.cpp \
     csvparsingresponse.cpp \
     analysisresponse.cpp \
-    certificategenerator.cpp
+    certificategenerator.cpp \
+    certificateprinter.cpp \
+    cprinter.cpp \
+    termicaltreatmentresponse.cpp
 
 HEADERS += \
     requestlistener.h \
@@ -47,7 +50,10 @@ HEADERS += \
     certificateresponse.h \
     csvparsingresponse.h \
     analysisresponse.h \
-    certificategenerator.h
+    certificategenerator.h \
+    certificateprinter.h \
+    cprinter.h \
+    termicaltreatmentresponse.h
 
 LIBS += -L../DataLibrary \
     -lDataLibrary
