@@ -1,5 +1,4 @@
 var globals = {
-
 	currentOrders: null,
 	server_url: "http://localhost:8080/?callback=?",
 	currentCA: null,
@@ -10,9 +9,11 @@ var globals = {
 	currentUsers: null,
 	currentTTermicos: null,
 	currentUsers: null,
-	currentCerts: null
+	currentCerts: null,
 	logedUser: null,
 	logedPass: null,
+	pathToUpload: "../AmroClient/files/uploads/",
+	pathToCerts: "files/certificados/",
 };
 
 

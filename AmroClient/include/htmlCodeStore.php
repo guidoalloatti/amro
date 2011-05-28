@@ -384,6 +384,9 @@ class htmlCodeStore {
 		unset($_SESSION['user']);
 		unset($_SESSION['pass']);
 		
+		unset($_COOKIE["user"]);
+		unset($_COOKIE["pass"]);
+		
 		return file_get_contents("html/body/logout.html");
 	}
 	

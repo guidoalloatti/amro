@@ -9,8 +9,8 @@ $(document).ready(function() {
 	$("#loginButton").click(function(){
 		if(checkValues())
 			{
-				fakeLogin();
-				//checkLogin()
+				//fakeLogin();
+				checkLogin();
 			}
 		else
 			$("#error_box").html("<b>Atencion:</b> Usuario o password no especificados");
@@ -35,7 +35,7 @@ function fakeLogin()
 
 function checkLogin()
 {
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(globals.server_url, 		//"http://localhost:8080/?callback=?",
 	{
 		target: "User",
 		method: "Login",
@@ -83,14 +83,15 @@ function doLogin(user, pass, key)
 			var json_data = http_request.responseText; 
 			var the_object = eval("(" + json_data + ")");
 			
-			window.location.replace("main.php?invoice_url=pr");
 			
 			//globals.logedUser = $("#user").val();
 			//globals.logedPass = $("#pass").val();
-			//console.log("http_request.readyState: "+http_request.readyState);
-			//console.log("The Object: "+the_object);
-			//console.log("Json Data: "+json_data);	
-			//console.log("Usuario y Password Seteado en globals: "+globals.logedUser+" | "+globals.logedPass);
+			console.log("http_request.readyState: "+http_request.readyState);
+			console.log("The Object: "+the_object);
+			console.log("Json Data: "+json_data);	
+			console.log("Usuario y Password Seteado en globals: "+globals.logedUser+" | "+globals.logedPass);
+
+			window.location.replace("main.php?invoice_url=pr");
 			
 		} else {
 			alert("Ocurrio un problema con la URL.");

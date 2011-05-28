@@ -1,4 +1,4 @@
-var server_url = "http://localhost:8080/?callback=?";
+var server_url = globals.server_url; //"http://localhost:8080/?callback=?";
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 
@@ -352,7 +352,7 @@ function uploadCAFile(file)
 				method: "ParseCA",
 				email: user,      	// "pmata@amro.com",
 				password: pass,     // "123",
-				filepath: "/home/pmata/amro/"+shortname
+				filepath: globals.pathToUploads+shortname,		//"/home/pmata/amro/"+shortname
 			},
 			function(data) {
 				if (data.success == true) {
@@ -572,7 +572,7 @@ function checkSaveOpportunity()
 
 function selectTR(id)
 {
-	alert("asd");
+	//alert("asd");
 	$("#ttermico_selected").val(id);
 }
 

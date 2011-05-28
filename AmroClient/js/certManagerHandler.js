@@ -1,3 +1,6 @@
+var user = $.cookie("user");
+var pass = $.cookie("pass");
+
 $(document).ready(function() {
 
 	$("#cargar_certs").click(function(){
@@ -8,6 +11,8 @@ $(document).ready(function() {
 
 function loadCertPage()
 {
+	if(user == null || pass == null)
+		doGetSessionVars();
 	loadClients();
 	loadMaterials();
 	loadUsers();
@@ -98,8 +103,8 @@ function loadClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,
+		password: pass,
 	},
 	function(data) {
 		if(data.success == true && data.clients.length > 0)
@@ -157,8 +162,8 @@ function loadUsers()
 	{
 		target: "User",
 		method: "GetUser",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,
+		password: pass,
 	},
 	function(data) {
 		if(data.success == true && data.users.length > 0)
@@ -216,8 +221,8 @@ function loadMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: "pmata@amro.com",
-		password: "123"
+		email: user,
+		password: pass,
 	},
 	function(data) {
 		if(data.success == true && data.materials.length > 0)
@@ -270,8 +275,8 @@ function searchByOC()
 	{
 		target: "Certificate",
 		method: "GetCertificate",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,
+		password: pass,
 		ordencompra: $("#cert_orden_compra").val(),
 		order: "id"
 	},
@@ -310,8 +315,8 @@ function searchByDate()
 	{
 		target: "Certificate",
 		method: "GetCertificate",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,
+		password: pass,
 		day: $("#cert_dia").val(),
 		month: $("#cert_mes").val(),
 		year: $("#cert_year").val(),
@@ -341,8 +346,8 @@ function searchByProtN()
 	{
 		target: "Certificate",
 		method: "GetCertificate",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,
+		password: pass,
 		protn: $("#cert_protn").val(),
 		order: "id"
 	},
@@ -372,8 +377,8 @@ function searchByProbeta()
 	{
 		target: "Certificate",
 		method: "GetCertificate",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,
+		password: pass,
 		numprobeta: $("#cert_numprob").val(),
 		order: "id"
 	},
@@ -395,8 +400,8 @@ function getAllCerts()
 	{
 		target: "Certificate",
 		method: "GetCertificate",
-		email: "pmata@amro.com",
-		password: "123",
+		email: user,
+		password: pass,
 		order: "id"
 	},
 	function(data) {

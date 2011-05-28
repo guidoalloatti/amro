@@ -32,16 +32,16 @@ function searchOC()
 	switch(selected_search)
 	{
 		case "o":
-			searchByOC();
+			searchOCByOC();
 			break;
 		case "p":
-			searchByProbeta();
+			searchOCByProbeta();
 			break;
 		case "c":
-			searchByClient();
+			searchOCByClient();
 			break;
 		case "m":
-			searchByMaterial();
+			searchOCByMaterial();
 			break;
 		default:
 			getAllOC();
@@ -58,7 +58,7 @@ function searchOC()
 	*/
 }
 
-function showClients(clients)
+function showClientsByOC(clients)
 {		
 	var inner_html = "<select name='select_cliente' id='select_cliente'><option>Todos los Clientes</option>";
 	for(i = 0; i < clients.length; i++)
@@ -85,7 +85,7 @@ function loadClients()
 		if(data.success == true && data.clients.length > 0)
 		{
 			globals.currentClients = data.clients;
-			showClients(data.clients);
+			showClientsByOC(data.clients);
 		}
 		else
 		{
@@ -94,7 +94,7 @@ function loadClients()
 	});
 }
 
-function showMaterials(materials)
+function showMaterialsByOC(materials)
 {		
 	var inner_html = "<select name='select_material' id='select_material'><option>Todos los Materiales</option>";
 	for(i = 0; i < materials.length; i++)
@@ -121,7 +121,7 @@ function loadMaterials()
 		if(data.success == true && data.materials.length > 0)
 		{
 			globals.currentMaterials = data.materials;
-			showMaterials(data.materials);
+			showMaterialsByOC(data.materials);
 		}
 		else
 		{
@@ -130,7 +130,7 @@ function loadMaterials()
 	});
 }
 
-function searchByOC()
+function searchOCByOC()
 {
 	if($("#orden_compra").val() == "")
 	{
@@ -176,7 +176,7 @@ function searchByOC()
 	});
 }
 
-function searchByProbeta()
+function searchOCByProbeta()
 {
 	if($("#protocolo").val() == "")
 	{
@@ -222,8 +222,8 @@ function searchByProbeta()
 	});
 }
 	
-/*	
-function searchByMaterial()
+/*
+function searchOCByMaterial()
 {
 	if($("#material").val() == "")
 	{

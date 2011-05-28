@@ -1,6 +1,6 @@
 // Global Variables Definitions
 //var server_url = "http://192.168.1.101:8080/?callback=?";
-var server_url = "http://localhost:8080/?callback=?";
+var server_url = globals.server_url; //"http://localhost:8080/?callback=?";
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 
@@ -35,12 +35,6 @@ $(document).ready(function() {
 	if(user == null || pass == null)
 		doGetSessionVars();
 	getClientList();
-}
-
-
-function pep()
-{
-	alert("Juanchorga");
 }
 
 // Funciones de Manejo de Clientes
@@ -115,6 +109,7 @@ function updateClient()
 		password: pass, 							//"123",
 	},
 	function(data) {
+		getClientList();
 	});
 }
 
