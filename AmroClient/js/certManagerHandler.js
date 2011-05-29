@@ -3,10 +3,15 @@ var pass = $.cookie("pass");
 
 $(document).ready(function() {
 
-	$("#cargar_certs").click(function(){
-		getAllCerts();
+	$("#to_new_certs").click(function(){
+		window.location = "main.php?invoice_url=ce"; 
+		event.preventDefault();
 	});	
 	
+	$("#cargar_certs").click(function(){
+		getAllCerts();
+		event.preventDefault();
+	});	
 });
 
 function loadCertPage()
@@ -237,9 +242,32 @@ function loadMaterials()
 	});
 }
 
+function deleteCertificate(id)
+{
+	$.getJSON(globals.server_url,
+			{
+				target: "Certificate",
+				method: "DeleteCertificate",
+				email: user,
+				password: pass,
+				id: id
+			},
+			function(data) {
+				if(data.success == true)
+				{
+					if (data.files == undefined)
+						alert("Certificado borrado con éxito!");
+					else
+						alert("El certificado fue borrado con éxito de la base de datos, pero no se pudieron eliminar los archivos correctamente del sistema.");
+					getAllCerts();					
+				} else
+					alert("No se pudo borrar certificado. Error en el servidor.");
+			});
+}
+
 function showCerts(certs)
 {
-	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Ver Certificado</th></tr>";
+	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Borrar</th><th class='oc'>Ver Certificado</th></tr>";
 	for(var i=0; i < certs.length; i++)
 	{
 		var line = "even";
@@ -257,7 +285,8 @@ function showCerts(certs)
 		inner_html += "<td>"+userNameSearch(certs[i].performer_id)+"</td>";
 		inner_html += "<td>"+certs[i].ordencompra+"</td>";
 		inner_html += "<td>"+certs[i].date+"</td>";
-		inner_html += "<td align='center'><a href='file://" + certs[i].certificatepath + "'><img src='img/create.gif' alt='Ver Certificado "+certs[i].protn+"' width='25px'/></a></td>";
+		inner_html += "<td align='center'><button style='background: #e82c2c;' id='delete_cert_button' onclick='deleteCertificate("+certs[i].id+"); event.preventDefault(); '>borrar</button></td>";
+		inner_html += "<td align='center'><a target='_blank' href='" + certs[i].certificatepath + "'><button id='open_cert_button'>Ver</button> </a></td>";
 		inner_html += "</tr>";
 	}	
 	$("#certificados").html(inner_html);

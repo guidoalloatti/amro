@@ -90,6 +90,9 @@ function doLogin(user, pass, key)
 			console.log("The Object: "+the_object);
 			console.log("Json Data: "+json_data);	
 			console.log("Usuario y Password Seteado en globals: "+globals.logedUser+" | "+globals.logedPass);
+			
+			$.cookie("user", $("#user").val());
+			$.cookie("pass", $("#pass").val());
 
 			window.location.replace("main.php?invoice_url=pr");
 			

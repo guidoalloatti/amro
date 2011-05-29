@@ -10,24 +10,24 @@
 <hr/>
 <table>
 	<tr>
-		<td>Nº Orden de Compra:</td><td><input id="cert_orden_compra" /></td>
-		<td>Nº de Probeta:</td><td><input id="cert_numprob" /></td>
-		<td>Fecha:</td><td><input placeholder="dd" size="1" id="cert_dia"/><input placeholder="mm" size="1" id="cert_mes"/><input  placeholder="yyyy" size="1" id="cert_year"/></td>
+		<td><label>Nº Orden de Compra:</label></td><td><input id="cert_orden_compra" /></td>
+		<td><label>Nº de Probeta:</label></td><td><input id="cert_numprob" /></td>
+		<td><label>Fecha:</label></td><td><input placeholder="dd" size="1" id="cert_dia"/><input placeholder="mm" size="1" id="cert_mes"/><input  placeholder="yyyy" size="1" id="cert_year"/></td>
 				
 	</tr>
 	<tr>
-		<td>Cliente:</td><td id="clientes"></td>
-		<td>Material:</td><td id="materiales"></td>
-		<td>Creador:</td><td  id="usuarios"></td>
+		<td><label>Cliente:</label></label></td><td id="clientes"></td>
+		<td><label>Material:</label></td><td id="materiales"></td>
+		<td><label>Creador:</label></td><td  id="usuarios"></td>
 				
 	</tr>
 	<tr>
-		<td>ProtN:</td><td><input id="cert_protn"/></td>
+		<td><label>ProtN:</label></td><td><input id="cert_protn"/></td>
 	</tr>	
 </table>
 <br/><hr>
 
-<div style="float: left; height: 55%; width: 50%; overflow: auto">
+<div style="height: 50%; width: 50%; overflow: auto">
 <table>
 	<tr>
 		<td>
@@ -38,8 +38,4 @@
 </table>
 </div>
 
-<div class="csvreportclass" style="float: right; height: 55%; width: 50%; overflow: auto">
-	<ul id="parsingreport" class="filetree"></ul>
-</div>
-
-<br/><a href='#' id='cargar_certs' >Mostrar todos los Certificados Disponibles</a>
+<br/><button id='cargar_certs' >Mostrar todos los Certificados Disponibles</button><button id='to_new_certs' >Cargar Nuevo Certificado</button>

@@ -181,38 +181,7 @@ button.common:active span {
     padding: 6px 0 4px 18px; /* push text down 1px */
 }
 
-#abm_tt button, #select_ca_button {
-	border:none;
-	outline: 5px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    color: #ffffff;
-    /*display: block;*/
-    cursor:pointer;
-    clear:both;
-    padding: 0px 5px 0px 5px;
-	margin: 5px 0px 5px 0px 0px;
-    text-shadow: 0 1px 1px #777;
-    font-weight:bold;
-    font-family:"Century Gothic", Helvetica, sans-serif;
-    font-size:12px;
-    -moz-box-shadow:0px 0px 3px #aaa;
-    -webkit-box-shadow:0px 0px 3px #aaa;
-    box-shadow:0px 0px 3px #aaa;
-    background:#4797ED;
-	
-	/*
-	position: absolute;
-    bottom: 10px;
-    left: 10px;
-	*/
-}
-#abm_tt button:hover, #select_ca_button:hover {
-    background:#d8d8d8;
-    color:#666;
-    text-shadow:1px 1px 1px #fff;
-}
+
 
 #abm_tt p{
     float:left;
@@ -243,7 +212,7 @@ button.common:active span {
     font-weight:bold;
 }
 
-#abm_tt p label{
+#abm_tt p label, #cm_body label, #oc_body label, #abm_body label{
     /*width:180px;
     float:left;*/
     text-align:center;
@@ -255,7 +224,8 @@ button.common:active span {
 }
 #abm_tt input:not([type=radio]),
 #abm_tt textarea,
-#abm_tt select{
+#abm_tt select,
+#abm_body input {
     background: #ffffff;
     border: 1px solid #ddd;
     -moz-border-radius: 3px;
@@ -266,10 +236,75 @@ button.common:active span {
     /*width: 200px;*/
     /*float:left;*/
 }
+
+#cm_body input:not(#search),
+#oc_body input:not(#search)
+ {
+    background: #ffffff;
+    /*border: .5px solid #ddd;*/
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    outline: none;
+    padding: 2.5px;
+    /*width: 200px;*/
+    /*float:left;*/
+}
+
+#cm_body select,
+#oc_body select{
+    background: lightgrey;
+    /*border: .5px solid #ddd;*/
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    outline: none;
+    padding: 2.5px;
+    /*width: 200px;*/
+    /*float:left;*/
+}
+
 #abm_tt input:focus,
-#abm_tt textarea {
+#abm_tt textarea,
+#oc_body input:focus,
+#cm_body input:focus,
+#abm_body input:focus {
     -moz-box-shadow:0px 0px 3px #aaa;
     -webkit-box-shadow:0px 0px 3px #aaa;
     box-shadow:0px 0px 3px #aaa;
     background-color:#FFFEEF;
+}
+
+#abm_tt button, #select_ca_button, #cm_body button, #oc_body button, #search, #abm_body button {
+	border:none;
+	outline: 5px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    /*display: block;*/
+    cursor:pointer;
+    clear:both;
+    padding: 0px 5px 0px 5px;
+	margin: 5px 0px 5px 0px 0px;
+    text-shadow: 0 1px 1px #777;
+    font-weight:bold;
+    font-family:"Century Gothic", Helvetica, sans-serif;
+    font-size:12px;
+    -moz-box-shadow:0px 0px 3px #aaa;
+    -webkit-box-shadow:0px 0px 3px #aaa;
+    box-shadow:0px 0px 3px #aaa;
+    background:#4797ED;
+	
+	/*
+	position: absolute;
+    bottom: 10px;
+    left: 10px;
+	*/
+}
+
+#abm_tt button:hover, #select_ca_button:hover, #cm_body button:hover, #oc_body button:hover, #abm_body button:hover, #search:hover {
+    background:#d8d8d8;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
 }

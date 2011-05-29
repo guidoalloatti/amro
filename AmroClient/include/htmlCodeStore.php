@@ -19,13 +19,13 @@ class htmlCodeStore {
 		switch ($this->pageInvoice)
         {
         	case "oc":
-        		$html .= "</head><body onload='loadOCPage();'>";
+        		$html .= "</head><body id='oc_body' onload='loadOCPage();'>";
         		break;
         	case "ce":
         		$html .= "</head><body onload='loadCert();'>";
         		break;
         	case "cm":
-        		$html .= "</head><body onload='loadCertPage();'>";
+        		$html .= "</head><body id='cm_body' onload='loadCertPage();'>";
         		break;
         	default:
         		$html .= '</head><body>';
@@ -270,7 +270,7 @@ class htmlCodeStore {
                     <p id="show_ttermico_asoc"></p>                  
                     <table width="810px" id="abm_tt">
                     	<tr>                    		
-                    		<td>
+                    		<td style="vertical-align:top;">
                     		<table width="300px">
 								<tr>
 									<td>
@@ -293,7 +293,7 @@ class htmlCodeStore {
 								</tr>
 							</table>
 							</td>
-                    		<td>
+                    		<td  style="vertical-align:top;">
                     			<table  width="480px">
 									<tr>
 										<td>
@@ -328,7 +328,8 @@ class htmlCodeStore {
                 <p><label for="observations">Observaciones</label><input type="text" id="observations" name="observations" placeholder="Ingrese alguna observación" autocomplete="OFF" /></p>
                 <p><label for="reviewer" id="reviewer">Revisa</label><select name="select_reviewer" id="select_reviewer"><option value="0">Seleccionar</option></select></p>
                 <p><label for="approver" id="approver">Aprueba</label><select name="select_approver" id="select_approver"><option value="0">Seleccionar</option></select></p>
-                <p class="submit"><button id="registerButton" type="submit">Generar Certificado!</button></p>
+                <p class="submit"><button id="registerButton" type="submit">Generar Certificado!</button><button style="float:right;" id="view_certs_button">Ir al Administrador de Certificados</button></p>"
+                
             </fieldset>
             <fieldset class="step"></fieldset>            
         </form>

@@ -149,7 +149,7 @@ function validateStep(step){
 		var $this 		= $(this);
 		var valueLength = jQuery.trim($this.val()).length;
 		
-		if($this.attr('id') != '_file' && valueLength == ''){
+		if($this.attr('id') != '_file' && valueLength == '' && step != 5){
 			hasError = true;
 			$this.css('background-color','#FFEDEF');			
 		}
@@ -157,7 +157,7 @@ function validateStep(step){
 			$this.css('background-color','#FFFFFF');					
 		}
 		
-		if ($this)
+		//if ($this)
 		
 		if (step == 5 && ($this.attr('id') == 'select_reviewer' || $this.attr('id') == 'select_approver'))
 			if ($this.val() == 0) {

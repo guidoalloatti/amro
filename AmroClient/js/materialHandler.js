@@ -9,22 +9,27 @@ $(document).ready(function() {
 
 	$("#guardar_material").click(function(){
 		insertMaterial();
+		event.preventDefault();
 	});
 	
 	$("#recargar_lista_materiales").click(function(){
 		getMaterialList();
+		event.preventDefault();
 	});
 	
 	$("#nuevo_material").click(function(){
 		newMaterial();
+		event.preventDefault();
 	});
 	
 	$("#recargar_material").click(function(){
 		reloadMaterial();
+		event.preventDefault();
 	});
 	
 	$("#actualizar_material").click(function(){
 		updateMaterial();
+		event.preventDefault();
 	});
 	
 });

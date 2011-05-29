@@ -10,22 +10,27 @@ $(document).ready(function() {
 
 	$("#guardar_cliente").click(function(){
 		insertClient();
+		event.preventDefault();
 	});
 	
 	$("#recargar_lista_clientes").click(function(){
 		getClientList();
+		event.preventDefault();
 	});
 	
 	$("#nuevo_cliente").click(function(){
 		newClient();
+		event.preventDefault();
 	});
 	
 	$("#recargar_cliente").click(function(){
 		reloadClient();
+		event.preventDefault();
 	});
 	
 	$("#actualizar_cliente").click(function(){
 		updateClient();
+		event.preventDefault();
 	});
 
 });
@@ -93,7 +98,7 @@ function updateClient()
 	{
 		target: "Client",
 		method: "UpdateClient",
-		name: encodeURIComponent($("#name").val()),
+		name: $("#name").val(),
 		address: $("#address").val(),
 		city: $("#city").val(),
 		zip: $("#zip").val(),

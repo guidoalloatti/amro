@@ -1,4 +1,8 @@
 #include "certificateresponse.h"
+
+#include <QDir>
+#include <QFile>
+
 #include "../DataLibrary/certificatemapper.h"
 #include "../DataLibrary/usermapper.h"
 #include "../DataLibrary/materialmapper.h"
@@ -164,7 +168,6 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
             }
         }
 
-
         /*
          generateCertificate() debe setear los campos state y certificatePath antes
          de insertar el certificado en la BD */
@@ -194,11 +197,24 @@ void CertificateResponse::deleteCertificate(JSONP &output, const QHash <QString,
 
     if (hasPermission(email, password, "CERTIFICATE_DELETE"))
     {
-        Certificate c;
+        Certificate c;        
 
-        c.setId(params.value("id", "").toUInt());
+        QList <Certificate> certs = CertificateMapper().get(params.value("id", "").toUInt());
+        if (certs.length() == 1)
+            c = certs.first();
+        else
+            c.setId(params.value("id", "").toUInt());
 
         success = CertificateMapper().erase(c);
+
+        if (success) {
+            QString certPath = c.getCertificatePath();
+            QString filesPath = "../AmroClient/" + certPath.split(".").first();
+
+            if (!QFile::remove(filesPath + ".pdf") ||
+                !QFile::remove(filesPath + ".html"))
+                output.add("files", "could not remove");
+        }
     } else
         output.add("permissions", "denied");
 

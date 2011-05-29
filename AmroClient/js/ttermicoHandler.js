@@ -67,6 +67,7 @@ function tratamientoTermicoStart()
 {
 	if(user == null || pass == null)
 		doGetSessionVars();
+	loadAllMaterials();
 	prepareTTAbm();	
 }
 
@@ -188,7 +189,7 @@ function showTTermicos(ttermicos)
 		inner_html += "<td>"+ttermicos[i].date+"</td>";
 		//inner_html += "<td>"+ttermicos[i].observations+"</td>";
 		inner_html += "<td align='center'><button id='view_tt' onclick='viewTT("+ttermicos[i].id+"); event.preventDefault(); '>mostrar</button></td>";
-		inner_html += "<td align='center'><button id='delete_tt' onclick='deleteTT("+ttermicos[i].id+"); event.preventDefault(); '>borrar</button></td>";
+		inner_html += "<td align='center'><button id='delete_tt' style='background: #e82c2c;' onclick='deleteTT("+ttermicos[i].id+"); event.preventDefault(); '>borrar</button></td>";
 		inner_html += "<td align='center'><button id='selected_tt' onclick='selectTT("+ttermicos[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
 		inner_html += "</tr>";
 	}

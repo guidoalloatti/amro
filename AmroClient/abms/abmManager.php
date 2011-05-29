@@ -38,14 +38,16 @@ class abmManager
 	
 	function getAbmMaterialHtml()
 	{
-		$this->html = "<body onload='materialStart();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
+		$this->html = "<body id='abm_body' onload='materialStart();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
-				<td width='20%' bgcolor='#BBBBBB' id='material_list' VALIGN='top'>
+				<td width='25%' bgcolor='#BBBBBB' id='material_list' VALIGN='top'>
+				<div style='height:300px; overflow:auto;'>
 					<table>
 					</td>
 						</tr>
 					</table>
+					</div>
 				</td>
 				<td bgcolor='lightgray' width='80%' VALIGN='top'>
 					<table bgcolor='#BBBBBB'>
@@ -63,7 +65,7 @@ class abmManager
 								<tr>
 								<tr>
 								<td><table><tr>
-									<td>Nombre:</td>
+									<td><label>Nombre:</label></td>
 									<td><input type='label' id='name' /></td>
 								</tr></table></td>
 								</tr>
@@ -76,47 +78,47 @@ class abmManager
 									<th><b>Minimo</b></th>
 								</tr>
 								<tr>
-									<td align='right'>% Carbono:</td>
+									<td align='right'><label>% Carbono:</label></td>
 									<td><input type='label' id='carbono_max' size='2'/></td>
 									<td><input type='label' id='carbono_min' size='2'/></td>
-									<td align='right'>% Cromo:</td>
+									<td align='right'><label>% Cromo:</label></td>
 									<td><input type='label' id='cromo_max' size='2'/></td>
 									<td><input type='label' id='cromo_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>% Manganeso:</td>
+									<td align='right'><label>% Manganeso:</label></td>
 									<td><input type='label' id='manganeso_max' size='2'/></td>
 									<td><input type='label' id='manganeso_min' size='2'/></td>
-									<td align='right'>% Silicio:</td>
+									<td align='right'><label>% Silicio:</label></td>
 									<td><input type='label' id='silicio_max' size='2'/></td>
 									<td><input type='label' id='silicio_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>% Fosforo:</td>
+									<td align='right'><label>% Fosforo:</label></td>
 									<td><input type='label' id='fosforo_max' size='2'/></td>
 									<td><input type='label' id='fosforo_min' size='2'/></td>
-									<td align='right'>% Azufre:</td>
+									<td align='right'><label>% Azufre:</label></td>
 									<td><input type='label' id='azufre_max' size='2'/></td>
 									<td><input type='label' id='azufre_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>% Niquel:</td>
+									<td align='right'><label>% Niquel:</label></td>
 									<td><input type='label' id='niquel_max' size='2'/></td>
 									<td><input type='label' id='niquel_min' size='2'/></td>
-									<td align='right'>% Molibdeno:</td>
+									<td align='right'><label>% Molibdeno:</label></td>
 									<td><input type='label' id='molibdeno_max' size='2'/></td>
 									<td><input type='label' id='molibdeno_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>% Cobre:</td>
+									<td align='right'><label>% Cobre:</label></td>
 									<td><input type='label' id='cobre_max' size='2'/></td>
 									<td><input type='label' id='cobre_min' size='2'/></td>
-									<td align='right'>% Vanadio:</td>
+									<td align='right'><label>% Vanadio:</label></td>
 									<td><input type='label' id='vanadio_max' size='2'/></td>
 									<td><input type='label' id='vanadio_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>C.E.:</td>
+									<td align='right'><label>C.E.:</label></td>
 									<td><input type='label' id='ce_max' size='2'/></td>
 									<td><input type='label' id='ce_min' size='2'/></td>
 								<tr>
@@ -132,26 +134,26 @@ class abmManager
 									
 									</tr>
 								<tr>
-									<td align='right'>Tension de Rotura (Mpa):</td>
+									<td align='right'><label>Tension de Rotura (Mpa):</label></td>
 									<td ><input type='label' id='tension_rotura_max' size='2'/></td>
 									<td><input type='label' id='tension_rotura_min' size='2'/></td>
-									<td align='right'>Limite de Fluencia (Mpa):</td>
+									<td align='right'><label>Limite de Fluencia (Mpa):</label></td>
 									<td><input type='label' id='limite_fluencia_max' size='2'/></td>
 									<td><input type='label' id='limite_fluencia_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>Alargamiento (%):</td>
+									<td align='right'><label>Alargamiento (%):</label></td>
 									<td><input type='label' id='alargamiento_max' size='2'/></td>
 									<td><input type='label' id='alargamiento_min' size='2'/></td>
-									<td align='right'>Estriccion (%):</td>
+									<td align='right'><label>Estriccion (%):</label></td>
 									<td><input type='label' id='estriccion_max' size='2'/></td>
 									<td><input type='label' id='estriccion_min' size='2'/></td>
 								</tr>
 								<tr>
-									<td align='right'>Resiliencia (J) Charpy A:</td>
+									<td align='right'><label>Resiliencia (J) Charpy A:</label></td>
 									<td><input type='label' id='resiliencia_max' size='2'/></td>
 									<td><input type='label' id='resiliencia_min' size='2'/></td>
-									<td align='right'>Dureza (Hb) 10/3000:</td>
+									<td align='right'><label>Dureza (Hb) 10/3000:</label></td>
 									<td><input type='label' id='dureza_max' size='2'/></td>
 									<td><input type='label' id='dureza_min' size='2'/></td>
 								</tr>
@@ -163,25 +165,27 @@ class abmManager
 			</tr>
 		</table>
 		<hr>
-		<a href='#' id='guardar_material' >Guardar Material</a> ::
-		<a href='#' id='actualizar_material' >Modificar Material</a> ::
-		<!-- <a href='#' id='eliminar_material'>Eliminar Materia</a> :: -->
-		<a href='#' id='recargar_material'>Regargar Material</a> ::
-		<a href='#' id='recargar_lista_materiales'>Regargar Lista de Materiales</a> ::
-		<a href='#' id='nuevo_material'>Nuevo Material</a><br/>
+		<button id='guardar_material' >Guardar Material</button> ::
+		<button id='actualizar_material' >Modificar Material</button> ::
+		<!-- <button id='eliminar_material'>Eliminar Materia</button> :: -->
+		<button id='recargar_material'>Recargar Material</button> ::
+		<button id='recargar_lista_materiales'>Recargar Lista de Materiales</button> ::
+		<button id='nuevo_material'>Nuevo Material</button><br/>
 		<div id='html_code'></div>";
 	}	
 	
 	function getAbmUsuarioHtml()
 	{	
-		$this->html = "<body onload='userStart();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
+		$this->html = "<body id='abm_body' onload='userStart();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
-				<td width='20%' bgcolor='#BBBBBB' id='usuario_list' VALIGN='top'>
+				<td width='25%' bgcolor='#BBBBBB' id='usuario_list' VALIGN='top'>
+				<div style='height:300px; overflow:auto;'>
 					<table>
 					</td>
 						</tr>
 					</table>
+					</div>
 				</td>
 				<td bgcolor='lightgray' width='80%' VALIGN='top'>
 					<table bgcolor='#BBBBBB'>
@@ -197,23 +201,23 @@ class abmManager
 						<td>
 							<table>
 								<tr>
-									<td>Nombre:</td>
+									<td><label>Nombre:</label></td>
 									<td><input type='label' id='name' /></td>
 								</tr>
 								<tr>
-									<td>Apellido:</td>
+									<td><label>Apellido:</label></td>
 									<td><input type='label' id='surname' /></td>
 								</tr>		
 								<tr>
-									<td>Email:</td>
+									<td><label>Email:</label></td>
 									<td><input type='label' id='email' /></td>
 								</tr>
 								<tr>
-									<td>Password:</td>
+									<td><label>Password:</label></td>
 									<td><input type='label' id='password' /></td>
 								</tr>
 								<tr>
-									<td>Firma:</td>
+									<td><label>Firma:</label></td>
 									<td><input type='file' id='signature' /></td>
 								</tr>	
 								<tr>
@@ -230,25 +234,26 @@ class abmManager
 			</tr>
 		</table>
 		<hr>
-		<a href='#' id='guardar_usuario' >Guardar Usuario</a> ::
-		<a href='#' id='actualizar_usuario' >Modificar Usuario</a> ::
-		<a href='#' id='recargar_usuario'>Regargar Usuario</a> ::
-		<a href='#' id='recargar_lista_usuarios'>Regargar Lista de Usuarios</a> ::
-		<a href='#' id='nuevo_usuario'>Nuevo Usuario</a><br/>
+		<button id='guardar_usuario' >Guardar Usuario</button> ::
+		<button id='actualizar_usuario' >Modificar Usuario</button> ::
+		<button id='recargar_usuario'>Recargar Usuario</button> ::
+		<button id='recargar_lista_usuarios'>Recargar Lista de Usuarios</button> ::
+		<button id='nuevo_usuario'>Nuevo Usuario</button><br/>
 		<div id='html_code'></div>";
 	}
 	
 	function getAbmClienteHtml()
 	{
 		
-		$this->html = "<body onload='clientStart();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
+		$this->html = "<body id='abm_body' onload='clientStart();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
 		<table width='90%' height='300px' border='0px'>
 			<tr>
-				<td width='20%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
-					<table>
+				<td width='25%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
+					<div style='height:300px overflow:auto;'><table>
 					</td>
 						</tr>
 					</table>
+					</div>
 				</td>
 				<td bgcolor='lightgray' width='80%' VALIGN='top'>
 					<table bgcolor='#BBBBBB'>
@@ -266,13 +271,13 @@ class abmManager
 								<tr>
 								<tr>
 									<td>
-										Nombre:
+										<label>Nombre:</label>
 									</td>
 									<td>
 										<input type='label' id='name' />
 									</td>
 									<td>
-										Direccion:
+										<label>Direccion:</label>
 									</td>
 									<td>
 										<input type='label' id='address' />
@@ -280,13 +285,13 @@ class abmManager
 								</tr>
 								<tr>
 									<td>
-										Ciudad:
+										<label>Ciudad:</label>
 									</td>
 									<td>
 										<input type='label' id='city' />
 									</td>
 									<td>
-										Codigo Postal:
+										<label>Codigo Postal:</label>
 									</td>
 									<td>
 										<input type='label' id='zip' />
@@ -294,13 +299,13 @@ class abmManager
 								</tr>
 								<tr>
 									<td>
-										Pais:
+										<label>Pais:</label>
 									</td>
 									<td>
 										<input type='label' id='country' />
 									</td>
 									<td>
-										Telefono:
+										<label>Telefono:</label>
 									</td>
 									<td>
 										<input type='label' id='phone' />
@@ -308,13 +313,13 @@ class abmManager
 								</tr>
 								<tr>
 									<td>
-										Fax:
+										<label>Fax:</label>
 									</td>
 									<td>
 										<input type='label' id='telefax' />
 									</td>
 									<td>
-										Pagina Web:
+										<label>Pagina Web:</label>
 									</td>
 									<td>
 										<input type='label' id='website' />
@@ -322,13 +327,13 @@ class abmManager
 								</tr>
 								<tr>
 									<td>
-										Codigo de Identificacion:
+										<label>Codigo de Identificacion:</label>
 									</td>
 									<td>
 										<input type='label' id='namecode' />
 									</td>
 									<td>
-										Cantidad Maxima de Certificados:
+										<label>Cantidad Maxima de Certificados:</label>
 									</td>
 									<td>
 										<input type='label' id='seqdigits' />
@@ -342,12 +347,12 @@ class abmManager
 			</tr>
 		</table>
 		<hr>
-		<a href='#' id='guardar_cliente' >Guardar Cliente</a> ::
-		<a href='#' id='actualizar_cliente' >Modificar Cliente</a> ::
-		<!-- <a href='#' id='eliminar_cliente'>Eliminar Cliente</a> :: -->
-		<a href='#' id='recargar_cliente'>Regargar Cliente</a> ::
-		<a href='#' id='recargar_lista_clientes'>Regargar Lista de Clientes</a> ::
-		<a href='#' id='nuevo_cliente'>Nuevo Cliente</a><br/>
+		<button id='guardar_cliente' >Guardar Cliente</button> ::
+		<button href='#' id='actualizar_cliente' >Modificar Cliente</button> ::
+		<!-- <a href='#' id='eliminar_cliente'>Eliminar Cliente</button> :: -->
+		<button href='#' id='recargar_cliente'>Recargar Cliente</button> ::
+		<button href='#' id='recargar_lista_clientes'>Recargar Lista de Clientes</button> ::
+		<button href='#' id='nuevo_cliente'>Nuevo Cliente</button><br/>
 		<div id='html_code'></div>";
 	}
 
@@ -356,7 +361,7 @@ class abmManager
 		$this->html = "<body onload='tratamientoTermicoStart();'> <h3>Carga y visualización de Tratamientos Termicos y asociación con Análisis Químicos realizados </h3>
 		<table id='abm_tt'>
 			<tr>
-				<td width='420px' id='all_tt_cell'>
+				<td width='420px' id='all_tt_cell' style='vertical-align:top;'>
 					<table width='420px'>
 						<tr>
 							<td>
@@ -381,7 +386,7 @@ class abmManager
 					</table>
 				</td>
 				
-				<td width='430px' id='link_tt_cell'>
+				<td width='430px' id='link_tt_cell' style='vertical-align:top;'>
 					<table  width='430px'>
 						<tr>
 							<td>
@@ -403,7 +408,7 @@ class abmManager
 					</table>
 				</td>			
 				
-				<td width='420px' id='new_tt_cell'>
+				<td width='420px' id='new_tt_cell' style='vertical-align:top;'>
 					<table width='420px'>
 						<tr>
 							<td>
@@ -429,7 +434,7 @@ class abmManager
 					</table>
 				</td>
 				
-				<td width='420px' id='tt_viewer_cell'>
+				<td width='420px' id='tt_viewer_cell' style='vertical-align:top;'>
 					<table  width='420px'>
 						<tr>
 							<td>

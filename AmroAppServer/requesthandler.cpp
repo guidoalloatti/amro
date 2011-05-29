@@ -42,6 +42,7 @@ void RequestHandler::run()
     QPair <QString, QString> p;
 
     foreach (p, url.queryItems()) {
+        p.second.replace('+', ' ');
         QByteArray decoded = QByteArray::fromPercentEncoding(QByteArray::fromPercentEncoding(p.second.toUtf8()));
         //QByteArray decoded = QByteArray::fromPercentEncoding(p.second.toUtf8());
         //qDebug() << decoded + " " + QString(decoded).toUtf8();

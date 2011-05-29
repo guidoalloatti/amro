@@ -15,11 +15,17 @@ $(document).ready(function() {
 	$("#ttermico_selected").hide();
 	$("#ttermico_selected").parent().hide();
 	$("#show_ttermico_asoc").hide();
+	$("#view_certs_button").hide();
+	
+	$("#view_certs_button").click(function(event){
+		window.location = "main.php?invoice_url=cm"; 
+		event.preventDefault();
+	});
 	
 	$("#checkMAExistence").click(function(event){
 		getMA();
 		event.preventDefault();
-	});
+	});	
 	
 	$("#create_tt_button").click(function(event){
 		window.location = "main.php?invoice_url=abm&module=ttermico"; 
@@ -58,7 +64,7 @@ $(document).ready(function() {
 	$('#formElem').children(':nth-child(3)').find(':input:not(button)').each(function(){
 		var $this 		= $(this);
 		$this.change(function(event){
-			checkSaveOpportunity();
+			checkMASaveOpportunity();
 			event.preventDefault();
 		});
 	});	
@@ -231,7 +237,7 @@ function cambiarOC()
 }
 
 function generateCertificate()
-{
+{	
 	var vars = getUrlVars();
 	
 	var quimicos = 	"c="+$("#_c").val()+"+"+
@@ -282,15 +288,17 @@ function generateCertificate()
 		ttreatment_id: ttreatment
 	},
 	function(data) {
-		if (data.success == true)
+		if (data.success == true) {
 			alert("El certificado se generó con éxito");
-		else
+			
+			$("#view_certs_button").show("slow");	
+		} else
 			alert("Fallo en la generación de certificado");
 	});	
 }
 
 function getOCs()
-{
+{	
 	$.getJSON(globals.server_url,
 	{
 		target: "CSVParsing",
@@ -307,9 +315,9 @@ function getOCs()
 
 function drawOC()
 {
-	inner_html = "<div style='max-height: 150px; overflow: auto;'>";
+	inner_html = "<div style='max-height: 250px; overflow: auto;'>";
 	inner_html += "<table>";
-	inner_html += "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
+	inner_html += "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
 	
 	if (globals.currentOrders == null)
 		return;
@@ -331,7 +339,7 @@ function drawOC()
 		inner_html += "<td>"+materialNameSearch(globals.currentOrders[i].material_id)+"</td>";
 		inner_html += "<td>"+globals.currentOrders[i].description+"</td>";
 		inner_html += "<td>"+globals.currentOrders[i].id+"</td>";
-		inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+globals.currentOrders[i].numprobeta+"&ordencompra="+globals.currentOrders[i].ordencompra+"&id="+globals.currentOrders[i].id+"&material="+globals.currentOrders[i].material_id+"&client="+globals.currentOrders[i].client_id+"&desc="+encodeURIComponent(globals.currentOrders[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+globals.currentOrders[i].numprobeta+"' width='25px'/></a></td>";
+		inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+globals.currentOrders[i].numprobeta+"&ordencompra="+globals.currentOrders[i].ordencompra+"&id="+globals.currentOrders[i].id+"&material="+globals.currentOrders[i].material_id+"&client="+globals.currentOrders[i].client_id+"&desc="+encodeURIComponent(globals.currentOrders[i].description)+"'><button>Generar</button></a></td>";
 		inner_html += "</tr>";
 	}
 	
@@ -453,6 +461,56 @@ function loadCAValues(id)
 	return false;
 }
 
+function showMA(mas)
+{
+	inner_html = "<div style='max-height: 150px; overflow: auto;'>";
+	inner_html += "<table>";
+	inner_html += "<tr class='oc'><th class='oc'>Fecha</th><th class='oc'>Material</th><th class='oc'>Id</th><th class='oc'>Borrar</th><th class='oc'>Seleccionar</th></tr>";
+	
+	//globals.currentMA = data.MAnalysis;
+	
+	for(var i=0; i < mas.length; i++)
+	{
+		var line = "even";
+		if( i%2 == 0 ) 
+			line = "odd";
+		
+		inner_html += "<tr class='"+line+"'>";
+		inner_html += "<td class='oc'>"+mas[i].date+"</td>";
+		inner_html += "<td>"+materialNameSearch(mas[i].material_id)+"</td>";
+		inner_html += "<td>"+mas[i].id+"</td>";
+		inner_html += "<td align='center'><button style='background: #e82c2c;' id='delete_ma' onclick='deleteMA("+mas[i].id+"); event.preventDefault(); '>borrar</button></td>";
+		inner_html += "<td align='center'><button id='selected_ma' onclick='loadMAValues("+mas[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
+		inner_html += "</tr>";
+	}
+	
+	inner_html += "</table>";
+	inner_html += "</div>";
+	$("#allMA").html(inner_html);					
+	$("#allMA").show("slow");
+	
+}
+
+function deleteMA(id)
+{
+	$.getJSON(globals.server_url,
+			{
+				target: "Analysis",
+				method: "DeleteMA",
+				email: user,      	// "pmata@amro.com",
+				password: pass,     // "123",
+				id: id
+			},
+			function(data) {
+				if (data.success == true) {
+					getMA();
+				} else {
+					alert("No se pudo borrar el análisis mecánico. Error en el servidor.");
+				}
+			}
+	);
+}
+
 function getMA()
 {
 	var vars = getUrlVars();
@@ -467,33 +525,12 @@ function getMA()
 			},
 			function(data) {
 				if (data.success == true) {
+					
 					if(data.MAnalysis.length > 0)
-					{				
-						inner_html = "<div style='max-height: 150px; overflow: auto;'>";
-						inner_html += "<table>";
-						inner_html += "<tr class='oc'><th class='oc'>Fecha</th><th class='oc'>Material</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
-						
+					{		
 						globals.currentMA = data.MAnalysis;
-						
-						for(var i=0; i < data.MAnalysis.length; i++)
-						{
-							var line = "even";
-							if( i%2 == 0 ) 
-								line = "odd";
-							
-							inner_html += "<tr class='"+line+"'>";
-							inner_html += "<td class='oc'>"+data.MAnalysis[i].date+"</td>";
-							inner_html += "<td>"+materialNameSearch(data.MAnalysis[i].material_id)+"</td>";
-							inner_html += "<td>"+data.MAnalysis[i].id+"</td>";
-							inner_html += "<td align='center'><button id='selected_ca' onclick='loadMAValues("+data.MAnalysis[i].id+"); event.preventDefault(); '>seleccionar</button></td>";
-							inner_html += "</tr>";
-						}
-						
-						inner_html += "</table>";
-						inner_html += "</div>";
-						$("#allMA").html(inner_html);					
-						$("#allMA").show("slow");
-					}					
+						showMA(globals.currentMA);						
+					}				
 				}
 				else
 				{
@@ -545,14 +582,15 @@ function loadMA()
 		material_id: material				
 	},
 	function(data) {
-		if (data.success == true)
+		if (data.success == true) {
 			alert("Análisis Mecánico guardado con éxito.");
-		else
+			getMA();
+		} else
 			alert("Fallo guardando nuevo Análisis Mecánico");
 	});
 }	
 
-function checkSaveOpportunity() 
+function checkMASaveOpportunity() 
 {
 	var filled = true;
 	$('#formElem').children(':nth-child(3)').find(':input:not(button)').each(function(){

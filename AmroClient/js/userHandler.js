@@ -8,22 +8,27 @@ $(document).ready(function() {
 
 	$("#guardar_usuario").click(function(){
 		insertUsuario();
+		event.preventDefault();
 	});
 	
 	$("#recargar_lista_usuarios").click(function(){
 		getUsuarioList();
+		event.preventDefault();
 	});
 	
 	$("#nuevo_usuario").click(function(){
 		newUsuario();
+		event.preventDefault();
 	});
 	
 	$("#recargar_usuario").click(function(){
 		reloadUsuario();
+		event.preventDefault();
 	});
 	
 	$("#actualizar_usuario").click(function(){
 		updateUser();
+		event.preventDefault();
 	});
 	
 	

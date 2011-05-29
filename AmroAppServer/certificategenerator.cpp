@@ -170,7 +170,7 @@ bool CertificateGenerator::generate(Certificate &c)
     out.flush();
     newFile.close();*/
 
-    c.setCertificatePath("files/" + c.getProtN() + ".pdf");
+    c.setCertificatePath("certificados/" + c.getProtN() + ".pdf");
 
     return requestStatus;
 }

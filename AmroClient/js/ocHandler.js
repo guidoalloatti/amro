@@ -1,4 +1,4 @@
-var server_url = "http://localhost:8080/?callback=?";
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 
@@ -13,16 +13,16 @@ $(document).ready(function() {
 	  var file = $in.val();
 	  parseCSV(file);		  
 	});
-	
 });
 
 function loadOCPage()
 {
+	
 	if(user == null || pass == null)
 		doGetSessionVars();
-	loadClients();
-	loadMaterials();
-	getAllOC();
+	loadOCClients();
+	loadOCMaterials();
+	getAllOC();	
 }
 
 function searchOC()
@@ -58,18 +58,81 @@ function searchOC()
 	*/
 }
 
+function filterOCClient(filter)
+{	
+	if (globals.currentOrders == null || globals.currentOrders.length == 0)
+		return;
+	
+	var orders = new Array();
+	
+	if (filter == 0) {
+		orders = globals.currentOrders;	
+	} else {	
+		for (var i=0; i < globals.currentOrders.length; i++) 
+			if (globals.currentOrders[i].client_id == filter)
+				orders.push(globals.currentOrders[i]);
+	}
+	
+	showOrders(orders);
+}
+
+function filterOCMaterial(filter)
+{	
+	if (globals.currentOrders == null || globals.currentOrders.length == 0)
+		return;
+	
+	var orders = new Array();
+	
+	if (filter == 0) {
+		orders = globals.currentOrders;	
+	} else {	
+		for (var i=0; i < globals.currentOrders.length; i++) 
+			if (globals.currentOrders[i].material_id == filter)
+				orders.push(globals.currentOrders[i]);
+	}
+	
+	showOrders(orders);
+}
+
+function showOrders(orders)
+{
+	var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
+	for(var i=0; i < orders.length; i++)
+	{
+		var line = "even";
+		if( i%2 == 0 ) 
+			line = "odd";
+
+		inner_html += "<tr class='"+line+"'>";
+			inner_html += "<td class='oc'>"+orders[i].ordencompra+"</td>";
+		inner_html += "<td>"+orders[i].numprobeta+"</td>";
+		inner_html += "<td>"+clientNameSearch(orders[i].client_id)+"</td>";
+		inner_html += "<td>"+materialNameSearch(orders[i].material_id)+"</td>";
+		inner_html += "<td>"+orders[i].description+"</td>";
+		inner_html += "<td>"+orders[i].id+"</td>";
+		inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+orders[i].numprobeta+"&ordencompra="+orders[i].ordencompra+"&id="+orders[i].id+"&material="+orders[i].material_id+"&client="+orders[i].client_id+"&desc="+encodeURIComponent(orders[i].description)+"'><button>Generar</button></a></td>";
+		inner_html += "</tr>";
+	}	
+	$("#ordenes_compra").html(inner_html);
+}
+
 function showClientsByOC(clients)
 {		
-	var inner_html = "<select name='select_cliente' id='select_cliente'><option>Todos los Clientes</option>";
+	var inner_html = "<select name='select_cliente' id='oc_select_cliente'><option value='0'>Todos los Clientes</option>";
 	for(i = 0; i < clients.length; i++)
 	{
-		inner_html += "<option>"+clients[i].name+"</option>";
+		inner_html += "<option value='"+clients[i].id+"'>"+clients[i].name+"</option>";
 	}
 	inner_html += "</select>";	
 	$("#clientes").replaceWith(inner_html);
+	$("#oc_select_cliente").change(function(e){
+		$in=$(this);
+		var value = $in.val();
+		filterOCClient(value);
+	});	
 }
 
-function loadClients()
+function loadOCClients()
 {
 	if(globals.currentClients != null && globals.currentClients.length > 0)
 		showClients(globals.currentClients);
@@ -96,16 +159,21 @@ function loadClients()
 
 function showMaterialsByOC(materials)
 {		
-	var inner_html = "<select name='select_material' id='select_material'><option>Todos los Materiales</option>";
+	var inner_html = "<select name='select_material' id='oc_select_material'><option value='0'>Todos los Materiales</option>";
 	for(i = 0; i < materials.length; i++)
 	{
-		inner_html += "<option>"+materials[i].name+"</option>";
+		inner_html += "<option value='"+materials[i].id+"'>"+materials[i].name+"</option>";
 	}
 	inner_html += "</select>";	
 	$("#materiales").replaceWith(inner_html);
+	$("#oc_select_material").change(function(e){
+		$in=$(this);
+		var value = $in.val();
+		filterOCMaterial(value);
+	});	
 }
 
-function loadMaterials()
+function loadOCMaterials()
 {
 	if(globals.currentMaterials != null && globals.currentMaterials.length > 0)
 		showMaterials(globals.currentMaterials);
@@ -155,24 +223,7 @@ function searchOCByOC()
 			return;
 		}	
 			
-		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
-		for(var i=0; i < data.lines.length; i++)
-		{
-			var line = "even";
-			if( i%2 == 0 ) 
-				line = "odd";
-
-			inner_html += "<tr class='"+line+"'>";
- 			inner_html += "<td class='oc'>"+data.lines[i].ordencompra+"</td>";
-			inner_html += "<td>"+data.lines[i].numprobeta+"</td>";
-			inner_html += "<td>"+clientNameSearch(data.lines[i].client_id)+"</td>";
-			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
-			inner_html += "<td>"+data.lines[i].description+"</td>";
-			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
-			inner_html += "</tr>";
-		}	
-		$("#ordenes_compra").html(inner_html);
+		showOrders(data.lines);
 	});
 }
 
@@ -201,24 +252,7 @@ function searchOCByProbeta()
 			return;
 		}	
 			
-		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
-		for(var i=0; i < data.lines.length; i++)
-		{
-			var line = "even";
-			if( i%2 == 0 ) 
-				line = "odd";
-
-			inner_html += "<tr class='"+line+"'>";
- 			inner_html += "<td class='oc'>"+data.lines[i].ordencompra+"</td>";
-			inner_html += "<td>"+data.lines[i].numprobeta+"</td>";
-			inner_html += "<td>"+clientNameSearch(data.lines[i].client_id)+"</td>";
-			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
-			inner_html += "<td>"+data.lines[i].description+"</td>";
-			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
-			inner_html += "</tr>";
-		}	
-		$("#ordenes_compra").html(inner_html);
+		showOrders(data.lines);
 	});
 }
 	
@@ -226,6 +260,8 @@ function searchOCByProbeta()
 	
 function getAllOC()
 {
+	
+	loading("ordenes_compra", true);
 	$.getJSON(globals.server_url,
 	{
 		target: "CSVParsing",
@@ -235,26 +271,7 @@ function getAllOC()
 		order: "ordencompra",	
 	},
 	function(data) {
-		var inner_html = "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
-		for(var i=0; i < data.lines.length; i++)
-		{
-			var line = "even";
-			if( i%2 == 0 ) 
-			{
-				line = "odd";
-			}
-				
-			inner_html += "<tr class='"+line+"'>";
- 			inner_html += "<td class='oc'>"+data.lines[i].ordencompra+"</td>";
-			inner_html += "<td>"+data.lines[i].numprobeta+"</td>";
-			inner_html += "<td>"+clientNameSearch(data.lines[i].client_id)+"</td>";
-			inner_html += "<td>"+materialNameSearch(data.lines[i].material_id)+"</td>";
-			inner_html += "<td>"+data.lines[i].description+"</td>";
-			inner_html += "<td>"+data.lines[i].id+"</td>";
-			inner_html += "<td align='center'><a href='main.php?invoice_url=ce&numprobeta="+data.lines[i].numprobeta+"&ordencompra="+data.lines[i].ordencompra+"&id="+data.lines[i].id+"&material="+data.lines[i].material_id+"&client="+data.lines[i].client_id+"&desc="+encodeURIComponent(data.lines[i].description)+"'><img src='img/create.gif' alt='Generar Certificadop para Probeta Numero"+data.lines[i].numprobeta+"' width='25px'/></a></td>";
-			inner_html += "</tr>";
-		}	
-		$("#ordenes_compra").html(inner_html);
+		showOrders(data.lines);
 				
 		globals.currentOrders = data.lines;
 		//alert(globals.currentOrders.length);
