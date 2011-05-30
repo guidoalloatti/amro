@@ -9,6 +9,8 @@
 #include <QFile>
 #include <QStringList>
 
+static QString client_relative_path = "../AmroClient/";
+
 AnalysisResponse::AnalysisResponse()
 {
     methodTable["ParseCA"] = &AnalysisResponse::parseCA;
@@ -132,7 +134,7 @@ void AnalysisResponse::parseCA(JSONP &output, const QHash <QString, QString> &pa
 
         QFile csvFile;
 
-        csvFile.setFileName(filePath);
+        csvFile.setFileName(client_relative_path + filePath);
         if (csvFile.open(QFile::ReadOnly)) {
             QVariantHash error;
             if (parseCSV(&csvFile, error))

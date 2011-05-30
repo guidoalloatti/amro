@@ -5,6 +5,8 @@
 #include "../DataLibrary/csvparsinglinemapper.h"
 #include "../DataLibrary/clientcodemapper.h"
 
+static QString client_relative_path = "../AmroClient/";
+
 CSVParsingResponse::CSVParsingResponse()
 {
     methodTable["ParseCSV"] = &CSVParsingResponse::parseCSV;
@@ -146,7 +148,7 @@ void CSVParsingResponse::parseCSV(JSONP &output, const QHash <QString, QString> 
 
         QFile csvFile;
 
-        csvFile.setFileName(filePath);
+        csvFile.setFileName(client_relative_path + filePath);
         if (csvFile.open(QFile::ReadOnly)) {
             QVariantHash error;
             if (parseLines(&csvFile, error))
