@@ -1,6 +1,5 @@
 // Global Variables Definitions
-//var server_url = "http://192.168.1.101:8080/?callback=?";
-var server_url = globals.server_url; //"http://localhost:8080/?callback=?";
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 
@@ -149,8 +148,8 @@ function getClient(id, name)
 			$("#website").val(data.clients[0].website);
 			$("#telefax").val(data.clients[0].telefax);
 			$("#seqdigits").val(data.clients[0].seqdigits);
-			$("#cliente_seleccionado_name").html(data.clients[0].name);
-			$("#cliente_seleccionado_id").html(data.clients[0].id);
+			$("#cliente_seleccionado_name").html("<td class='rounded_4'><h4>Nombre: "+data.clients[0].name+"</h4></td>");
+			$("#cliente_seleccionado_id").html("<td class='rounded_4'><h4>Id: "+data.clients[0].id+"</h4></td>");
 		}	
 	});
 }
@@ -175,13 +174,12 @@ function getClients()
 		password: pass, 			//"123"
 	},
 	function(data) {
-		var inner_html = "<table><tr><th>Cliente</th><th>Direccion</th><!--<th>Editar</th>--><th>Eliminar</th></tr><tr>"
+		var inner_html = "<table><tr bgcolor='#4797ED'><th class='rounded_start'>Cliente</th><th class='rounded_middle'>Direccion</th><th class='rounded_end'>Eliminar</th></tr><tr>"
 		
 		for(i = 0; i < data.clients.length; i++)
 		{	
-			inner_html += "<td><a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
+			inner_html += "<td class='rounded_4'><a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
 			inner_html += "<td>"+data.clients[i].address+"</td>";
-			//inner_html += "<td align='center'><img src='img/edit.png' width='20' heigth='20' alt='Editar' title='Editar' /></td>";
 			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";
 		}
 		$("#client_list").html(inner_html);		

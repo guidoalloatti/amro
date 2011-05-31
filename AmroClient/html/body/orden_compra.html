@@ -2,13 +2,7 @@
 <b><u>Buscar entre las Ordenes de Compra por:</u></b>
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="o" id="filtro_orden_compra">Orden de Compra
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="p" id="filtro_probeta">Numero de Probeta
-		<INPUT TYPE=RADIO NAME="filtro" VALUE="c" id="filtro_cliente">Cliente
-		<INPUT TYPE=RADIO NAME="filtro" VALUE="l" id="filtro_materiales">Material
 		<input type="button" id="search" value="Buscar" onclick="searchOC();"/>
-		
-		<!--
-		<input type="button" id="csvfile" value="Parsear CSV" onclick="parseCSV();"/>
-		-->
 <hr/>
 <table>
 	<tr>
@@ -42,13 +36,21 @@
 <!-- 
 Subir Ordenes de Compra:<input type="file" id="csvfile" />
 <a href='#' id='cargar_ocs' >Mostrar todas las OCs Disponibles</a>
--->
 
 <form action="ajax/uploadFile.php" method="post" enctype="multipart/form-data">
 	<label for="file">Subir Archivo:</label>
 	<input type="file" name="file" id="file" /> 
 	<br/>
 	<input type="submit" name="submit" value="Submit" />
+</form>
+<form action="upload_file.php" method="post" enctype="multipart/form-data" target="_blank">
+window.open('', 'ventana1', 'scrollbar=no,resizable=no,width=300,height=300,statusbar=no')">
+-->
+
+<form action="upload_file.php" method="post" enctype="multipart/form-data" name="oc_popup" target="ventana1" id="formUploadCSV" onsubmit="uploadCSV();">
+	<label for="file">Subir Archivo:</label>
+	<input type="file" name="file" id="csvfile" /> 
+	<input class="submit_lindo" type="submit" name="submit" value="Submit" />
 </form>
 
 

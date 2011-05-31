@@ -8,6 +8,70 @@ table.oc
 
 }
 
+th.rounded
+{
+
+	border: solid 1px lightblue;
+	color: white;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 50px 0px 0px 50px;
+
+}
+
+
+th.rounded_start
+{
+
+	border: solid 10px #4797ED;
+	color: white;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 50px 0px 0px 50px;
+
+}
+
+th.rounded_middle
+{
+	border: solid 10px #4797ED;
+	color: white;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 0px 0px 0px 0px;
+}
+
+th.rounded_end
+{
+	border: solid 10px #4797ED;
+	color: white;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 0px 50px 50px 0px;
+
+}
+
+td.rounded_1
+{
+	border: solid 3px #4797ED;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 50px 0px 0px 50px;
+}
+
+td.rounded_4
+{
+	 border: solid 4px lightgreen;
+	 background: lightgreen;
+	 color: blue;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 10px 10px 10px 10px;
+}
+
+
+td.rounded_2
+{
+	border: solid 2px #4797ED;
+	background: #4797ED;
+	color: white;
+	-moz-border-radius: 0 50px 50px 0;
+      border-radius: 10px 10px 10px 10px;
+}
+
 td.rounded
 {
 	 border: solid 10px gray;

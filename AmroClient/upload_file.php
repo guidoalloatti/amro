@@ -1,33 +1,8 @@
 <?php
 
-$upload_path = "/amro/AmroClient/ajax/up/";
+$upload_path = "upload/";
 
 /*
-header("content-type:text/plain"); 
-$keys = array(
-    "PATH_INFO",
-    "PATH_TRANSLATED",
-    "PHP_SELF",
-    "REQUEST_URI",
-    "SCRIPT_FILENAME",
-    "SCRIPT_NAME",
-    "QUERY_STRING"
-);
-
-$info_row = "<tr><td>$_SERVER[SERVER_SOFTWARE]</td><td></td><td></td>\n";
-print "Path Information for $_SERVER[SERVER_SOFTWARE]\n\n";
-
-foreach($keys as $key) {
-    print '$_SERVER["'.$key.'"] = '.$_SERVER[$key]."\n";
-    $info_row .= "<td>$_SERVER[$key]</td>\n";
-}
-
-print '__FILE__ = '. __FILE__;
-$info_row .= "<td>".__FILE__."</td>\n</tr>";
-
-print "\n\n\n" . $info_row;
-
-
 if ($_FILES["file"]["error"] > 0)
   {
   echo "Error: " . $_FILES["file"]["error"] . "<br />";
@@ -64,12 +39,17 @@ if ($_FILES["file"]["size"] < 2000000000)
 		}
 		else
 		{
-			$move_retun = move_uploaded_file($_FILES["file"]["tmp_name"], $upload_path . $_FILES["file"]["name"]);
-			echo "<br/>Stored in: " . $upload_path . $_FILES["file"]["name"];
-			echo "<br/>Upload Return: ".$move_retun;
+			if(move_uploaded_file($_FILES["file"]["tmp_name"],$upload_path . $_FILES["file"]["name"]))
+			{
+				echo "Se subio correctamente el archivo en: " . $upload_path . $_FILES["file"]["name"];
+			}
+			else
+			{
+				echo "No se subio el archivo";
+			}
 		}
+      }
     }
-  }
 else
 {
   echo "Invalid file";

@@ -1,7 +1,5 @@
 // Global Variables Definitions
-//var server_url = "http://192.168.1.101:8080/?callback=?";
-//var server_url = server_url;
-var server_url = globals.server_url; //"http://localhost:8080/?callback=?";
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 

@@ -1,6 +1,6 @@
 var globals = {
 	currentOrders: null,
-	server_url: "http://localhost:8080/?callback=?",
+	server_url: "http://192.168.1.101:8080/?callback=?",
 	currentCA: null,
 	currentMaterials: null,
 	currentClients: null,
@@ -12,10 +12,10 @@ var globals = {
 	currentCerts: null,
 	logedUser: null,
 	logedPass: null,
-	pathToUpload: "../AmroClient/files/uploads/",
+	pathToUpload: "../AmroClient/upload/",
 	pathToCerts: "../AmroClient/certificados/img/"
 };
-
+	//server_url: "http://localhost:8080/?callback=?",
 function loadError()
 {
 	alert("Error! No se puede comunicar con el servidor. Chequee su conexión.");

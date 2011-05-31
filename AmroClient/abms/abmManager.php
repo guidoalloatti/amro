@@ -243,22 +243,28 @@ class abmManager
 	}
 	
 	function getAbmClienteHtml()
-	{
-		
-		$this->html = "<body id='abm_body' onload='clientStart();'> <h3>Listado de Clientes <div id='clientes_totales'>Cantidad de Clientes: 0</div></h3>
+	{	
+		$this->html = "<body id='abm_body' onload='clientStart();'>
 		<table width='90%' height='300px' border='0px'>
+			<!-- 
 			<tr>
-				<td width='25%' bgcolor='#BBBBBB' id='client_list' VALIGN='top'>
+				<td id='clientes_totales'>Cantidad de Clientes: 0
+						<div id='clientes_totales'>Cantidad de Clientes: 0</div>s 
+				</td>
+			</tr>
+			-->
+			<tr>
+				<td width='25%'  id='client_list' VALIGN='top'>
 					<div style='height:300px overflow:auto;'><table>
 					</td>
 						</tr>
 					</table>
 					</div>
 				</td>
-				<td bgcolor='lightgray' width='80%' VALIGN='top'>
-					<table bgcolor='#BBBBBB'>
+				<td width='80%' VALIGN='top'>
+					<table>
 						<tr>
-							<td><h3>Cliente Seleccionado:</h3></td>
+							<td class='rounded_2'><h3>Cliente Seleccionado</h3></td>
 							<td align='right' id='cliente_seleccionado_name'></td>
 							<td id='cliente_seleccionado_id'></td>
 						</tr>

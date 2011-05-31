@@ -1,14 +1,17 @@
 			<div id="usuarios_dropdown"></div>
+			<hr/><h4><input type="checkbox"  name="ADMIN" id="ADMIN" value="0">El usuario es Administrador</h4>
 			<!--
 			<a href="#" id="cannotChangeUser">No puede cambiar usuario</a>
 			<a href="#" id="canChangeUser">Puede cambiar usuario</a>
 			-->
-			<a href="#" id="getUserPermissions">Obtener los Permisos del usuario</a>
-			<input type="checkbox"  name="ADMIN" id="ADMIN" value="0">El usuario es Admin
+			
 			<hr/>
 			
-
-			<!-- <table width="90%" border="0" cellpadding="15" cellspacing="15"> -->
+			<!-- 
+			<a href="#" id="getUserPermissions">Obtener los Permisos del usuario</a>
+			<table width="90%" border="0" cellpadding="15" cellspacing="15"> 
+			-->
+			
 			<table class="rounded"> 
 				<tr>
 					<td class="rounded" style="border: 2px" bgcolor="lightgreen">
@@ -29,8 +32,8 @@
 					</td>
 					<td class="rounded" width="250px" style="border: 2px" bgcolor="lightgreen">
 						<h3><u>Permisos de Ordenes de Compras</u></h3>
-							<!-- <input type="checkbox"  name="create_oc" id="create_oc_checkbox" value="0">Crear Orden de Compra -->
-							<h5><input type="checkbox"  name="GET_OC" id="GET_OC" value="0">Listar Orden de Compra
+							<h5><input type="checkbox"  name="OC_INSERT" id="OC_INSERT" value="0">Crear Orden de Compra
+							<br/><input type="checkbox"  name="GET_OC" id="GET_OC" value="0">Listar Orden de Compra
 							<br/><input type="checkbox"  name="OC_DELETE" id="OC_DELETE" value="0">Eliminar Orden de Compra
 							<!-- <br/><input type="checkbox"  name="edit_oc" id="edit_oc_checkbox" value="0">Modificar Orden de Compra -->
 						</h5>
@@ -93,4 +96,7 @@
 			<a href="#" id="mark_all" >Marcar todos los permisos</a> ::
 			<a href="#" id="unmark_all" >Desmarcar todos los permisos</a> ::
 			<a href="#" id="recargar" >Recargar Permisos</a> ::
+			<!-- 
 			<a href="main.php?invoice_url=pe&save=true" id="guardar" >Guardar Cambios</a>
+			-->
+			<a href="#" id="save_permissions" >Guardar Cambios</a>

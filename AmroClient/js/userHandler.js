@@ -86,14 +86,25 @@ function updateUser()
 	{
 		target: "User",
 		method: "UpdateUser",
+		from_email: user,
+		from_password: pass,
 		name: $("#name").val(),
 		surname: $("#surname").val(),
 		email: $("#email").val(),
 		password: $("#password").val(),
 		signature: $("#signature").val(),
-		id: $("#usuario_seleccionado_id").html(),
+		user_id: $("#usuario_seleccionado_id").html()
 	},
 	function(data) {
+		if(data.success == true)
+		{
+			if($("#email").val() == user && pass != $("#password").val())
+			{
+				console.log("Se cambio en pass del usuario actual, se cambia el password de sesion");
+				$.cookie("pass", $("#password").val());
+			}
+		}
+		console.log(data);
 	});
 }
 

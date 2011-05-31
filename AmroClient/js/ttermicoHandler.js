@@ -1,7 +1,7 @@
 // Global Vars
 var selectedCA = null;
 var selectedTT = null;
-var server_url = "http://localhost:8080/?callback=?";
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 

@@ -1,17 +1,14 @@
-var server_url = globals.server_url;
+var server_url = globals.server_url; //"http://192.168.1.101:8080/?callback=?";
 var user = $.cookie("user");
 var pass = $.cookie("pass");
-var users;
+var users = {};
 var userId = null;
 var selectedUser = null;
 
 $(document).ready(function() {	
 
 	$("#ADMIN").change(function(){
-		if($("#ADMIN").is(':checked'))
-		{
-			markAllCheckboxes();
-		}
+		toogleAdmin();
 	});
 
 	$("#getUserPermissions").click(function(){
@@ -40,6 +37,10 @@ $(document).ready(function() {
 		//console.log("Se cambio el usuario seleccionado");
 	});
 	
+	$("#save_permissions").click(function(){
+		savePermissions();
+	});
+	
 	userId = $.getUrlVar('userid');
 	
 	//console.log(userId);
@@ -48,7 +49,7 @@ $(document).ready(function() {
 
 	//if(userId == undefined)
 	//{
-	//	console.log("El userid no esta definido");
+	//	console.log("El userid no esta definººo");
 	//	$("#option_usuarios").attr('disabled', true);
 	//}
 	
@@ -59,6 +60,60 @@ $(document).ready(function() {
 	
 });
 
+function savePermissions()
+{
+	if(selectedUser != null)
+	{
+		var permString = "";
+		$('input:checkbox:checked').each(function(){
+			permString += $(this).attr('id')+", ";
+		});
+		
+		console.log("----------------- Actualizando Permisos -----------------");
+		console.log(permString);
+		console.log(selectedUser);
+		console.log("---------------------------------------------------------");
+		
+		
+		$.getJSON(server_url,
+		{
+			target: "User",
+			method: "UpdatePrivileges",
+			user_id: selectedUser.id,
+			privileges: permString,
+			email: user,
+			password: pass
+		},
+		function(data) {
+			if(data.success)
+			{
+				console.log(data);
+			}
+			else
+			{
+				console.log("La llamada realizada no fue existosa");
+			}
+		});
+	}
+	else
+	{
+		alert("Debe seleccionar un usuario para modificar sus permisos!");
+	}
+}
+
+function toogleAdmin()
+{
+	if($("#ADMIN").is(':checked'))
+	{
+		markAllCheckboxes();
+		disableAllCheckboxes();
+		$("#ADMIN").attr('disabled', false);
+	}
+	else
+	{
+		enableAllCheckboxes();
+	}
+}
 
 function selectedUserChanged()
 {
@@ -68,11 +123,6 @@ function selectedUserChanged()
 			selectedUser = users[i];
 			getUsersPermissions();
 	}
-	
-	//console.log($("#option_usuarios").val());
-	//console.log(users);
-	//selectedUser = users.
-	//console.log(selectedUser);
 }
 
 function cannotChangeUser()
@@ -90,6 +140,16 @@ function markAllCheckboxes()
 	$("input[type='checkbox']:not([disabled='disabled'])").attr('checked', true);
 }
 
+function disableAllCheckboxes()
+{
+	$("input[type='checkbox']:not([disabled='disabled'])").attr('disabled', true);
+}
+
+function enableAllCheckboxes()
+{
+	$("input[type='checkbox']:not([disabled='disabled'])").attr('disabled', false);
+}
+
 function unmarkAlCheckboxes()
 {
 	$("input[type='checkbox']:not([enabled='disabled'])").attr('checked', false);
@@ -97,17 +157,21 @@ function unmarkAlCheckboxes()
 
 function getUsersPermissions()
 {
+	//console.log(selectedUser);
+	
 	unmarkAlCheckboxes();
-	console.log(selectedUser.privileges);
-	//ifselectedUser.privileges
-	for(var i = 0; i < selectedUser.privileges.length; i++)
+
+	if(selectedUser != null)
 	{
-		$("#"+selectedUser.privileges[i]).attr('checked', true);
-		if(selectedUser.privileges[i] == "ADMIN")
+		for(var i = 0; i < selectedUser.privileges.length; i++)
 		{
-			markAllCheckboxes();
+			$("#"+selectedUser.privileges[i]).attr('checked', true);
+			if(selectedUser.privileges[i] == "ADMIN")
+			{
+				markAllCheckboxes();
+			}
+			//console.log(selectedUser.privileges[i]); //.permissions);
 		}
-		//console.log(selectedUser.privileges[i]); //.permissions);
 	}
 }
 
@@ -121,33 +185,27 @@ function getUsersDropdown()
 		password: pass
 	},
 	function(data) {
-		if(data.users.length > 0)
-		{
-			users = data.users;
-			
-			//var inner_html = "<table><tr><th>Usuario</th><th>Eliminar</th></tr><tr>"
+		
+		users = data.users;
+		if(users.length > 0)
+		{			
 			var inner_html = 'Seleccionar Usuario: <select name="option_usuarios" id="option_usuarios"><option value="0">Seleccione...</option>';
 			for(i = 0; i < users.length; i++)
 			{
-				//console.log("data.users[i].id | userId\n"+data.users[i].id+" | "+userId);
 				if(users[i].id == userId)
 				{
 					console.log("Se selecciono el usuario: "+users[i].name);
 					selectedUser = users[i];
-					//$("#option_usuarios").attr('selectedValue', users[i].id);
 				}
-					
 				inner_html += '<option value='+users[i].id+'>'+users[i].name+'</option>';
-				
-				//inner_html += "<td><a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
-				//inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td></tr>";
 			}
 			inner_html += "</select>";
-			
 			if(userId != undefined)
+			{
 				inner_html = "Usuario Seleccionado: <b>"+selectedUser.name+"</b>";
-
+			}
 			$("#usuarios_dropdown").html(inner_html);
 		}
+		
 	});
 }

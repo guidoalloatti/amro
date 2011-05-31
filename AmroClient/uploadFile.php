@@ -1,6 +1,6 @@
 <?php
 
-$upload_path = "/amro/AmroClient/ajax/up/";
+$upload_path = "upload/";
 
 /*
 header("content-type:text/plain"); 

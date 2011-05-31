@@ -15,6 +15,14 @@ $(document).ready(function() {
 	});
 });
 
+function uploadCSV()
+{
+	//console.log($("#formUploadCSV"));
+	//console.log($("#csvfile").val());
+	//console.log("Pedro");	
+	parseCSV($("#csvfile").val());
+}
+
 function loadOCPage()
 {
 	
@@ -36,12 +44,6 @@ function searchOC()
 			break;
 		case "p":
 			searchOCByProbeta();
-			break;
-		case "c":
-			searchOCByClient();
-			break;
-		case "m":
-			searchOCByMaterial();
 			break;
 		default:
 			getAllOC();
@@ -305,7 +307,7 @@ function materialNameSearch(id)
 function parseCSV(file)
 {
 	var shortname = file.match(/[^\/\\]+$/);
-	$.getJSON("http://localhost:8080/?callback=?",
+	$.getJSON(server_url,
 	{
 		target: "CSVParsing",
 		method: "ParseCSV",
