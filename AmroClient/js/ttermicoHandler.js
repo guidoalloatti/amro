@@ -61,6 +61,13 @@ $(document).ready(function() {
 		
 		event.preventDefault();
 	});
+	
+	/*$("#tt_image_file").change(function(e){
+		  $in=$(this);
+		  var file = $in.val();
+		  //uploadCAFile(file);	
+		  $("#ttImageUpload").submit();
+		});*/	
 });
 
 function tratamientoTermicoStart()
@@ -343,6 +350,11 @@ function linkTT()
 }
 
 function newTT()
+{	
+	$("#ttImageUpload").submit();
+}
+
+function newTTComplete(file)
 {
 	var year = $("#tt_year").val();
 	var day = $("#tt_day").val();
@@ -357,12 +369,8 @@ function newTT()
 		return;
 	}
 	
-	var image = $("#tt_image_path").val();
-	
-	if (image == "") {
-		alert("Ingresar una imagen de tratamiento térmico");
-		return;
-	}
+	//var image = $("#tt_image_path").val();
+	var image = globals.pathToTTs + file;
 	
 	var observations = $("#tt_obs").val();
 	

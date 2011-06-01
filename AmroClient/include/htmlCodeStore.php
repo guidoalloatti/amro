@@ -213,6 +213,9 @@ class htmlCodeStore {
 
 <div id="wrapper">
     <div id="steps">
+    <form style="position:absolute; z-index:-1;" action="upload_cafile.php" name="ca_popup" method="post" enctype="multipart/form-data" target="_blank" id="submitCA">
+		<input id="_file" name="file" type="file"/>					
+</form>
         <form id="formElem" name="formElem" action="" method="post">
             <fieldset class="step">
                 <legend>1. Orden de Compra</legend>
@@ -261,10 +264,7 @@ class htmlCodeStore {
 					<!--<p id="addCA"><label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/></p>-->
 
 					<p id="addCA">
-					<form action="http://localhost:9081:/upload_cafile.php" method="post" enctype="multipart/form-data" name="ca_popup" target="_blank" id="submitCA">
-					<label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/><input class="submit_lindo" id="submitCA_button" type="submit" name="submit_ca" value="Submit"/>
-					
-					</form>
+					<button style="background:green;" id="submitCAButton">Subir Archivo con Análisis Químicos</button>					
 					</p>
 					
                     <p id="selectedCA"></p>
@@ -354,7 +354,9 @@ class htmlCodeStore {
             <fieldset class="step"></fieldset>            
         </form>
     </div>
+    
 </div>
+
 </div>';
 
 	return $html;

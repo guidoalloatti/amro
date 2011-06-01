@@ -25,7 +25,7 @@ if ($_FILES["file"]["size"] < 2000000000)
 	if ($_FILES["file"]["error"] > 0)
     {
 		echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
-		echo '<script>window.opener.alert("Error! Debe seleccionar un archivo."); window.close();</script>';
+		echo '<script>window.opener.alert("Error! Debe seleccionar un archivo valido."); window.close();</script>';
     }
 	else
     {
@@ -44,7 +44,7 @@ if ($_FILES["file"]["size"] < 2000000000)
 			if(move_uploaded_file($_FILES["file"]["tmp_name"],$upload_path . $_FILES["file"]["name"]))
 			{
 				echo "Se subio correctamente el archivo en: " . $upload_path . $_FILES["file"]["name"];
-				echo "<script>window.opener.parseCSV('" . $_FILES["file"]["name"] . "'); window.close();</script>";
+				echo "<script>window.opener.newTTComplete('" . $_FILES["file"]["name"] . "'); window.close();</script>";
 			}
 			else
 			{

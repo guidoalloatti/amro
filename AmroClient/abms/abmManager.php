@@ -429,12 +429,15 @@ class abmManager
 							<td>
 								<p id='new_tt_date'>
 									<label>Ingrese una fecha*:</label><br/>
-									<label>dd</label><input type='text' id='tt_day' size='2'/><label>/ mm</label><input id='tt_month' type='text' size='2'/><label>/ yyyy</label><input id='tt_year' type='text' size='2'/><br/>
+									<input type='text' placeholder='dd' id='tt_day' style='text-align:center;' size='1'/><input placeholder='mm' style='text-align:center;' id='tt_month' type='text' size='1'/><input placeholder='yyyy' style='text-align:center;' id='tt_year' type='text' size='1'/><br/>
 									* Si no ingresa nada se tomará la fecha de hoy.
 								</p>
-								<p id='new_tt_image'>
-									<label>Seleccione una nueva imagen:</label><input id='tt_image_path' type='file'/>
-								</p>
+									<form action='upload_ttfile.php' method='post' enctype='multipart/form-data' target='_blank' id='ttImageUpload'>
+										<p id='new_tt_image'>									
+											<label for='tt_image_path'>Seleccione una nueva imagen:</label><input id='tt_image_file' name='file' type='file'/>
+										</p>
+									</form>								
+								
 								<p id='new_tt_obs'><label>Ingrese observación:</label><textarea id='tt_obs' cols='20' rows='5'></textarea></p>
 								<p id='new_tt_submit' align='center'><button onclick='newTT(); event.preventDefault();'>Crear</button></p>
 							</td>

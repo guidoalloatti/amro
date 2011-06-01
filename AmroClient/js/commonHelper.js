@@ -14,7 +14,8 @@ var globals = {
 	logedPass: null,
 	pathToCSVUpload: "upload/ordenes_compras/",
 	pathToCAUpload: "upload/analisis_quimicos/",
-	pathToCerts: "certificados/img/"
+	pathToCerts: "certificados/img/",
+	pathToTTs: "certificados/img/tratamientos_termicos/"
 };
 	//server_url: "http://localhost:8080/?callback=?",
 function loadError()

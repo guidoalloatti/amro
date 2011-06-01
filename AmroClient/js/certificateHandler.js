@@ -47,18 +47,19 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
+	//$("#submitCA").hide();
+	
 	$("#_file").change(function(e){
-	  alert('asdf');
 	  $in=$(this);
 	  var file = $in.val();
 	  //uploadCAFile(file);	
+	  $("#form_file").val(file);
 	  $("#submitCA").submit();
-	});
+	});	
 	
-	$("#submitCA_button").click(function(e)
-	{
-		//event.preventDefault();
-		$("#submitCA").submit();
+	$("#submitCAButton").click(function(event){
+		$("#_file").click();
+		event.preventDefault();
 	});
 	
 	$("#ttloader").change(function(e){
@@ -360,6 +361,10 @@ function drawOC()
 
 function uploadCAFile(file)
 {
+	alert(globals.pathToCAUpload + file);
+	
+	return;
+	
 	var shortname = file.match(/[^\/\\]+$/);
 
 	$.getJSON(globals.server_url,
@@ -368,7 +373,7 @@ function uploadCAFile(file)
 				method: "ParseCA",
 				email: user,      	// "pmata@amro.com",
 				password: pass,     // "123",
-				filepath: globals.pathToCAUploads+shortname,		//"/home/pmata/amro/"+shortname
+				filepath: globals.pathToCAUpload + file,		//"/home/pmata/amro/"+shortname
 			},
 			function(data) {
 				if (data.success == true) {
