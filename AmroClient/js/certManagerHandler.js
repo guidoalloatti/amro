@@ -21,7 +21,7 @@ function loadCertPage()
 	loadClients();
 	loadMaterials();
 	loadUsers();
-	getAllCerts();
+	// Luego de cargar los usuarios, ahí si cargo los certificados. Ver show_users()
 }
 
 function searchCert()
@@ -48,10 +48,11 @@ function searchCert()
 		case "f":
 			searchByDate();
 			break;
-		case "m":
+		case "pr":
+			searchByProtN();
 			break;
 		default:
-			getAllOC();
+			alert("Seleccione un parámetro para filtrar la búsqueda");
 			break;
 	}
 	
@@ -79,7 +80,10 @@ function filterClient(filter)
 				certs.push(globals.currentCerts[i]);
 	}
 	
-	showCerts(certs);
+	if (filter == 0)
+		showCerts(certs, " de Todos Los Clientes");
+	else
+		showCerts(certs, " con cliente " + clientNameSearch(filter));
 }
 
 
@@ -97,6 +101,7 @@ function showClients(clients)
 		var value = $in.val();
 		filterClient(value);
 	});
+	getAllCerts();
 }
 
 function loadClients()
@@ -139,7 +144,10 @@ function filterUser(filter)
 				certs.push(globals.currentCerts[i]);
 	}
 	
-	showCerts(certs);
+	if (filter == 0)
+		showCerts(certs, " Creados por Todos Los Usuarios");
+	else
+		showCerts(certs, " creados por " + userNameSearch(filter));
 }
 
 function showUsers(users)
@@ -198,7 +206,10 @@ function filterMaterial(filter)
 				certs.push(globals.currentCerts[i]);
 	}
 	
-	showCerts(certs);
+	if (filter == 0)
+		showCerts(certs, " de Todos Los Materiales");
+	else
+		showCerts(certs, " con material " + materialNameSearch(filter));
 }
 
 function showMaterials(materials)
@@ -265,9 +276,9 @@ function deleteCertificate(id)
 			});
 }
 
-function showCerts(certs)
+function showCerts(certs, title)
 {
-	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Borrar</th><th class='oc'>Ver Certificado</th></tr>";
+	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Revisa</th><th class='oc'>Aprueba</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Borrar</th><th class='oc'>Ver Certificado</th></tr>";
 	for(var i=0; i < certs.length; i++)
 	{
 		var line = "even";
@@ -283,12 +294,16 @@ function showCerts(certs)
 		inner_html += "<td>"+clientNameSearch(certs[i].client_id)+"</td>";
 		inner_html += "<td>"+materialNameSearch(certs[i].material_id)+"</td>";
 		inner_html += "<td>"+userNameSearch(certs[i].performer_id)+"</td>";
+		inner_html += "<td>"+userNameSearch(certs[i].reviewer_id)+"</td>";
+		inner_html += "<td>"+userNameSearch(certs[i].approver_id)+"</td>";
 		inner_html += "<td>"+certs[i].ordencompra+"</td>";
 		inner_html += "<td>"+certs[i].date+"</td>";
 		inner_html += "<td align='center'><button style='background: #e82c2c;' id='delete_cert_button' onclick='deleteCertificate("+certs[i].id+"); event.preventDefault(); '>borrar</button></td>";
 		inner_html += "<td align='center'><a target='_blank' href='" + certs[i].certificatepath + "'><button id='open_cert_button'>Ver</button> </a></td>";
 		inner_html += "</tr>";
-	}	
+	}
+	
+	$("#all_certs_title label").html("Certificados"+title);
 	$("#certificados").html(inner_html);
 }
 
@@ -298,8 +313,11 @@ function searchByOC()
 	{
 		inner_html = "No se definio el valor de busqueda por orden de compra.";
 		$("#certificados").html(inner_html);
+		$("#all_certs_title label").html("Certificados");
 		return;
 	}
+	loading("certificados", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "Certificate",
@@ -314,10 +332,11 @@ function searchByOC()
 		{
 			inner_html = "No se encontro ningun certificado con orden de compra "+$("#cert_orden_compra").val();
 			$("#certificados").html(inner_html);
+			$("#all_certs_title label").html("Certificados");
 			return;
 		}	
 			
-		showCerts(data.certificates);
+		showCerts(data.certificates, " con Nº de Orden de Compra " + $("#cert_orden_compra").val());
 	});
 }
 
@@ -330,6 +349,7 @@ function searchByDate()
 	{
 		inner_html = "No se definio el valor de busqueda por fecha.";
 		$("#certificados").html(inner_html);
+		$("#all_certs_title label").html("Certificados");
 		return;
 	}
 	
@@ -337,9 +357,11 @@ function searchByDate()
 	{
 		inner_html = "El formato de fecha ingresado para la busqueda es incorrecto.";
 		$("#certificados").html(inner_html);
+		$("#all_certs_title label").html("Certificados");
 		return;
 	}
-	
+	loading("certificados", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "Certificate",
@@ -356,10 +378,11 @@ function searchByDate()
 		{
 			inner_html = "No se encontro ningun certificado con fecha "+$("#cert_dia").val()+"/"+ $("#cert_mes").val()+"/"+$("#cert_year").val();
 			$("#certificados").html(inner_html);
+			$("#all_certs_title label").html("Certificados");
 			return;
 		}	
 			
-		showCerts(data.certificates);
+		showCerts(data.certificates, " con fecha " + $("#cert_dia").val() + "/" + $("#cert_mes").val() + "/" + $("#cert_year").val());
 	});
 }
 
@@ -367,10 +390,13 @@ function searchByProtN()
 {
 	if($("#cert_protn").val() == "")
 	{
-		inner_html = "No se definio el valor de busqueda por ProtN.";
+		inner_html = "No se definio el valor de busqueda por Nº de Protocolo.";
 		$("#certificados").html(inner_html);
+		$("#all_certs_title label").html("Certificados");
 		return;
 	}
+	loading("certificados", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "Certificate",
@@ -385,10 +411,11 @@ function searchByProtN()
 		{
 			inner_html = "No se encontro ningún certificado con valor protn "+$("#cert_protn").val();
 			$("#certificados").html(inner_html);
+			$("#all_certs_title label").html("Certificados");
 			return;
 		}	
 			
-		showCerts(data.certificates);
+		showCerts(data.certificates, " con Nº de Protocolo " + $("#cert_protn").val());
 	});
 }
 
@@ -400,8 +427,11 @@ function searchByProbeta()
 	{
 		inner_html = "No se definio el valor de busqueda por número de probeta.";
 		$("#certificados").html(inner_html);
+		$("#all_certs_title label").html("Certificados");
 		return;
 	}
+	loading("certificados", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "Certificate",
@@ -412,19 +442,22 @@ function searchByProbeta()
 		order: "id"
 	},
 	function(data) {
-		if(data.certificates.length < 1)
+		if(data.success == false || data.certificates.length < 1)
 		{
 			inner_html = "No se encontro ningun certificado con numero de probeta "+$("#cert_numprob").val();
 			$("#certificados").html(inner_html);
+			$("#all_certs_title label").html("Certificados");
 			return;
 		}	
 			
-		showCerts(data.certificates);
+		showCerts(data.certificates, " con Nº de Probeta " + $("#cert_numprob").val());
 	});
 }
 	
 function getAllCerts()
 {
+	loading("certificados", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "Certificate",
@@ -456,10 +489,16 @@ function getAllCerts()
 			inner_html += "</tr>";
 		}	
 		$("#certificados").html(inner_html);*/
-		if (data.success == true && data.certificates.length > 0) {
-			showCerts(data.certificates);	
-			globals.currentCerts = data.certificates;
+		if(data.success == false || data.certificates.length < 1)
+		{
+			inner_html = "No se encontro ningun certificado";
+			$("#certificados").html(inner_html);
+			$("#all_certs_title label").html("Certificados");
+			return;
 		}
+		
+		globals.currentCerts = data.certificates;
+		showCerts(data.certificates, "");	
 		//alert(globals.currentOrders.length);
 	});
 }	

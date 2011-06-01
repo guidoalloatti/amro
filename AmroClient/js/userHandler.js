@@ -235,8 +235,24 @@ function deleteUser(id, name)
 		id: id,
 	},
 	function(data) {
-		console.log("Se elimino usuario "+name+" con id "+id);
-		getUserList();
+		if (data.success == true) {
+			console.log("Se elimino usuario "+name+" con id "+id);
+			
+			if (globals.currentUsers != null) {
+				for (var i=0; i < globals.currentUsers; i++)
+					if (globals.currentUsers[i].email == name &&
+						globals.currentUsers[i].password == pass)
+						if (globals.currentUsers[i].id == id)
+							window.location = "main.php?invoice_url=logout";
+			}
+			
+			getUserList();			
+		} else if (data.permission != undefined) {
+			alert("No se tiene permisos para realizar esta operación");
+		} else
+			alert("Error. Problemas con el servidor.");
+		
+		
 	});
 }
 

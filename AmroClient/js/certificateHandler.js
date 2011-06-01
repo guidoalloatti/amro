@@ -196,11 +196,11 @@ function showDetails(lines)
 	if (lines.length < 1)
 	{
 		var inner_html = "No se encontro ninguna orden de compra con valor de protocolo "+$("#orden_compra").val();
-		$("#ordenes_compra").html(inner_html);
+		$("#oc_details").html(inner_html);
 		return;
 	}
 	
-	var inner_html = "<div><table><tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Id Cliente</th><th class='oc'>Id Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th></tr>";
+	var inner_html = "<div><table><tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th></tr>";
 	inner_html += "<tr class='odd'>";
 		inner_html += "<td class='oc'>"+lines[0].ordencompra+"</td>";
 	inner_html += "<td>"+lines[0].numprobeta+"</td>";
@@ -218,7 +218,12 @@ function showDetails(lines)
 function getOCDetails(callback)
 {
 	var vars = getUrlVars();
-		
+	
+	if (vars.id == undefined) {
+		alert("Primero debe seleccionar una orden de compra");
+		return;
+	}
+	
 	$.getJSON(globals.server_url,
 			{
 				target: "CSVParsing",
@@ -308,6 +313,8 @@ function generateCertificate()
 
 function getOCs()
 {	
+	loading("all_oc", true);
+
 	$.getJSON(globals.server_url,
 	{
 		target: "CSVParsing",
@@ -324,7 +331,7 @@ function getOCs()
 
 function drawOC()
 {
-	inner_html = "<div style='max-height: 250px; overflow: auto;'>";
+	inner_html = "<div style='max-height: 275px; overflow: auto;'>";
 	inner_html += "<table>";
 	inner_html += "<tr class='oc'><th class='oc'>Orden de Compra</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Descripcion</th><th class='oc'>Id</th><th class='oc'>Generar Certificado</th></tr>";
 	

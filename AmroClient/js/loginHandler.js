@@ -16,6 +16,14 @@ $(document).ready(function() {
 			$("#error_box").html("<b>Atencion:</b> Usuario o password no especificados");
 	});
 	
+	$("#new_user_table").hide();
+	$("#new_user_button").click(function(){
+		newUserForm();
+	});
+	
+	$("#new_user_submit").click(function(){
+		newUser();
+	});
 });
 
 function checkValues()
@@ -101,4 +109,50 @@ function doLogin(user, pass, key)
 		}
 		http_request = null;
 	}
+}
+ 
+function newUserForm()
+{
+	var inner_html = "<table>";
+	inner_html += "<tr><td><label>Nombre:</label></td><td><input type='text' placeholder='Juan' id='new_user_name' style='text-align:center;' /></td></tr>";
+	inner_html += "<tr><td><label>Apellido:</label></td><td><input type='text' placeholder='Perez' id='new_user_surname' style='text-align:center;' /></td></tr>";
+	inner_html += "<tr><td><label>email:</label></td><td><input type='text' placeholder='juanperez@amro.com.ar' id='new_user_email' style='text-align:center;' /></td></tr>";
+	inner_html += "<tr><td><label>Contraseña:</label></td><td><input type='password' placeholder='xjfwaz90d' id='new_user_pass' style='text-align:center;' /></td></tr>";
+
+	inner_html += "</table>";
+	
+	$("#new_user_fields").html(inner_html);	
+	$("#new_user_table").show("slow");	
+}
+
+function newUser()
+{	
+	var mail = $("#new_user_email").val();
+	var password = $("#new_user_pass").val();
+	
+	if (mail == "" || password == "") {
+		alert("Ni el mail ni la contraseña pueden ser vacios");
+		return;	
+	}		
+	
+	$.getJSON(globals.server_url,
+	{	
+		target: "User",
+		method: "NewUser",
+		password: password,
+		email: mail,
+		name: $("#new_user_name").val(),
+		surname: $("#new_user_surname").val()
+	},
+	function(data) {
+		if (data.success == true) {
+			alert("Usuario " + mail + " creado!\nRecuerde que cada usuario en el sistema será\nidentificado con su dirección única de mail.");
+			window.location = "main.php?invoice_url=lo";
+		} else if (data.user != undefined)
+			alert("Error creando usuario! El usuario con mail " + mail + " ya existe.");
+		else if (data.email != undefined)
+			alert("Error! El formato del mail no es valido.");
+		else
+			alert("Error creando usuario. Problemas en el servidor.\nIntente nuevamente.");
+	});
 }

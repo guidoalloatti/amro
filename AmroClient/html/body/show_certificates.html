@@ -5,9 +5,8 @@
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="f" id="filtrocert_fecha">Fecha
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="pr" id="filtrocert_protn">ProtN
 		<input type="button" id="search" value="Buscar" onclick="searchCert();"/>
-		
-		
-<hr/>
+
+<hr/>	
 <table>
 	<tr>
 		<td><label>Nº Orden de Compra:</label></td><td><input id="cert_orden_compra" /></td>
@@ -22,20 +21,31 @@
 				
 	</tr>
 	<tr>
-		<td><label>ProtN:</label></td><td><input id="cert_protn"/></td>
+		<td><label>Nº de Protocolo:</label></td><td><input id="cert_protn"/></td>
 	</tr>	
-</table>
-<br/><hr>
-
-<div style="height: 50%; width: 50%; overflow: auto">
-<table>
+</table>		
+		
+<hr/>
+<table width="70%">
 	<tr>
 		<td>
-			<div id="certificados">
-			</div>
+			<p align='center' id='all_certs_title'>
+				<label style='font-weight:bold;'>Certificados</label>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td align="center" id="all_certs_cell" width="50%">
+			<div style="float: left; height: 100%; width: 100%;">				
+				<p id="certificados"></p>						
+			</div>			
 		</td>
 	</tr>
 </table>
-</div>
+
+
+<br/><hr>
+
+
 
 <br/><button id='cargar_certs' >Mostrar todos los Certificados Disponibles</button><button id='to_new_certs' >Cargar Nuevo Certificado</button>

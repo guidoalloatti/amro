@@ -214,7 +214,7 @@ class abmManager
 								</tr>
 								<tr>
 									<td><label>Password:</label></td>
-									<td><input type='label' id='password' /></td>
+									<td><input type='password' id='password' /></td>
 								</tr>
 								<tr id='signature_line'>
 									<td><label>Firma:</label></td>

@@ -3,6 +3,7 @@
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="o" id="filtro_orden_compra">Orden de Compra
 		<INPUT TYPE=RADIO NAME="filtro" VALUE="p" id="filtro_probeta">Numero de Probeta
 		<input type="button" id="search" value="Buscar" onclick="searchOC();"/>
+		<button style="float:right;" id="show_all_oc_button">Mostrar Todas las Ordenes de Compra</button>
 <hr/>
 <table>
 	<tr>
@@ -16,20 +17,63 @@
 </table>
 <br/><hr>
 
-<div style="float: left; height: 50%; width: 50%; overflow: auto">
-<table>
+<table id="oc_main_table" width="100%" height="350px">
 	<tr>
-		<td>
-			<div id="ordenes_compra">
-			</div>
+		<td width="70%" style='align:center; vertical-align:top;'>
+			<table width="100%">
+					<tr>
+						<td>
+							<p align='center' id='all_oc_title'>
+								<label style='font-weight:bold;'>Ordenes de Compra</label>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td align="center" id="all_oc_cell" width="50%">
+							<div style="float: left; height: 100%; width: 100%;">				
+											<p id="ordenes_compra"></p>						
+							</div>
+						</td>
+					</tr>
+			</table>
+		</td>			
+		<td id="new_oc_cell" width="30%" style='vertical-align:top;'>
+			<table width="100%">
+				<tr>
+					<td>
+						<p align='center' id='new_oc_title'>
+							<label style='font-weight:bold;'>Nueva Orden de Compra</label>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p id='new_oc_fields'></p>						
+						<p id='new_oc_submit' align='center'><button>Crear</button></p>
+					</td>
+				</tr>						
+			</table>			
+		</td>
+		<td width="30%" id="parsing_cell" width="50%" style='vertical-align:top;'>
+			<table width="100%">
+			 		<tr>
+						<td>
+							<p align='center' id='parse_oc_title'>
+								<label style='font-weight:bold;'>Errores del Archivo Analizado</label>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="csvreportclass" style="float: right; height: 100%; width: 100%">
+								<p><ul id="parsingreport" class="filetree"></ul></p>
+							</div>
+						</td>
+					</tr>						
+			</table>			
 		</td>
 	</tr>
 </table>
-</div>
-
-<div class="csvreportclass" style="float: right; height: 50%; width: 50%; overflow: auto">
-	<ul id="parsingreport" class="filetree"></ul>
-</div>
 
 
 <br/><hr>
@@ -46,11 +90,12 @@ Subir Ordenes de Compra:<input type="file" id="csvfile" />
 <form action="upload_file.php" method="post" enctype="multipart/form-data" target="_blank">
 window.open('', 'ventana1', 'scrollbar=no,resizable=no,width=300,height=300,statusbar=no')">
 -->
-
-<form action="upload_csv.php" method="post" enctype="multipart/form-data" name="oc_popup" target="_blank" id="formUploadCSV">
+ <div>
+<button id="new_oc_button">Cargar Nueva Orden de Compra</button><form style="float:right;" action="upload_csv.php" method="post" enctype="multipart/form-data" name="oc_popup" target="_blank" id="formUploadCSV">
 	<label for="file">Subir Archivo:</label>
 	<input type="file" name="file" id="csvfile" /> 
-	<input class="submit_lindo" id="submit_button" type="submit" name="submit" value="Submit"/>
+	<input class="submit_lindo" id="submit_button" type="submit" name="submit" value="Subir"/>
 </form>
+</div>
 
 

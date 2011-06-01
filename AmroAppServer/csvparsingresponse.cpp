@@ -206,7 +206,7 @@ void CSVParsingResponse::newOC(JSONP &output, const QHash <QString, QString> &pa
         if (materials.length() == 1)
             pl.setMaterial(materials.first());
         else {
-            output.add("error", "Material does not exist");
+            output.add("material", "Material does not exist");
             output.add("success", false);
             return;
         }
@@ -215,7 +215,7 @@ void CSVParsingResponse::newOC(JSONP &output, const QHash <QString, QString> &pa
         if (clients.length() == 1)
             pl.setClient(clients.first());
         else {
-            output.add("error", "Client does not exist");
+            output.add("client", "Client does not exist");
             output.add("success", false);
             return;
         }
@@ -225,7 +225,7 @@ void CSVParsingResponse::newOC(JSONP &output, const QHash <QString, QString> &pa
         QRegExp numProbetaFormat("([a-z|A-Z]+)(\\s*|\\-)(\\d+)");
         QString numprobeta = params.value("numprobeta", "").toUtf8();
         if (numprobeta.isEmpty() || !numProbetaFormat.exactMatch(numprobeta)) {
-            output.add("error", "Bad formatted num probeta");
+            output.add("probeta", "Bad formatted num probeta");
             output.add("success", false);
             return;
         }
