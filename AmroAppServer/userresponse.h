@@ -11,6 +11,7 @@ class UserResponse : public Response
     static void newUser(JSONP &output, const QHash <QString, QString> &params);
     static void deleteUser(JSONP &output, const QHash <QString, QString> &params);
     static void updateUser(JSONP &output, const QHash <QString, QString> &params);
+    static void updatePrivileges(JSONP &output, const QHash <QString, QString> &params);
     static void getUser(JSONP &output, const QHash <QString, QString> &params);
 
 public:

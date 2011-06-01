@@ -238,7 +238,8 @@ button.common:active span {
 }
 
 #cm_body input:not(#search),
-#oc_body input:not(#search)
+#oc_body input:not([type=submit]),
+#oc_body not(#search)
  {
     background: #ffffff;
     /*border: .5px solid #ddd;*/
@@ -275,7 +276,7 @@ button.common:active span {
     background-color:#FFFEEF;
 }
 
-#abm_tt button, #select_ca_button, #cm_body button, #oc_body button, #search, #abm_body button {
+#abm_tt button, #select_ca_button, #cm_body button, #oc_body button, #search, #abm_body button, #submit_button {
 	border:none;
 	outline: 5px;
     -moz-border-radius: 10px;
@@ -303,7 +304,11 @@ button.common:active span {
 	*/
 }
 
-#abm_tt button:hover, #select_ca_button:hover, #cm_body button:hover, #oc_body button:hover, #abm_body button:hover, #search:hover {
+#search, #submit_button {
+	padding:5px;
+}
+
+#abm_tt button:hover, #select_ca_button:hover, #cm_body button:hover, #oc_body button:hover, #abm_body button:hover, #search:hover, , #submit_button:hover {
     background:#d8d8d8;
     color:#666;
     text-shadow:1px 1px 1px #fff;

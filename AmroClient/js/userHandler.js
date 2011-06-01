@@ -11,6 +11,8 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
+	$("#signature_line").hide();
+	
 	$("#recargar_lista_usuarios").click(function(){
 		getUsuarioList();
 		event.preventDefault();
@@ -50,14 +52,14 @@ function newUsuario()
 	$("#email").val("");
 	$("#password").val("");
 }
-	
+
 function loadUser(name, id)
 {
 	getUser(id, name);
 }
 
 function insertUsuario()
-{
+{	
 	$.getJSON(server_url,
 	{	
 		target: "User",
@@ -67,7 +69,6 @@ function insertUsuario()
 		signature: $("#signature").val(),
 		name: $("#name").val(),
 		surname: $("#surname").val(),
-		signature: $("#signature").val(),
 	},
 	function(data) {
 		getUserList();
@@ -132,7 +133,12 @@ function getUser(id, name)
 			$("#name").val(data.users[0].name);
 			$("#surname").val(data.users[0].surname);
 			$("#email").val(data.users[0].email);
-			$("#signature").val(data.users[0].signature);
+			if (data.users[0].signature != "") {
+				$("#signature").attr("src", data.users[0].signature);
+				$("#signature_line").show("slow");
+			} else
+				$("#signature_line").hide();
+			
 			$("#usuario_seleccionado_name").html(data.users[0].name);
 			$("#usuario_seleccionado_id").html(data.users[0].id);
 			$("#gestionarPermisosUsuario").html("<a href='main.php?invoice_url=pe&userid="+data.users[0].id+"'>Gestionar Permisos del Usuario</a>");
@@ -148,6 +154,39 @@ function deleteUserConfirmation(name, id)
 	}
 }
 
+function updateSignature(file, id)
+{		
+	$.getJSON(server_url,
+	{	
+		target: "User",
+		method: "UpdateUser",
+		from_email: user,
+		from_password: pass,
+		user_id: id,
+		signature: globals.pathToCerts + id + "/" + file,
+	},
+	function(data) {
+		if (data.success == true)
+			alert("Firma digital actualizada con éxito!");
+		getUserList();
+	});
+}
+
+function uploadSignature(id)
+{
+	var html = "<form action='upload_signature.php' name='sig_popup' method='post' enctype='multipart/form-data' target='_blank' id='signatureUpload_"+id+"'><input type='file' name='file' id='signature_"+id+"'/> ";
+	$("#subir_firma_"+id).html(html);
+	
+	$("#signature_"+id).change(function(e){
+		  $in=$(this);
+		  var file = $in.val();
+		  //uploadCAFile(file);	
+		  $("#signatureUpload_"+id).attr("action", $("#signatureUpload_"+id).attr("action") + "?user=" + id);
+		  $("#signatureUpload_"+id).submit();
+	});	
+	
+}
+
 function getUsers()
 {
 	$.getJSON(server_url,
@@ -158,17 +197,32 @@ function getUsers()
 		password: pass, 		// "123"
 	},
 	function(data) {
-		var inner_html = "<table><tr><th>Usuario</th><th>Eliminar</th></tr><tr>"
+		if (data.success == false) {
+			alert("Error trayendo usuarios del servidor");
+			return;
+		}
+		
+		var inner_html = "<table><tr><th>Usuario</th><th>Eliminar</th><th>Subir Firma</th></tr><tr>"
 		for(i = 0; i < data.users.length; i++)
 		{	
 			inner_html += "<td><a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
-			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td></tr>";
-		}
+			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td>";
+			inner_html += "<td id='subir_firma_"+data.users[i].id+"' align='center'><button onclick='uploadSignature("+data.users[i].id+")'>Subir</button></td></tr>";
+		
+			
+		}		
+		
+		
+		
+		
 		$("#usuario_list").html(inner_html);
 		$("#usuarios_totales").html("Cantidad de Usuarios: "+data.users.length);
 		$("#usuario_seleccionado").html("<h4>Ninguno...</h4>");
+		
+		globals.currentUsers = data.users;
 	});
 }
+
 
 function deleteUser(id, name)
 {

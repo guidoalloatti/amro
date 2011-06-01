@@ -187,7 +187,7 @@ class abmManager
 					</table>
 					</div>
 				</td>
-				<td bgcolor='lightgray' width='80%' VALIGN='top'>
+				<td bgcolor='lightgray' width='70%' VALIGN='top'>
 					<table bgcolor='#BBBBBB'>
 						<tr>
 							<td><h3>Usuario Seleccionado:</h3></td>
@@ -216,9 +216,11 @@ class abmManager
 									<td><label>Password:</label></td>
 									<td><input type='label' id='password' /></td>
 								</tr>
-								<tr>
+								<tr id='signature_line'>
 									<td><label>Firma:</label></td>
-									<td><input type='file' id='signature' /></td>
+									<td>
+										<img id='signature' width='100px' height='100px'/>									
+									</td>
 								</tr>	
 								<tr>
 									<td><div id='gestionarPermisosUsuario'></div> 

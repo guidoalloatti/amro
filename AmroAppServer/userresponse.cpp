@@ -1,7 +1,12 @@
 #include "userresponse.h"
+
+#include <QDir>
+
 #include "../DataLibrary/usermapper.h"
 #include "../DataLibrary/privilegemapper.h"
 
+static QString default_privileges = "USER_LIST, CLIENT_LIST, MATERIAL_LIST, CERTIFICATE_LIST, GET_CA, GET_OC, TT_LIST, GET_MA";
+static QString relative_user_folder = "../AmroClient/certificados/img/";
 
 UserResponse::UserResponse()
 {
@@ -10,6 +15,7 @@ UserResponse::UserResponse()
     methodTable["DeleteUser"] = &UserResponse::deleteUser;
     methodTable["UpdateUser"] = &UserResponse::updateUser;
     methodTable["GetUser"] = &UserResponse::getUser;
+    methodTable["UpdatePrivileges"] = &UserResponse::updatePrivileges;
 
 }
 
@@ -54,11 +60,24 @@ void UserResponse::newUser(JSONP &output, const QHash <QString, QString> &params
 
     foreach(Privilege p, PrivilegeMapper().get()) {
         QString key = p.getName();
-        if (params.keys().contains(key))
-            u.addPrivilege(p);        
+        if (default_privileges.contains(key))
+            u.addPrivilege(p);
+    }    
+
+    bool success = UserMapper().insert(u);
+
+    if (success) {
+        QDir dir;
+        success = dir.mkdir(relative_user_folder + QString::number(u.getId()));
+        if (!success)
+            UserMapper().erase(u);
+        else {
+            QFile file(relative_user_folder + QString::number(u.getId()));
+            file.setPermissions(file.permissions() | QFile::WriteGroup | QFile::WriteOther);
+        }
     }
 
-    output.add("success", UserMapper().insert(u));
+    output.add("success", success);
 }
 
 void UserResponse::deleteUser(JSONP &output, const QHash <QString, QString> &params)
@@ -83,25 +102,83 @@ void UserResponse::updateUser(JSONP &output, const QHash <QString, QString> &par
 {
     output.add("method", "UpdateUser");
 
+    QString from_email = params.value("from_email", "").toUtf8();
+    QString from_password = params.value("from_password", "").toUtf8();
+
+    QList <User> users = UserMapper().get(params.value("user_id", "0").toUInt());
+    if (users.length() != 1) {
+        output.add("error", "User does not exists");
+        output.add("success", false);
+        return;
+    }
+
+    User u = users.first();
+
+    bool success = false;
+
+    if ((u.getEmail() == from_email && u.getPassword() == from_password)||
+        hasPermission(from_email, from_password, "USER_UPDATE")) {
+
+        QString name = params.value("name", "").toUtf8();
+        if (!name.isEmpty())
+            u.setName(name);
+
+        QString surname = params.value("surname", "").toUtf8();
+        if (!surname.isEmpty())
+            u.setSurname(params.value("surname", "").toUtf8());
+
+        QString signature = params.value("signature", "").toUtf8();
+        if (!signature.isEmpty())
+            u.setSignature(params.value("signature", "").toUtf8());
+
+        QString email = params.value("email", "").toUtf8();
+        if (!email.isEmpty())
+            u.setEmail(params.value("email", "").toUtf8());
+
+        QString password = params.value("password", "").toUtf8();
+        if (!password.isEmpty())
+            u.setPassword(params.value("password", "").toUtf8());
+
+        success = UserMapper().update(u);
+    }
+    else
+        success = false;
+
+    output.add("success", success);
+}
+
+void UserResponse::updatePrivileges(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "UpdatePrivileges");
+
     QString email = params.value("email", "").toUtf8();
     QString password = params.value("password", "").toUtf8();
 
-    QList <User> users = UserMapper().get(email, password);
+    bool success = false;
 
-    bool success = true;
+    if (hasPermission(email, password, "USER_UPDATE")) {
+        QList <User> users = UserMapper().get(params.value("user_id", "0").toUInt());
+        if (users.length() != 1) {
+            output.add("error", "User does not exists");
+            output.add("success", false);
+            return;
+        }
 
-    if (!users.empty())
-    {
-        User u(users[0].getId(), email, password);
-        u.setName(params.value("name", "").toUtf8());
-        u.setSurname(params.value("surname", "").toUtf8());
-        u.setSignature(params.value("signature", "").toUtf8());
+        User u = users.first();
+
+        QString denied;
 
         foreach(Privilege p, PrivilegeMapper().get()) {
             QString key = p.getName();
-            if (params.keys().contains(key))
-                u.addPrivilege(p);
+            if (params.value("privileges", "").contains(key) && !u.getPrivileges().contains(p)) {
+                if (hasPermission(email, password, key))
+                    u.addPrivilege(p);
+                else
+                    denied.append(key + " ");
+            }
         }
+
+        output.add("denied", denied);
 
         success = UserMapper().update(u);
     }

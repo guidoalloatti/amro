@@ -47,10 +47,10 @@ Subir Ordenes de Compra:<input type="file" id="csvfile" />
 window.open('', 'ventana1', 'scrollbar=no,resizable=no,width=300,height=300,statusbar=no')">
 -->
 
-<form action="upload_file.php" method="post" enctype="multipart/form-data" name="oc_popup" target="ventana1" id="formUploadCSV" onsubmit="uploadCSV();">
+<form action="upload_csv.php" method="post" enctype="multipart/form-data" name="oc_popup" target="_blank" id="formUploadCSV">
 	<label for="file">Subir Archivo:</label>
 	<input type="file" name="file" id="csvfile" /> 
-	<input class="submit_lindo" type="submit" name="submit" value="Submit" />
+	<input class="submit_lindo" id="submit_button" type="submit" name="submit" value="Submit"/>
 </form>
 
 

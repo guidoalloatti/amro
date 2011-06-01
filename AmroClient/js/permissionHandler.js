@@ -45,11 +45,9 @@ $(document).ready(function() {
 	
 	//console.log(userId);
 	
-	getUsersDropdown();	
-
 	//if(userId == undefined)
 	//{
-	//	console.log("El userid no esta definººo");
+	//	console.log("El userid no esta definï¿½ï¿½o");
 	//	$("#option_usuarios").attr('disabled', true);
 	//}
 	
@@ -185,6 +183,8 @@ function getUsersDropdown()
 		password: pass
 	},
 	function(data) {
+		if (data.success == false)
+			return;
 		
 		users = data.users;
 		if(users.length > 0)

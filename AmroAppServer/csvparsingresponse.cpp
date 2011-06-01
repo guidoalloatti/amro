@@ -11,6 +11,7 @@ CSVParsingResponse::CSVParsingResponse()
 {
     methodTable["ParseCSV"] = &CSVParsingResponse::parseCSV;
     methodTable["DeleteOC"] = &CSVParsingResponse::deleteOC;
+    methodTable["NewOC"] = &CSVParsingResponse::newOC;
     methodTable["GetOC"] = &CSVParsingResponse::getOC;
 }
 
@@ -141,6 +142,8 @@ void CSVParsingResponse::parseCSV(JSONP &output, const QHash <QString, QString> 
     QString email = params.value("email", "").toUtf8();
     QString password = params.value("password", "").toUtf8();
 
+    qDebug() << params.value("filepath", "").toUtf8();
+
     bool success = false;
 
     if (hasPermission(email, password, "PARSE_CSV")) {
@@ -180,6 +183,58 @@ void CSVParsingResponse::deleteOC(JSONP &output, const QHash <QString, QString> 
         CSVParsingLine pl;
         pl.setId(id);
         success = CSVParsingLineMapper().erase(pl);
+    } else
+        output.add("permissions", "denied");
+
+    output.add("success", success);
+}
+
+void CSVParsingResponse::newOC(JSONP &output, const QHash <QString, QString> &params)
+{
+    output.add("method", "NewOC");
+
+    QString email = params.value("email", "").toUtf8();
+    QString password = params.value("password", "").toUtf8();
+
+    bool success = false;
+
+    if (hasPermission(email, password, "OC_INSERT"))
+    {
+        CSVParsingLine pl;
+
+        QList <Material> materials = MaterialMapper().get(params.value("material_id", "").toUInt());
+        if (materials.length() == 1)
+            pl.setMaterial(materials.first());
+        else {
+            output.add("error", "Material does not exist");
+            output.add("success", false);
+            return;
+        }
+
+        QList <Client> clients = ClientMapper().get(params.value("client_id", "").toUInt());
+        if (clients.length() == 1)
+            pl.setClient(clients.first());
+        else {
+            output.add("error", "Client does not exist");
+            output.add("success", false);
+            return;
+        }
+
+        pl.setDescription(params.value("description", "").toUtf8());
+
+        QRegExp numProbetaFormat("([a-z|A-Z]+)(\\s*|\\-)(\\d+)");
+        QString numprobeta = params.value("numprobeta", "").toUtf8();
+        if (numprobeta.isEmpty() || !numProbetaFormat.exactMatch(numprobeta)) {
+            output.add("error", "Bad formatted num probeta");
+            output.add("success", false);
+            return;
+        }
+        pl.setNumProbeta(numprobeta);
+
+        quint64 orden = params.value("ordencompra", "0").toUInt();
+        pl.setOrdenCompra(orden);
+
+        success = CSVParsingLineMapper().insert(pl);
     } else
         output.add("permissions", "denied");
 

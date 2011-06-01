@@ -9,6 +9,7 @@ class CSVParsingResponse: public Response
 
     static void parseCSV(JSONP &output, const QHash <QString, QString> &params);
     static void deleteOC(JSONP &output, const QHash <QString, QString> &params);
+    static void newOC(JSONP &output, const QHash <QString, QString> &params);
     static void getOC(JSONP &output, const QHash <QString, QString> &params);
 
 public:

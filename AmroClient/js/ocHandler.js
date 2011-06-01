@@ -11,7 +11,7 @@ $(document).ready(function() {
 	$("#csvfile").change(function(e){
 	  $in=$(this);
 	  var file = $in.val();
-	  parseCSV(file);		  
+	  //parseCSV(file);		  
 	});
 });
 
@@ -20,7 +20,7 @@ function uploadCSV()
 	//console.log($("#formUploadCSV"));
 	//console.log($("#csvfile").val());
 	//console.log("Pedro");	
-	parseCSV($("#csvfile").val());
+	parseCSV($("#csvfile").val());	
 }
 
 function loadOCPage()
@@ -313,7 +313,7 @@ function parseCSV(file)
 		method: "ParseCSV",
 		email: user,		//"pmata@amro.com",
 		password: pass,		//"123",
-		filepath: globals.pathToUpload+shortname,	//"/home/guido/Escritorio/"+ shortname
+		filepath: globals.pathToCSVUpload+shortname,	//"/home/guido/Escritorio/"+ shortname
 	},
 	function(data) {
 		if (data.errors == 'undefined')
@@ -328,6 +328,11 @@ function parseCSV(file)
 		$("#parsingreport").treeview();	
 	});
 }	
+
+function test()
+{
+	alert("sdfasdfs");
+}
 
 
 

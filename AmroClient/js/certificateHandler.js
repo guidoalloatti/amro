@@ -48,9 +48,17 @@ $(document).ready(function() {
 	});
 	
 	$("#_file").change(function(e){
+	  alert('asdf');
 	  $in=$(this);
 	  var file = $in.val();
-	  uploadCAFile(file);		  
+	  //uploadCAFile(file);	
+	  $("#submitCA").submit();
+	});
+	
+	$("#submitCA_button").click(function(e)
+	{
+		//event.preventDefault();
+		$("#submitCA").submit();
 	});
 	
 	$("#ttloader").change(function(e){
@@ -360,7 +368,7 @@ function uploadCAFile(file)
 				method: "ParseCA",
 				email: user,      	// "pmata@amro.com",
 				password: pass,     // "123",
-				filepath: globals.pathToUploads+shortname,		//"/home/pmata/amro/"+shortname
+				filepath: globals.pathToCAUploads+shortname,		//"/home/pmata/amro/"+shortname
 			},
 			function(data) {
 				if (data.success == true) {

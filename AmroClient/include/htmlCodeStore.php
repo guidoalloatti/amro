@@ -27,6 +27,9 @@ class htmlCodeStore {
         	case "cm":
         		$html .= "</head><body id='cm_body' onload='loadCertPage();'>";
         		break;
+        	case "pe":
+        		$html .= "</head><body id='cm_body' onload='getUsersDropdown();'>";
+        		break;
         	default:
         		$html .= '</head><body>';
         		break;
@@ -93,6 +96,13 @@ class htmlCodeStore {
 					<link rel="icon" href="/favicon.gif" type="image/gif">
 					';
 					break;
+			case "lo":
+				$html.='
+					<title>Login</title>
+					<meta content="menu" name="keywords">
+					<link rel="icon" href="/favicon.gif" type="image/gif">
+					';
+					break;
             default:
                 $html.='
 					<title>Pagina no Encontrada</title>
@@ -128,6 +138,9 @@ class htmlCodeStore {
 				break;
 			case "pe":
 				$pageDescription = "Gestión de Permisos de Usuario";
+				break;
+			case "lo":
+				$pageDescription = "Ingreso de Usuarios";
 				break;
 			default:
 				$pageDescription = $this->pageInvoice;
@@ -245,8 +258,15 @@ class htmlCodeStore {
 					<p><label for="_ce">C.E.</label><input type="text" id="_ce" name="_ce" placeholder="Ingrese el C.E." autocomplete="OFF" /></p>
                     
 					<p><button id="checkCAExistence">Chequear Existencia de Analisis Quimico</button></p>
-					<p id="addCA"><label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/></p>
-                                             
+					<!--<p id="addCA"><label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/></p>-->
+
+					<p id="addCA">
+					<form action="http://localhost:9081:/upload_cafile.php" method="post" enctype="multipart/form-data" name="ca_popup" target="_blank" id="submitCA">
+					<label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/><input class="submit_lindo" id="submitCA_button" type="submit" name="submit_ca" value="Submit"/>
+					
+					</form>
+					</p>
+					
                     <p id="selectedCA"></p>
             
 			</fieldset>
