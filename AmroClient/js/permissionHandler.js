@@ -69,7 +69,7 @@ function savePermissions()
 		
 		console.log("----------------- Actualizando Permisos -----------------");
 		console.log(permString);
-		console.log(selectedUser);
+		//sconsole.log(selectedUser);
 		console.log("---------------------------------------------------------");
 		
 		
@@ -85,11 +85,13 @@ function savePermissions()
 		function(data) {
 			if(data.success)
 			{
+				console.log("La llamada fue un exito: ");
 				console.log(data);
 			}
 			else
 			{
-				console.log("La llamada realizada no fue existosa");
+				console.log("La llamada realizada no fue existosa: ");
+				console.log(data);
 			}
 		});
 	}

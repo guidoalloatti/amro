@@ -38,10 +38,13 @@ class abmManager
 	
 	function getAbmMaterialHtml()
 	{
-		$this->html = "<body id='abm_body' onload='materialStart();'> <h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
+		$this->html = "<body id='abm_body' onload='materialStart();'> 
+		<!--
+		<h3>Listado de Materiales <div id='materiales_totales'>Cantidad de Materiales: 0</div></h3>
+		-->
 		<table width='90%' height='300px' border='0px'>
 			<tr>
-				<td width='25%' bgcolor='#BBBBBB' id='material_list' VALIGN='top'>
+				<td width='25%' id='material_list' VALIGN='top'>
 				<div style='height:300px; overflow:auto;'>
 					<table>
 					</td>
@@ -49,12 +52,16 @@ class abmManager
 					</table>
 					</div>
 				</td>
-				<td bgcolor='lightgray' width='80%' VALIGN='top'>
-					<table bgcolor='#BBBBBB'>
+				<td width='80%' VALIGN='top' class='invisible'>
+					<table>
 						<tr>
-							<td><h3>Material Seleccionado:</h3></td>
+							<!-- <td><h3>Material Seleccionado:</h3></td> 
 							<td align='right' id='material_seleccionado_name'></td>
-							<td id='material_seleccionado_id'></td>
+							<td id='material_seleccionado_id'></td> -->
+							
+							<td align='right' id='material_seleccionado_name' class='rounded_4'>Ninguno</td>
+							<td id='material_seleccionado_id'  align='right' class='rounded_4'>Sin Definir</td>
+							
 						</tr>
 					</table>
 					<table><hr noshade/></table>					
@@ -70,10 +77,10 @@ class abmManager
 								</tr></table></td>
 								</tr>
 								<tr>
-									<th><b>Material Quimico</b></th>
+									<th><b>Composicion Quimica</b></th>
 									<th><b>Maximo</b></th>
 									<th><b>Minimo</b></th>
-									<th><b>Material Quimico</b></th>
+									<th><b>Composicion Quimica</b></th>
 									<th><b>Maximo</b></th>
 									<th><b>Minimo</b></th>
 								</tr>
@@ -176,10 +183,11 @@ class abmManager
 	
 	function getAbmUsuarioHtml()
 	{	
-		$this->html = "<body id='abm_body' onload='userStart();'> <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>
+		$this->html = "<body id='abm_body' onload='userStart();'> 
+		<!-- <h3>Listado de Usuarios <div id='usuarios_totales'>Cantidad de Usuarios: 0</div></h3>-->
 		<table width='90%' height='300px' border='0px'>
 			<tr>
-				<td width='25%' bgcolor='#BBBBBB' id='usuario_list' VALIGN='top'>
+				<td width='25%' id='usuario_list' VALIGN='top'>
 				<div style='height:300px; overflow:auto;'>
 					<table>
 					</td>
@@ -187,12 +195,15 @@ class abmManager
 					</table>
 					</div>
 				</td>
-				<td bgcolor='lightgray' width='70%' VALIGN='top'>
-					<table bgcolor='#BBBBBB'>
+				<td class='invisible' width='70%' VALIGN='top'>
+					<table>
 						<tr>
-							<td><h3>Usuario Seleccionado:</h3></td>
-							<td align='right' id='usuario_seleccionado_name'></td>
-							<td id='usuario_seleccionado_id'></td>
+							<!-- <td><h3>Usuario Seleccionado:</h3></td> -->
+							<td align='right' id='usuario_seleccionado_name' class='rounded_4'>Ninguno</td>
+							<td id='usuario_seleccionado_id'  align='right' class='rounded_4'>Sin Definir</td>
+							
+							<!-- <td align='right' id='usuario_seleccionado_name'></td>
+							<td id='usuario_seleccionado_id'></td>-->
 						</tr>
 					</table>
 					<table><hr noshade/></table>					
@@ -256,19 +267,19 @@ class abmManager
 			</tr>
 			-->
 			<tr>
-				<td width='25%'  id='client_list' VALIGN='top'>
+				<td width='30%'  id='client_list' VALIGN='top'>
 					<div style='height:300px overflow:auto;'><table>
 					</td>
 						</tr>
 					</table>
 					</div>
 				</td>
-				<td width='80%' VALIGN='top'>
+				<td  width='70%' VALIGN='top' class='invisible' id='client_details'>
 					<table>
 						<tr>
-							<td class='rounded_2'><h3>Cliente Seleccionado</h3></td>
-							<td align='right' id='cliente_seleccionado_name'></td>
-							<td id='cliente_seleccionado_id'></td>
+							<!-- <td class='rounded_2'><b>Cliente Seleccionado<b></td> -->
+							<td align='right' id='cliente_seleccionado_name' class='rounded_4'>Ninguno</td>
+							<td id='cliente_seleccionado_id'  align='right' class='rounded_4'>c</td>
 						</tr>
 					</table>
 					<table><hr noshade/></table>					

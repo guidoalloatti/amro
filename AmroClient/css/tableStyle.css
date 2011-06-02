@@ -8,8 +8,19 @@ table.oc
 
 }
 
-th.rounded
+table.invisible
 {
+	display: none;
+}
+
+td.invisible
+{
+	opacity: 0.00;
+	/*display: none;*/
+}
+
+th.rounded
+{	
 
 	border: solid 1px lightblue;
 	color: white;
@@ -21,7 +32,7 @@ th.rounded
 
 th.rounded_start
 {
-
+	line-height: 4px;
 	border: solid 10px #4797ED;
 	color: white;
 	-moz-border-radius: 0 50px 50px 0;
@@ -31,6 +42,7 @@ th.rounded_start
 
 th.rounded_middle
 {
+	line-height: 4px;
 	border: solid 10px #4797ED;
 	color: white;
 	-moz-border-radius: 0 50px 50px 0;
@@ -39,6 +51,7 @@ th.rounded_middle
 
 th.rounded_end
 {
+	line-height: 4px;
 	border: solid 10px #4797ED;
 	color: white;
 	-moz-border-radius: 0 50px 50px 0;
@@ -55,7 +68,8 @@ td.rounded_1
 
 td.rounded_4
 {
-	 border: solid 4px lightgreen;
+	line-height: 6px;
+	 border: solid 8px lightgreen;
 	 background: lightgreen;
 	 color: blue;
 	-moz-border-radius: 0 50px 50px 0;
@@ -65,7 +79,8 @@ td.rounded_4
 
 td.rounded_2
 {
-	border: solid 2px #4797ED;
+	line-height: 4px;
+	border: solid 5px #4797ED;
 	background: #4797ED;
 	color: white;
 	-moz-border-radius: 0 50px 50px 0;

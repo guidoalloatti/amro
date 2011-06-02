@@ -1,8 +1,7 @@
 // Global Variables Definitions
-var server_url = globals.server_url; //"http://192.168.1.101:8080/?callback=?"; // globals.server_url; // 
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
-
 
 $(document).ready(function() {
 
@@ -46,6 +45,9 @@ function userStart()
 // Funciones de Manejo de Usuarios
 function newUsuario()
 {
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+	$("#usuario_seleccionado_name").html("Nuevo");
+	$("#usuario_seleccionado_id").html("Usuario");	
 	$("#name").val("");
 	$("#surname").val("");
 	$("#signature").val("");
@@ -70,8 +72,13 @@ function insertUsuario()
 		name: $("#name").val(),
 		surname: $("#surname").val(),
 	},
-	function(data) {
-		getUserList();
+	function(data) {	
+		if(data.success)
+		{
+			getUserList();
+		}
+		else
+			alert("Hubo un problema al ejecutar el metodo NewUser");
 	});
 }
 
@@ -97,15 +104,20 @@ function updateUser()
 		user_id: $("#usuario_seleccionado_id").html()
 	},
 	function(data) {
-		if(data.success == true)
+		if(data.success)
 		{
 			if($("#email").val() == user && pass != $("#password").val())
 			{
-				console.log("Se cambio en pass del usuario actual, se cambia el password de sesion");
+				//console.log("Se cambio en pass del usuario actual, se cambia el password de sesion");
 				$.cookie("pass", $("#password").val());
+				getUserList();
 			}
 		}
-		console.log(data);
+		else
+		{
+			alert("Hubo un problema al ejecutar el metodo UpdateUser");
+			//console.log(data);
+		}
 	});
 }
 
@@ -116,6 +128,8 @@ function getUserList()
 
 function getUser(id, name)
 {
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+
 	$.getJSON(server_url,
 	{
 		target: "User",
@@ -125,24 +139,29 @@ function getUser(id, name)
 		email: user, 			// "pmata@amro.com",
 		password: pass, 		// "123"
 	},
-	function(data) {
-		if(data.users.length > 1)
-			alert("Error en la cantidad de usuarios, no se puede especificar el usuario seleccionado");
-		else	
+	function(data) {	
+		if(data.success)
 		{
-			$("#name").val(data.users[0].name);
-			$("#surname").val(data.users[0].surname);
-			$("#email").val(data.users[0].email);
-			if (data.users[0].signature != "") {
-				$("#signature").attr("src", data.users[0].signature);
-				$("#signature_line").show("slow");
-			} else
-				$("#signature_line").hide();
-			
-			$("#usuario_seleccionado_name").html(data.users[0].name);
-			$("#usuario_seleccionado_id").html(data.users[0].id);
-			$("#gestionarPermisosUsuario").html("<a href='main.php?invoice_url=pe&userid="+data.users[0].id+"'>Gestionar Permisos del Usuario</a>");
-		}	
+			if(data.users.length > 1)
+				alert("Error en la cantidad de usuarios, no se puede especificar el usuario seleccionado");
+			else	
+			{
+				$("#name").val(data.users[0].name);
+				$("#surname").val(data.users[0].surname);
+				$("#email").val(data.users[0].email);
+				if (data.users[0].signature != "") {
+					$("#signature").attr("src", data.users[0].signature);
+					$("#signature_line").show("slow");
+				} else
+					$("#signature_line").hide();
+				
+				$("#usuario_seleccionado_name").html(data.users[0].name);
+				$("#usuario_seleccionado_id").html(data.users[0].id);
+				$("#gestionarPermisosUsuario").html("<a href='main.php?invoice_url=pe&userid="+data.users[0].id+"'>Gestionar Permisos del Usuario</a>");
+			}
+		}
+		else
+			alert("Hubo un problema al ejecutar el metodo GetUser");
 	});
 }
 
@@ -166,9 +185,16 @@ function updateSignature(file, id)
 		signature: globals.pathToCerts + id + "/" + file,
 	},
 	function(data) {
-		if (data.success == true)
+		if (data.success)
+		{
 			alert("Firma digital actualizada con éxito!");
-		getUserList();
+			getUserList();	
+		}
+		else
+		{
+			alert("Hubo un problema al ejecutar el metodo UpdateUser");
+			//console.log(data);
+		}
 	});
 }
 
@@ -180,7 +206,6 @@ function uploadSignature(id)
 	$("#signature_"+id).change(function(e){
 		  $in=$(this);
 		  var file = $in.val();
-		  //uploadCAFile(file);	
 		  $("#signatureUpload_"+id).attr("action", $("#signatureUpload_"+id).attr("action") + "?user=" + id);
 		  $("#signatureUpload_"+id).submit();
 	});	
@@ -201,19 +226,19 @@ function getUsers()
 			alert("Error trayendo usuarios del servidor");
 			return;
 		}
+		var inner_html = "<table>";
+		inner_html += "<tr bgcolor='#4797ED'>";
+		inner_html += "<th class='rounded_start'>Usuario</th>";
+		inner_html += "<th class='rounded_middle'>Subir Firma</th>";
+		inner_html += "<th class='rounded_end'>Eliminar</th>";
+		inner_html += "</tr>";
 		
-		var inner_html = "<table><tr><th>Usuario</th><th>Eliminar</th><th>Subir Firma</th></tr><tr>"
 		for(i = 0; i < data.users.length; i++)
 		{	
-			inner_html += "<td><a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
-			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td>";
-			inner_html += "<td id='subir_firma_"+data.users[i].id+"' align='center'><button onclick='uploadSignature("+data.users[i].id+")'>Subir</button></td></tr>";
-		
-			
+			inner_html += "<tr><td class='rounded_4'> > <a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
+			inner_html += "<td id='subir_firma_"+data.users[i].id+"' align='center'><button onclick='uploadSignature("+data.users[i].id+")'>Subir</button></td>";
+			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td></tr>";
 		}		
-		
-		
-		
 		
 		$("#usuario_list").html(inner_html);
 		$("#usuarios_totales").html("Cantidad de Usuarios: "+data.users.length);

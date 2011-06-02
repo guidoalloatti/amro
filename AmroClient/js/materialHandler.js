@@ -42,6 +42,12 @@ function materialStart()
 // Funciones de Manejo de Clientes
 function newMaterial()
 {
+	
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+	
+	// Name and Id
+	$("#material_seleccionado_name").html("Nuevo");
+	$("#material_seleccionado_id").html("Material");		
 	$("#name").val("");
 	
 	$("#carbono_max").val("");
@@ -122,8 +128,11 @@ function insertMaterial()
 		//id: id,
 	},
 	function(data) {
-		getMaterialList();
-		newMaterial();
+		if(!data.success)
+			alert("No se pudo llamar a UpdateMaterial correctamente");
+		else
+			getMaterialList();
+			newMaterial();
 	});
 }
 
@@ -167,7 +176,8 @@ function updateMaterial()
 		id: $("#material_seleccionado_id").html(),
 	},
 	function(data) {
-		//alert( $("#material_seleccionado_id").html());
+		if(!data.success)
+			alert("No se pudo llamar a UpdateMaterial correctamente");
 	});
 }
 
@@ -178,6 +188,8 @@ function getMaterialList()
 
 function getMaterial(id, name)
 {
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+
 	$.getJSON(server_url,
 	{
 		target: "Material",
@@ -187,54 +199,61 @@ function getMaterial(id, name)
 		email: user,			// "pmata@amro.com",
 		password: pass,			// "123"
 	},
-	function(data) {
-		if(data.materials.length > 1)
-			alert("Error en la cantidad de materiales, no se puede especificar el material seleccionado");
-		else	
+	function(data) {	
+		if(data.success)
 		{
-			// Name and Id
-			$("#name").val(data.materials[0].name);
-			$("#material_seleccionado_name").html(data.materials[0].name);
-			$("#material_seleccionado_id").html(data.materials[0].id);
-			
-			// Quimicos
-			$("#carbono_max").val(data.materials[0].chlimits.c[0]);
-			$("#carbono_min").val(data.materials[0].chlimits.c[1]);
-			$("#manganeso_max").val(data.materials[0].chlimits.mn[0]);
-			$("#manganeso_min").val(data.materials[0].chlimits.mn[1]);
-			$("#silicio_max").val(data.materials[0].chlimits.si[0]);
-			$("#silicio_min").val(data.materials[0].chlimits.si[1]);
-			$("#fosforo_max").val(data.materials[0].chlimits.p[0]);
-			$("#fosforo_min").val(data.materials[0].chlimits.p[1]);
-			$("#azufre_max").val(data.materials[0].chlimits.s[0]);
-			$("#azufre_min").val(data.materials[0].chlimits.s[1]);
-			$("#cromo_max").val(data.materials[0].chlimits.cr[0]);
-			$("#cromo_min").val(data.materials[0].chlimits.cr[1]);
-			$("#niquel_max").val(data.materials[0].chlimits.ni[0]);
-			$("#niquel_min").val(data.materials[0].chlimits.ni[1]);
-			$("#molibdeno_max").val(data.materials[0].chlimits.mo[0]);
-			$("#molibdeno_min").val(data.materials[0].chlimits.mo[1]);			
-			$("#cobre_max").val(data.materials[0].chlimits.cu[0]);
-			$("#cobre_min").val(data.materials[0].chlimits.cu[1]);			
-			$("#vanadio_max").val(data.materials[0].chlimits.v[0]);
-			$("#vanadio_min").val(data.materials[0].chlimits.v[1]);			
-			$("#ce_max").val(data.materials[0].chlimits.ce[0]);
-			$("#ce_min").val(data.materials[0].chlimits.ce[1]);
-			
-			// Mecanicos
-			$("#tension_rotura_max").val(data.materials[0].mlimits.tension_rotura[0]);
-			$("#tension_rotura_min").val(data.materials[0].mlimits.tension_rotura[1]);
-			$("#limite_fluencia_max").val(data.materials[0].mlimits.limite_fluencia[0]);
-			$("#limite_fluencia_min").val(data.materials[0].mlimits.limite_fluencia[1]);
-			$("#alargamiento_max").val(data.materials[0].mlimits.alargamiento[0]);
-			$("#alargamiento_min").val(data.materials[0].mlimits.alargamiento[1]);
-			$("#estriccion_max").val(data.materials[0].mlimits.estriccion[0]);
-			$("#estriccion_min").val(data.materials[0].mlimits.estriccion[1]);
-			$("#resiliencia_max").val(data.materials[0].mlimits.resiliencia[0]);
-			$("#resiliencia_min").val(data.materials[0].mlimits.resiliencia[1]);
-			$("#dureza_max").val(data.materials[0].mlimits.dureza[0]);
-			$("#dureza_min").val(data.materials[0].mlimits.dureza[1]);
-		}	
+			if(data.materials.length > 1)
+				alert("Error en la cantidad de materiales, no se puede especificar el material seleccionado");
+			else	
+			{
+				// Quimicos
+				$("#carbono_max").val(data.materials[0].chlimits.c[0]);
+				$("#carbono_min").val(data.materials[0].chlimits.c[1]);
+				$("#manganeso_max").val(data.materials[0].chlimits.mn[0]);
+				$("#manganeso_min").val(data.materials[0].chlimits.mn[1]);
+				$("#silicio_max").val(data.materials[0].chlimits.si[0]);
+				$("#silicio_min").val(data.materials[0].chlimits.si[1]);
+				$("#fosforo_max").val(data.materials[0].chlimits.p[0]);
+				$("#fosforo_min").val(data.materials[0].chlimits.p[1]);
+				$("#azufre_max").val(data.materials[0].chlimits.s[0]);
+				$("#azufre_min").val(data.materials[0].chlimits.s[1]);
+				$("#cromo_max").val(data.materials[0].chlimits.cr[0]);
+				$("#cromo_min").val(data.materials[0].chlimits.cr[1]);
+				$("#niquel_max").val(data.materials[0].chlimits.ni[0]);
+				$("#niquel_min").val(data.materials[0].chlimits.ni[1]);
+				$("#molibdeno_max").val(data.materials[0].chlimits.mo[0]);
+				$("#molibdeno_min").val(data.materials[0].chlimits.mo[1]);			
+				$("#cobre_max").val(data.materials[0].chlimits.cu[0]);
+				$("#cobre_min").val(data.materials[0].chlimits.cu[1]);			
+				$("#vanadio_max").val(data.materials[0].chlimits.v[0]);
+				$("#vanadio_min").val(data.materials[0].chlimits.v[1]);			
+				$("#ce_max").val(data.materials[0].chlimits.ce[0]);
+				$("#ce_min").val(data.materials[0].chlimits.ce[1]);
+				
+				// Mecanicos
+				$("#tension_rotura_max").val(data.materials[0].mlimits.tension_rotura[0]);
+				$("#tension_rotura_min").val(data.materials[0].mlimits.tension_rotura[1]);
+				$("#limite_fluencia_max").val(data.materials[0].mlimits.limite_fluencia[0]);
+				$("#limite_fluencia_min").val(data.materials[0].mlimits.limite_fluencia[1]);
+				$("#alargamiento_max").val(data.materials[0].mlimits.alargamiento[0]);
+				$("#alargamiento_min").val(data.materials[0].mlimits.alargamiento[1]);
+				$("#estriccion_max").val(data.materials[0].mlimits.estriccion[0]);
+				$("#estriccion_min").val(data.materials[0].mlimits.estriccion[1]);
+				$("#resiliencia_max").val(data.materials[0].mlimits.resiliencia[0]);
+				$("#resiliencia_min").val(data.materials[0].mlimits.resiliencia[1]);
+				$("#dureza_max").val(data.materials[0].mlimits.dureza[0]);
+				$("#dureza_min").val(data.materials[0].mlimits.dureza[1]);
+				
+				// Name and Id
+				$("#name").val(data.materials[0].name);
+				$("#material_seleccionado_name").html(data.materials[0].name);
+				$("#material_seleccionado_id").html(data.materials[0].id);			
+			}	
+		}
+		else
+		{
+			alert("No se pudo llamar a GetMaterial correctamente");
+		}
 	});
 }
 
@@ -255,17 +274,24 @@ function getMaterials()
 		email: user,			// "pmata@amro.com",
 		password: pass,			// "123"
 	},
-	function(data) {
-		var inner_html = "<table><tr><th>Material</th><th>Eliminar</th></tr><tr>"
-		
-		for(i = 0; i < data.materials.length; i++)
-		{	
-			inner_html += "<td><a href='#' id='material_"+data.materials[i].id+"' onclick='loadMaterial(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");'>"+data.materials[i].name+"</a></td>";
-			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteMaterialConfirmation(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");' /></td></tr>";
+	function(data) {	
+		if(data.success)
+		{
+			var inner_html = "<table><tr  bgcolor='#4797ED'><th class='rounded_start'>Material</th><th class='rounded_end'>Eliminar</th></tr>"
+			
+			for(i = 0; i < data.materials.length; i++)
+			{	
+				inner_html += "<tr><td class='rounded_4'> > <a href='#' id='material_"+data.materials[i].id+"' onclick='loadMaterial(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");'>"+data.materials[i].name+"</a></td>";
+				inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteMaterialConfirmation(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");' /></td></tr>";
+			}
+			$("#material_list").html(inner_html);
+			$("#materiales_totales").html("Cantidad de Materiales: "+data.materials.length);
+			$("#material_seleccionado").html("<h4>Ninguno...</h4>");
 		}
-		$("#material_list").html(inner_html);
-		$("#materiales_totales").html("Cantidad de Materiales: "+data.materials.length);
-		$("#material_seleccionado").html("<h4>Ninguno...</h4>");
+		else
+		{
+			alert("No se pudo llamar a GetMaterial correctamente");
+		}
 	});
 }
 
@@ -280,8 +306,10 @@ function deleteMaterial(id, name)
 		id: id,
 	},
 	function(data) {
-		console.log("Se elimino material "+name+" con id "+id);
-		getMaterialList();
+		if(!data.success)
+			alert("No se pudo llamar a DeleteMaterial correctamente");
+		else
+			getMaterialList();
 	});
 }
 

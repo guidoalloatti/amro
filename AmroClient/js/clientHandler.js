@@ -6,7 +6,7 @@ var pass = $.cookie("pass");
 
 // On Ready
 $(document).ready(function() {
-
+	
 	$("#guardar_cliente").click(function(){
 		insertClient();
 		event.preventDefault();
@@ -44,6 +44,10 @@ $(document).ready(function() {
 // Funciones de Manejo de Clientes
 function newClient()
 {
+
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+	$("#cliente_seleccionado_name").html("Nuevo");
+	$("#cliente_seleccionado_id").html("Cliente");	
 	$("#name").val("");
 	$("#address").val("");
 	$("#city").val("");
@@ -80,8 +84,11 @@ function insertClient()
 		email: user,										// "pmata@amro.com",
 		password: pass, 									// "123",
 	},
-	function(data) {
-		getClientList();
+	function(data) {	
+		if(!data.success)
+			alert("No se pudo correr el metodo NewClient correctamente");
+		else
+			getClientList();
 	});
 }
 
@@ -112,18 +119,23 @@ function updateClient()
 		password: pass, 							//"123",
 	},
 	function(data) {
-		getClientList();
+		if(!data.success)
+			alert("No se pudo correr el metodo UpdateClient correctamente");
+		else
+			getClientList();
 	});
 }
 
 function getClientList()
 {
-	//console.log("getClientList"+user+pass);
 	getClients();
 }
 
 function getClient(id, name)
 {
+
+	$( ".invisible" ).animate({"opacity": 1}, "slow");
+	
 	$.getJSON(server_url,
 	{
 		target: "Client",
@@ -134,23 +146,32 @@ function getClient(id, name)
 		password: pass, 						//"123"
 	},
 	function(data) {
-		if(data.clients.length > 1)
-			alert("Error en la cantidad de clientes, no se puede especificar el cliente seleccionado");
-		else	
+		if(!data.success)
+			alert("No se pudo correr el metodo GetClient correctamente");
+		else
 		{
-			$("#name").val(data.clients[0].name);
-			$("#namecode").val(data.clients[0].code);
-			$("#address").val(data.clients[0].address);
-			$("#city").val(data.clients[0].city);
-			$("#zip").val(data.clients[0].zip);
-			$("#country").val(data.clients[0].country);
-			$("#phone").val(data.clients[0].phone);
-			$("#website").val(data.clients[0].website);
-			$("#telefax").val(data.clients[0].telefax);
-			$("#seqdigits").val(data.clients[0].seqdigits);
-			$("#cliente_seleccionado_name").html("<td class='rounded_4'><h4>Nombre: "+data.clients[0].name+"</h4></td>");
-			$("#cliente_seleccionado_id").html("<td class='rounded_4'><h4>Id: "+data.clients[0].id+"</h4></td>");
-		}	
+			if(data.clients.length > 1)
+				alert("Error en la cantidad de clientes, no se puede especificar el cliente seleccionado");
+			else	
+			{
+				$("#name").val(data.clients[0].name);
+				$("#namecode").val(data.clients[0].code);
+				$("#address").val(data.clients[0].address);
+				$("#city").val(data.clients[0].city);
+				$("#zip").val(data.clients[0].zip);
+				$("#country").val(data.clients[0].country);
+				$("#phone").val(data.clients[0].phone);
+				$("#website").val(data.clients[0].website);
+				$("#telefax").val(data.clients[0].telefax);
+				$("#seqdigits").val(data.clients[0].seqdigits);
+				$("#cliente_seleccionado_name").html(data.clients[0].name);
+				$("#cliente_seleccionado_id").html(data.clients[0].id);
+				
+				//$("#cliente_seleccionado_name").html("<td class='rounded_4'>Nombre: <b>"+data.clients[0].name+"</b></td>");
+				//$("#cliente_seleccionado_id").html("<td class='rounded_4'>Id: <b>"+data.clients[0].id+"</b></td>");
+				
+			}	
+		}
 	});
 }
 
@@ -173,19 +194,22 @@ function getClients()
 		email: user, 				//"pmata@amro.com",
 		password: pass, 			//"123"
 	},
-	function(data) {
-		var inner_html = "<table><tr bgcolor='#4797ED'><th class='rounded_start'>Cliente</th><th class='rounded_middle'>Direccion</th><th class='rounded_end'>Eliminar</th></tr><tr>"
-		
-		for(i = 0; i < data.clients.length; i++)
-		{	
-			inner_html += "<td class='rounded_4'><a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
-			inner_html += "<td>"+data.clients[i].address+"</td>";
-			inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";
+	function(data) {	
+		if(!data.success)
+			alert("No se pudo correr el metodo GetClient correctamente");
+		else
+		{
+			var inner_html = "<table><tr bgcolor='#4797ED'><th class='rounded_start'>Cliente</th><th class='rounded_middle'>Direccion</th><th class='rounded_end'>Eliminar</th></tr>";
+			for(i = 0; i < data.clients.length; i++)
+			{	
+				inner_html += "<tr><td class='rounded_4'> > <a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
+				inner_html += "<td>"+data.clients[i].address+"</td>";
+				inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";
+			}
+			$("#client_list").html(inner_html);		
+			$("#clientes_totales").html("Cantidad de Clientes: "+data.clients.length);
+			$("#cliente_seleccionado").html("Ninguno...");
 		}
-		$("#client_list").html(inner_html);		
-		$("#clientes_totales").html("Cantidad de Clientes: "+data.clients.length);
-		$("#cliente_seleccionado").html("<h4>Ninguno...</h4>");
-
 	});
 }
 
@@ -199,14 +223,20 @@ function deleteClient(id, name)
 		password: pass, 			// "123",
 		id: id,
 	},
-	function(data) {
-		getClientList();
-		//console.log("Se elimino cliente "+name+" con id "+id);
+	function(data) {	
+		if(!data.success)
+			alert("No se pudo correr el metodo DeleteClient correctamente");
+		else
+			getClientList();
 	});
 }
 
 function reloadClient()
-{
-	getClient( $("#cliente_seleccionado_id").html(), $("#cliente_seleccionado_name").html() );
+{	
+	
+	//console.log($("#cliente_seleccionado_id").html());
+	
+	//if($("#cliente_seleccionado_id").html() != "Sin Definir")
+		getClient( $("#cliente_seleccionado_id").html(), $("#cliente_seleccionado_name").html() );
 }
 
