@@ -117,7 +117,7 @@ function loadClients()
 		password: pass,
 	},
 	function(data) {
-		if(data.success == true && data.clients.length > 0)
+		if(data.success == true)
 		{
 			globals.currentClients = data.clients;
 			showClients(data.clients);
@@ -179,7 +179,7 @@ function loadUsers()
 		password: pass,
 	},
 	function(data) {
-		if(data.success == true && data.users.length > 0)
+		if(data.success == true)
 		{
 			globals.currentUsers = data.users;
 			showUsers(data.users);
@@ -241,7 +241,7 @@ function loadMaterials()
 		password: pass,
 	},
 	function(data) {
-		if(data.success == true && data.materials.length > 0)
+		if(data.success == true)
 		{
 			globals.currentMaterials = data.materials;
 			showMaterials(data.materials);

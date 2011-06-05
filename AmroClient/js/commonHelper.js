@@ -15,7 +15,7 @@ var globals = {
 	pathToCSVUpload: "upload/ordenes_compras/",
 	pathToCAUpload: "upload/analisis_quimicos/",
 	pathToCerts: "certificados/img/",
-	pathToTTs: "certificados/img/tratamientos_termicos/"
+	pathToTTs: "certificados/img/tratamientos_termicos/"	
 };
 	//server_url: "http://localhost:8080/?callback=?",
 function loadError()

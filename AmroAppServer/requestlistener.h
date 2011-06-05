@@ -11,6 +11,20 @@ class RequestListener : public QTcpServer
 
 public:
     RequestListener();
+    void start();
+    void stop();
+
+signals:
+    void requestAccepted();
+    void failedListen();
+    void finishedRequest();
+    void listenerFinished();
+
+public slots:
+    void prepareToExit();
+    void serverStart();
+    void serverStop();
+    void processRequestFinished();
 };
 
 #endif // REQUESTLISTENER_H

@@ -205,7 +205,7 @@ function loadOCClients()
 		password: pass,		//"123"
 	},
 	function(data) {
-		if(data.success == true && data.clients.length > 0)
+		if(data.success == true)
 		{
 			globals.currentClients = data.clients;
 			showClientsByOC(data.clients);
@@ -246,7 +246,7 @@ function loadOCMaterials()
 		password: pass,		//"123"
 	},
 	function(data) {
-		if(data.success == true && data.materials.length > 0)
+		if(data.success == true)
 		{
 			globals.currentMaterials = data.materials;
 			showMaterialsByOC(data.materials);
@@ -425,10 +425,13 @@ function getAllOC()
 		order: "ordencompra",	
 	},
 	function(data) {
-		showOrders(data.lines, "");
+		if (data.success == true) {
+			showOrders(data.lines, "");
 				
-		globals.currentOrders = data.lines;
-		//alert(globals.currentOrders.length);
+			globals.currentOrders = data.lines;
+			//alert(globals.currentOrders.length);
+		}else
+			alert("No se pudieron cargar las ordenes de compra. Error con el servidor.");
 	});
 }	
 

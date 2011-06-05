@@ -10,6 +10,9 @@ TARGET = DataLibrary
 TEMPLATE = lib
 DEFINES += DATALIB_LIBRARY
 
+# Para Windows
+# CONFIG += dll
+
 SOURCES += main.cpp \
     datalib.cpp \
     database.cpp \

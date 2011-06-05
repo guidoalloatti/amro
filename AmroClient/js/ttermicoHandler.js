@@ -225,7 +225,7 @@ function prepareTT()
 		password: pass,				//"123"
 	},
 	function(data) {
-		if(data.success == true && data.tts.length > 0)
+		if(data.success == true)
 		{
 			globals.currentTTermicos = data.tts;
 			showTTermicos(data.tts);

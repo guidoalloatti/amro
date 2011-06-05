@@ -93,7 +93,7 @@ function loadAllClients()
 		password: pass		// "123"
 	},
 	function(data) {
-		if(data.success == true && data.clients.length > 0)
+		if(data.success == true)
 		{
 			globals.currentClients = data.clients;
 			//showClients(data.clients);
@@ -118,7 +118,7 @@ function loadAllMaterials()
 		password: pass,	  // "123",
 	},
 	function(data) {
-		if(data.success == true && data.materials.length > 0)
+		if(data.success == true)
 		{
 			globals.currentMaterials = data.materials;
 			//showMaterials(data.materials);
@@ -143,7 +143,7 @@ function loadAllUsers()
 		password: pass, 	// "123"
 	},
 	function(data) {
-		if(data.success == true && data.users.length > 0)
+		if(data.success == true)
 		{
 			globals.currentUsers = data.users;
 			showReviewers(data.users);
@@ -324,8 +324,12 @@ function getOCs()
 		order: "ordencompra"
 	},
 	function(data) {
-		globals.currentOrders = data.lines;
-		drawOC();
+		if (data.success == true) {
+			globals.currentOrders = data.lines;
+			drawOC();
+		}
+		else
+			alert("No se pudieron cargar las ordenes de compra. Error con el servidor");
 	});
 }
 
@@ -676,7 +680,7 @@ function getTT()
 		password: pass,		// "123"
 	},
 	function(data) {
-		if(data.success == true && data.tts.length > 0)
+		if(data.success == true)
 		{
 			globals.currentTTermicos = data.tts;
 			showTT(data.tts);

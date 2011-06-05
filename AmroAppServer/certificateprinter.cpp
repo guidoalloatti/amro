@@ -8,11 +8,11 @@
 #include <QWebElement>
 #include <QString>
 #include <QLocale>
+#include <QRegExp>
 
 #include "certificategenerator.h"
 
-QString client_path = "../AmroClient/certificados/";
-
+static QString client_path = "../AmroClient/certificados/";
 
 CertificatePrinter* CertificatePrinter::pinstance = 0;
 
@@ -176,16 +176,28 @@ void CertificatePrinter::generate(Certificate c)
             label.setPlainText(c.getReviewer().getName() + " " + c.getReviewer().getSurname());
     }
 
+
+    int certificatePathLength = QString("certificados/").length();
+
+    QString tt_image = c.getTermicalTreatment().getImagePath().mid(certificatePathLength);
+
+    QString performer_image = c.getPerformer().getSignature().mid(certificatePathLength);
+
+    QString reviewer_image = c.getReviewer().getSignature().mid(certificatePathLength);
+
+    QString approver_image = c.getApprover().getSignature().mid(certificatePathLength);
+
+
     foreach(QWebElement image, allImages) {
         if (image.attribute("id") == "ttimage")
             //image.setAttribute("src", c.getTermicoPath());
-            image.setAttribute("src", c.getTermicalTreatment().getImagePath());
+            image.setAttribute("src", tt_image);
         else if (image.attribute("id") == "realizo_image")
-            image.setAttribute("src", c.getPerformer().getSignature());
+            image.setAttribute("src", performer_image);
         else if (image.attribute("id") == "aprobo_image")
-            image.setAttribute("src", c.getApprover().getSignature());
+            image.setAttribute("src", approver_image);
         else if (image.attribute("id") == "reviso_image")
-            image.setAttribute("src", c.getReviewer().getSignature());
+            image.setAttribute("src", reviewer_image);
 
     }
 

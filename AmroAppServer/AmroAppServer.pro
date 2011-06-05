@@ -35,7 +35,8 @@ SOURCES += main.cpp \
     certificategenerator.cpp \
     certificateprinter.cpp \
     cprinter.cpp \
-    termicaltreatmentresponse.cpp
+    termicaltreatmentresponse.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     requestlistener.h \
@@ -53,7 +54,15 @@ HEADERS += \
     certificategenerator.h \
     certificateprinter.h \
     cprinter.h \
-    termicaltreatmentresponse.h
+    termicaltreatmentresponse.h \
+    mainwindow.h
 
 LIBS += -L../DataLibrary \
     -lDataLibrary
+
+FORMS += \
+    mainwindow.ui
+
+#  Para Windows
+#LIBS += -L..\DataLibrary\release \
+#    -lDataLibrary \

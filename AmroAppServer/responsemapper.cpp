@@ -43,6 +43,6 @@ void ResponseMapper::execute(const QString &method, QTextStream &output, const Q
 
     jsonp.close();
 
-    qDebug() << "Termine llamada : " + result;
+    qDebug() << "Termine la llamada " << method << " con status: " << result.contains("true");
     output << result;
 }

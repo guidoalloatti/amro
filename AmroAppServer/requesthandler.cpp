@@ -21,13 +21,19 @@ RequestHandler::RequestHandler(int socketDescriptor)
 void RequestHandler::run()
 {    
     QTcpSocket socket;
-    if (!socket.setSocketDescriptor(socketDescriptor))
-        return;
 
-    if (!socket.waitForConnected(20 * 1000))
+    if (!socket.setSocketDescriptor(socketDescriptor)) {
+        emit this->requestDone();
         return;
+    }
+
+    if (!socket.waitForConnected(20 * 1000)) {
+        emit this->requestDone();
+        return;
+    }
 
     // HACER: todo esto mas robusto
+
 
     // HACER: tengo que leer hasta un "\r\n\r\n"
     if (!socket.canReadLine())
@@ -65,4 +71,6 @@ void RequestHandler::run()
         socket.waitForDisconnected();
 
     DataLib::shutdown();
+    emit this->requestDone();
 }
+

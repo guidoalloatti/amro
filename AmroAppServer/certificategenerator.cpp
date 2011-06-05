@@ -9,8 +9,19 @@
 #include <QWebElement>
 #include <QWebFrame>
 #include <QDir>
+#include <QThread>
 
 #include"certificateprinter.h"
+
+class SleeperThread : public QThread
+{
+public:
+    static void msleep(unsigned long msecs)
+    {
+        QThread::msleep(msecs);
+    }
+};
+
 
 CertificateGenerator::CertificateGenerator()
 {
@@ -31,7 +42,8 @@ bool CertificateGenerator::generate(Certificate &c)
     mutex.lock();
     while (!requestCompleted) {
         mutex.unlock();
-        sleep(1);
+        //sleep(1);
+        SleeperThread::msleep(1000);
         mutex.lock();
     }
 

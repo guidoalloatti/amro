@@ -3,10 +3,18 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(DATALIB_LIBRARY)
-#  define DATALIBSHARED_EXPORT Q_DECL_EXPORT
+#if defined(Q_WS_WIN)
+    #if defined(DATALIB_LIBRARY)
+        #  define DATALIBSHARED_EXPORT __declspec(dllexport)
+    #else
+        #  define DATALIBSHARED_EXPORT __declspec(dllimport)
+    #endif
 #else
-#  define DATALIBSHARED_EXPORT Q_DECL_IMPORT
+    #if defined(DATALIB_LIBRARY)
+        #  define DATALIBSHARED_EXPORT Q_DECL_EXPORT
+    #else
+        #  define DATALIBSHARED_EXPORT Q_DECL_IMPORT
+    #endif
 #endif
 
 #endif // DATALIB_GLOBAL_H
