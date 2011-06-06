@@ -54,6 +54,7 @@ public:
     Client getClient() const;
     QDate getDate() const;
     Status getState() const;
+    void checkState();
     User getApprover() const;
     User getReviewer() const;
     User getPerformer() const;

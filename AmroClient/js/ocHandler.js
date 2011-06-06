@@ -132,7 +132,7 @@ function deleteOC(id)
 					for (var i = 0; i < globals.currentOrders; i++ )
 						if (globals.currentOrders[i].id == id) {
 							order = globals.currentOrders[i];
-							globals.currentOrders.splice(i, 1);
+							globals.currentOrders = globals.currentOrders.splice(i, 1);
 						}	
 					
 					$("#ordenes_compra td").each(function() {
@@ -140,8 +140,8 @@ function deleteOC(id)
 							$(this).parent().remove();
 					});					
 					
-					globals.currentClients = data.clients;
-					showClientsByOC(data.clients);
+					//globals.currentClients = data.clients;
+					//showOrders(globals.currentOrders, "");
 				} else if (data.permissions != undefined) {
 					alert("Error! No tiene permisos para realizar la operacion");
 				} else
@@ -338,7 +338,7 @@ function startNewOC() {
 	}
 	inner_html += "</select></td></tr>";
 	
-	inner_html += "<tr><td><label>Elegir cliente:</label></td><td>";
+	inner_html += "<tr><td><label>Elegir material:</label></td><td>";
 
 	var materials = globals.currentMaterials;
 	inner_html += "<select name='select_material' id='new_oc_material'><option value='0'>Todos los Materiales</option>";

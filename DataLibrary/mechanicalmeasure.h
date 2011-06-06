@@ -34,6 +34,8 @@ public:
     double getMinValue(MechanicalProperty p);
     QVariantHash print() const;
 
+    static bool includes(MechanicalMeasure a, MechanicalMeasure target);
+
 private:
     QHash <QString, QPair<double, double> > measures;
 };

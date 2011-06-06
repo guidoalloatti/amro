@@ -3,6 +3,7 @@
 #include "../DataLibrary/usermapper.h"
 #include "../DataLibrary/termicaltreatmentmapper.h"
 
+static QString client_path = "../AmroClient/";
 
 TermicalTreatmentResponse::TermicalTreatmentResponse()
 {
@@ -75,11 +76,22 @@ void TermicalTreatmentResponse::deleteTTreatment(JSONP &output, const QHash <QSt
 
     if (hasPermission(email, password, "TT_DELETE"))
     {
+        TermicalTreatment tt;
+
         quint32 id = params.value("id", "").toUInt();
 
-        TermicalTreatment tt;
-        tt.setId(id);
-        success = TermicalTreatmentMapper().erase(tt);
+        QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(id);
+        if (tts.length() != 1) {
+            output.add("success", false);
+            output.add("error", "no TT");
+            return;
+        }
+        tt = tts.first();
+
+        QDir dir;
+        success = dir.remove(client_path + tt.getImagePath());
+        if (success)
+            success = TermicalTreatmentMapper().erase(tt);
     } else
         output.add("permissions", "denied");
 

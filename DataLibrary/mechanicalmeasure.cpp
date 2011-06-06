@@ -83,3 +83,13 @@ QVariantHash MechanicalMeasure::print() const
 
     return m;
 }
+
+bool MechanicalMeasure::includes(MechanicalMeasure a, MechanicalMeasure target)
+{
+    foreach(QString key, a.measures.keys())
+        if (target.measures[key].second > a.measures[key].first ||
+            target.measures[key].first < a.measures[key].first)
+            return false;
+
+    return true;
+}

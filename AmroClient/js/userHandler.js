@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$("#signature_line").hide();
 	
 	$("#recargar_lista_usuarios").click(function(){
-		getUsuarioList();
+		getUserList();
 		event.preventDefault();
 	});
 	
@@ -23,7 +23,7 @@ $(document).ready(function() {
 	});
 	
 	$("#recargar_usuario").click(function(){
-		reloadUsuario();
+		reloadUser();
 		event.preventDefault();
 	});
 	

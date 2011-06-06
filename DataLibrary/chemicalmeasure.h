@@ -33,6 +33,8 @@ public:
     double getMinValue(ChemicalProperty p);
     QVariantHash print() const;
 
+    static bool includes(ChemicalMeasure a, ChemicalMeasure target);
+
 private:
     QHash <QString, QPair<double, double> > measures;
 

@@ -81,3 +81,13 @@ QVariantHash ChemicalMeasure::print() const
 
     return m;
 }
+
+bool ChemicalMeasure::includes(ChemicalMeasure a, ChemicalMeasure target)
+{
+    foreach(QString key, a.measures.keys())
+        if (target.measures[key].second > a.measures[key].first ||
+            target.measures[key].first < a.measures[key].first)
+            return false;
+
+    return true;
+}

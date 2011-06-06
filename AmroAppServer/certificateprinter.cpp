@@ -99,9 +99,11 @@ void CertificatePrinter::generate(Certificate c)
     //qDebug() << "file://" + str + "/files/";
     //QUrl url("file:///home/pmata/amro/AmroClientServer/AmroClient/certificados/");
     //QUrl url(client_path);
-    QUrl url("file://" + pwd + "/");
-    qDebug() << url;
-    view->setHtml(html, url);
+    //QUrl url("file://" + pwd + "/");
+    //qDebug() << url;
+    view->setHtml(html,  QUrl::fromLocalFile(pwd + "/"));
+
+    //view->setHtml(html, url);
 
     QWebFrame *main = view->page()->mainFrame();
 

@@ -30,6 +30,9 @@ CertificateGenerator::CertificateGenerator()
 
 bool CertificateGenerator::generate(Certificate &c)
 {
+    c.checkState();
+    qDebug() << c.getState();
+
     CertificatePrinter *printer = CertificatePrinter::getPrinter();
 
     connect(this, SIGNAL(requestGeneration(Certificate)), printer, SLOT(generate(Certificate)));

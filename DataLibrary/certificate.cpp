@@ -67,6 +67,15 @@ void Certificate::setState(Status s)
     this->state = s;
 }
 
+void Certificate::checkState()
+{
+    if (MechanicalMeasure::includes(this->mechanicalAnalysis, this->material.getMechanicalLimit()) &&
+        ChemicalMeasure::includes(this->chemicalAnalysis, this->material.getChemicalLimit()))
+        this->state = PASSED;
+    else
+        this->state = FAILED;
+}
+
 void Certificate::setMaterial(Material m)
 {
     this->material = m;
