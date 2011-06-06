@@ -29,9 +29,6 @@ $(document).ready(function() {
 
 function uploadCSV()
 {
-	//console.log($("#formUploadCSV"));
-	//console.log($("#csvfile").val());
-	//console.log("Pedro");	
 	parseCSV($("#csvfile").val());	
 }
 
@@ -61,15 +58,6 @@ function searchOC()
 			alert("Seleccionar parámetro para filtrar la búsqueda");
 			break;
 	}
-	
-	//console.log($("input[@name='filtro']:checked").val());
-	//console.log($("#filtro_orden_compra:checked").val());
-	//if($("#filtro_orden_compra").val());
-	/*
-	alert("Buscando OC cliente "+$("#select_cliente").val()+
-		  "\ncon el material "+$("#select_material").val()+
-		  "\ny con orden de compra con valor "+$("#protocolo").val());
-	*/
 }
 
 function filterOCClient(filter)
@@ -120,8 +108,8 @@ function deleteOC(id)
 			{
 				target: "CSVParsing",
 				method: "DeleteOC",
-				email: user,		//"pmata@amro.com",
-				password: pass,		//"123"
+				email: user,
+				password: pass,
 				id: id
 			},
 			function(data) {
@@ -201,8 +189,8 @@ function loadOCClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: user,		//"pmata@amro.com",
-		password: pass,		//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -242,8 +230,8 @@ function loadOCMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: user,		//"pmata@amro.com",
-		password: pass,		//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -269,12 +257,12 @@ function searchOCByOC()
 	}
 	loading("ordenes_compra", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: user,		//"pmata@amro.com",
-		password: pass,		//"123",
+		email: user,
+		password: pass,
 		ordencompra: $("#orden_compra").val(),
 		order: "ordencompra"
 	},
@@ -302,12 +290,12 @@ function searchOCByProbeta()
 	}
 	loading("ordenes_compra", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: user,			//"pmata@amro.com",
-		password: pass,			//"123",
+		email: user,
+		password: pass,
 		numprobeta: $("#protocolo").val(),
 		order: "numprobeta"
 	},
@@ -387,12 +375,12 @@ function insertOC()
 		return;
 	}	
 	
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 			{
 				target: "CSVParsing",
 				method: "NewOC",
-				email: user,			//"pmata@amro.com",
-				password: pass,			//"123",
+				email: user,
+				password: pass,
 				ordencompra: orden,
 				material_id: material,
 				client_id: client,
@@ -416,13 +404,13 @@ function insertOC()
 function getAllOC()
 {	
 	loading("ordenes_compra", true);
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "CSVParsing",
 		method: "GetOC",
-		email: user,			//"pmata@amro.com",
-		password: pass,			//"123",
-		order: "ordencompra",	
+		email: user,
+		password: pass,
+		order: "ordencompra"
 	},
 	function(data) {
 		if (data.success == true) {
@@ -467,9 +455,9 @@ function parseCSV(file)
 	{
 		target: "CSVParsing",
 		method: "ParseCSV",
-		email: user,		//"pmata@amro.com",
-		password: pass,		//"123",
-		filepath: globals.pathToCSVUpload+shortname,	//"/home/guido/Escritorio/"+ shortname
+		email: user,
+		password: pass,
+		filepath: globals.pathToCSVUpload+shortname
 	},
 	function(data) {
 		if (data.errors == 'undefined')

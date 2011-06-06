@@ -1,3 +1,4 @@
+var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
 
@@ -114,7 +115,7 @@ function loadClients()
 		target: "Client",
 		method: "GetClient",
 		email: user,
-		password: pass,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -176,7 +177,7 @@ function loadUsers()
 		target: "User",
 		method: "GetUser",
 		email: user,
-		password: pass,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -238,7 +239,7 @@ function loadMaterials()
 		target: "Material",
 		method: "GetMaterial",
 		email: user,
-		password: pass,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -255,7 +256,7 @@ function loadMaterials()
 
 function deleteCertificate(id)
 {
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 			{
 				target: "Certificate",
 				method: "DeleteCertificate",
@@ -318,7 +319,7 @@ function searchByOC()
 	}
 	loading("certificados", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Certificate",
 		method: "GetCertificate",
@@ -362,7 +363,7 @@ function searchByDate()
 	}
 	loading("certificados", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Certificate",
 		method: "GetCertificate",
@@ -397,7 +398,7 @@ function searchByProtN()
 	}
 	loading("certificados", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Certificate",
 		method: "GetCertificate",
@@ -432,7 +433,7 @@ function searchByProbeta()
 	}
 	loading("certificados", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Certificate",
 		method: "GetCertificate",
@@ -458,7 +459,7 @@ function getAllCerts()
 {
 	loading("certificados", true);
 
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Certificate",
 		method: "GetCertificate",

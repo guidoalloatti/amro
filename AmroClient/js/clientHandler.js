@@ -81,8 +81,8 @@ function insertClient()
 		telefax: $("#telefax").val(),
 		seqdigits: $("#seqdigits").val(), 					// Esto especifica cu�ntos d�gitos va a usar para los n�meros de probeta. Ej. AR425 --> 3
 		code: $("#namecode").val(), 						// Codigo del n�mero de probeta, si alg�n otro cliente tiene el c�digo, tira error.
-		email: user,										// "pmata@amro.com",
-		password: pass, 									// "123",
+		email: user,
+		password: pass
 	},
 	function(data) {	
 		if(!data.success)
@@ -115,8 +115,8 @@ function updateClient()
 		seqdigits: $("#seqdigits").val(),
 		code: $("#namecode").val(),
 		id: $("#cliente_seleccionado_id").html(),
-		email: user, 								//"pmata@amro.com",
-		password: pass, 							//"123",
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(!data.success)
@@ -142,8 +142,8 @@ function getClient(id, name)
 		method: "GetClient",
 		name: name,
 		id: id,
-		email: user, 							//"pmata@amro.com",
-		password: pass, 						//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(!data.success)
@@ -191,8 +191,8 @@ function getClients()
 	{
 		target: "Client",
 		method: "GetClient",
-		email: user, 				//"pmata@amro.com",
-		password: pass, 			//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {	
 		if(!data.success)
@@ -219,9 +219,9 @@ function deleteClient(id, name)
 	{
 		target: "Client",
 		method: "DeleteClient",
-		email: user,				// "pmata@amro.com",
-		password: pass, 			// "123",
-		id: id,
+		email: user,
+		password: pass,
+		id: id
 	},
 	function(data) {	
 		if(!data.success)
@@ -233,10 +233,5 @@ function deleteClient(id, name)
 
 function reloadClient()
 {	
-	
-	//console.log($("#cliente_seleccionado_id").html());
-	
-	//if($("#cliente_seleccionado_id").html() != "Sin Definir")
-		getClient( $("#cliente_seleccionado_id").html(), $("#cliente_seleccionado_name").html() );
+	getClient( $("#cliente_seleccionado_id").html(), $("#cliente_seleccionado_name").html() );
 }
-

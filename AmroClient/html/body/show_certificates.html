@@ -9,20 +9,21 @@
 <hr/>	
 <table>
 	<tr>
-		<td><label>Nº Orden de Compra:</label></td><td><input id="cert_orden_compra" /></td>
-		<td><label>Nº de Probeta:</label></td><td><input id="cert_numprob" /></td>
-		<td><label>Fecha:</label></td><td><input placeholder="dd" size="1" id="cert_dia"/><input placeholder="mm" size="1" id="cert_mes"/><input  placeholder="yyyy" size="1" id="cert_year"/></td>
-				
+		<td><label>Nº Orden de Compra:</label></td><td><input id="cert_orden_compra" size="5"/></td>
+		<td><label>Nº de Probeta:</label></td><td><input id="cert_numprob" size="5"/></td>
+		<td><label>Fecha:</label></td><td><input placeholder="dd" size="1" id="cert_dia" size="5"/><input placeholder="mm" size="1" id="cert_mes"/><input  placeholder="yyyy" size="1" id="cert_year" size="5"/></td>
+		<td><label>Nº de Protocolo:</label></td><td><input id="cert_protn" size="5"/></td>
 	</tr>
+</table>
+<hr/>	
+<table>
 	<tr>
 		<td><label>Cliente:</label></label></td><td id="clientes"></td>
 		<td><label>Material:</label></td><td id="materiales"></td>
 		<td><label>Creador:</label></td><td  id="usuarios"></td>
 				
 	</tr>
-	<tr>
-		<td><label>Nº de Protocolo:</label></td><td><input id="cert_protn"/></td>
-	</tr>	
+		
 </table>		
 		
 <hr/>
@@ -42,10 +43,5 @@
 		</td>
 	</tr>
 </table>
-
-
-<br/><hr>
-
-
-
-<br/><button id='cargar_certs' >Mostrar todos los Certificados Disponibles</button><button id='to_new_certs' >Cargar Nuevo Certificado</button>
+<hr>
+<button id='cargar_certs' >Mostrar todos los Certificados Disponibles</button><button id='to_new_certs' >Cargar Nuevo Certificado</button>

@@ -123,9 +123,8 @@ function insertMaterial()
 		name: $("#name").val(),
 		chlimits: quimicos,
 		mlimits: mecanicos,
-		email: user, 			// "pmata@amro.com",
-		password: pass,			// "123",
-		//id: id,
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(!data.success)
@@ -171,9 +170,9 @@ function updateMaterial()
 		name: $("#name").val(),
 		chlimits: quimicos,
 		mlimits: mecanicos,
-		email: user,			// "pmata@amro.com",
-		password: pass,			//"123",
-		id: $("#material_seleccionado_id").html(),
+		email: user,
+		password: pass,
+		id: $("#material_seleccionado_id").html()
 	},
 	function(data) {
 		if(!data.success)
@@ -196,8 +195,8 @@ function getMaterial(id, name)
 		method: "GetMaterial",
 		name: name,
 		id: id,
-		email: user,			// "pmata@amro.com",
-		password: pass,			// "123"
+		email: user,
+		password: pass
 	},
 	function(data) {	
 		if(data.success)
@@ -271,8 +270,8 @@ function getMaterials()
 	{
 		target: "Material",
 		method: "GetMaterial",
-		email: user,			// "pmata@amro.com",
-		password: pass,			// "123"
+		email: user,
+		password: pass
 	},
 	function(data) {	
 		if(data.success)
@@ -301,9 +300,9 @@ function deleteMaterial(id, name)
 	{
 		target: "Material",
 		method: "DeleteMaterial",
-		email: user,				// "pmata@amro.com",
-		password: pass,				// "123",
-		id: id,
+		email: user,
+		password: pass,
+		id: id
 	},
 	function(data) {
 		if(!data.success)

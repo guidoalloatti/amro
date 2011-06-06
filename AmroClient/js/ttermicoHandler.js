@@ -1,9 +1,9 @@
 // Global Vars
-var selectedCA = null;
-var selectedTT = null;
 var server_url = globals.server_url;
 var user = $.cookie("user");
 var pass = $.cookie("pass");
+var selectedCA = null;
+var selectedTT = null;
 
 
 $(document).ready(function() {
@@ -159,8 +159,8 @@ function deleteTT(id)
 			{
 				target: "TTreatment",
 				method: "DeleteTT",
-				email: user,				// "pmata@amro.com",
-				password: pass,				// "123",
+				email: user,
+				password: pass,
 				id: id					
 			},
 			function(data) {
@@ -221,8 +221,8 @@ function prepareTT()
 	{
 		target: "TTreatment",
 		method: "GetTT",
-		email: user,				// "pmata@amro.com",
-		password: pass,				//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if(data.success == true)
@@ -275,12 +275,12 @@ function prepareCA()
 	if(globals.currentCA != null && globals.currentCA.length > 0)
 		showCA(globals.currentCA);
 	
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 	{
 		target: "Analysis",
 		method: "CheckCA",
-		email: user,					//"pmata@amro.com",
-		password: pass					//"123"
+		email: user,
+		password: pass
 	},
 	function(data) {
 		if (data.success == true) {
@@ -331,12 +331,12 @@ function linkTT()
 		return;
 	}
 	
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 			{
 				target: "Analysis",
 				method: "AttachTT",
-				email: user,			// "pmata@amro.com",
-				password: pass,			// "123",
+				email: user,
+				password: pass,
 				ttreatment_id: selectedTT.id,
 				id: selectedCA.id
 			},
@@ -374,7 +374,7 @@ function newTTComplete(file)
 	
 	var observations = $("#tt_obs").val();
 	
-	$.getJSON(globals.server_url,
+	$.getJSON(server_url,
 			{
 				target: "TTreatment",
 				method: "NewTT",
