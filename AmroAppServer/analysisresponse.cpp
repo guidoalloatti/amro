@@ -108,6 +108,8 @@ static bool parseCSV(QFile *file, QVariantHash &error)
         QVariantHash measures;
         foreach(QString measure, measuresIndexMapper.keys()) {
             QString value = fields.at(measuresIndexMapper[measure]);
+            if (value.contains('<'))
+                value = "0";
             measures[measure] = QVariantList() << QVariant(value.toDouble()) << 0;
         }
 

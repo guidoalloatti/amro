@@ -264,7 +264,7 @@ class htmlCodeStore {
 					<!--<p id="addCA"><label for="_file">Suba un nuevo archivo:</label><input id="_file" type="file"/></p>-->
 
 					<p id="addCA">
-					<button style="background:green;" id="submitCAButton">Subir Archivo con Análisis Químicos</button>					
+					<button style="background:green;" id="submitCAButton">Subir Archivo con Análisis Químicos</button><img id="loadCAImage" src="img/ajax-loader.gif"/>					
 					</p>
 					
                     <p id="selectedCA"></p>

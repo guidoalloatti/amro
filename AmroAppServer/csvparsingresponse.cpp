@@ -66,7 +66,7 @@ static bool parseLines(QFile *file, QVariantHash &error)
             if (headerIndexMapper.value("colada", -1) == -1 ||
                 headerIndexMapper.value("compra", -1) == -1 ||
                 headerIndexMapper.value("material", -1) == -1) {
-                error[QString::number(lineNumber)] = "Information incomplete";
+                error[QString::number(lineNumber)] = "Los titulos de cada columna no especifican correctament su contenido";
                 return false;
             }
 

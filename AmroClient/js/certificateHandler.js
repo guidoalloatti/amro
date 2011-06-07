@@ -16,6 +16,9 @@ $(document).ready(function() {
 	$("#ttermico_selected").parent().hide();
 	$("#show_ttermico_asoc").hide();
 	$("#view_certs_button").hide();
+	$("#loadCAImage").hide();
+
+	
 	
 	$("#view_certs_button").click(function(event){
 		window.location = "main.php?invoice_url=cm"; 
@@ -372,12 +375,8 @@ function drawOC()
 
 function uploadCAFile(file)
 {
-	alert(globals.pathToCAUpload + file);
-	
-	return;
-	
 	var shortname = file.match(/[^\/\\]+$/);
-
+	$("#loadCAImage").show();
 	$.getJSON(globals.server_url,
 			{
 				target: "Analysis",
@@ -387,6 +386,7 @@ function uploadCAFile(file)
 				filepath: globals.pathToCAUpload + file,		//"/home/pmata/amro/"+shortname
 			},
 			function(data) {
+				$("#loadCAImage").hide();
 				if (data.success == true) {
 					alert("Archivo parseado exitósamente");
 					$("#addCA").hide("slow");

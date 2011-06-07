@@ -24,6 +24,20 @@ $(document).ready(function() {
 	$("#new_user_submit").click(function(){
 		newUser();
 	});
+	
+	$("#pass").keypress(function(event) {
+	  if (event.which == '13') {
+		 $("#loginButton").click();
+		 event.preventDefault();  
+	  }
+	});
+	
+	$("#user").keypress(function(event) {
+		  if (event.which == '13') {
+			 $("#loginButton").click();
+			 event.preventDefault();  
+		  }
+		});
 });
 
 function checkValues()

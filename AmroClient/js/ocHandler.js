@@ -8,6 +8,8 @@ $(document).ready(function() {
 		getAllOC();
 	});
 	
+	$("#loadOCImage").hide();
+	
 	$("#new_oc_button").click(function(){
 		startNewOC();
 	});
@@ -450,7 +452,8 @@ function materialNameSearch(id)
 function parseCSV(file)
 {
 	$("#new_oc_cell").hide();
-	var shortname = file.match(/[^\/\\]+$/);
+	var shortname = file.match(/[^\/\\]+$/);	
+	$("#loadOCImage").show();
 	$.getJSON(server_url,
 	{
 		target: "CSVParsing",
@@ -459,15 +462,29 @@ function parseCSV(file)
 		password: pass,
 		filepath: globals.pathToCSVUpload+shortname
 	},
-	function(data) {
-		if (data.errors == 'undefined')
+	function(data) {	
+		$("#loadOCImage").hide();
+		
+		if (data.filepath != undefined) {
+			alert("Error subiendo el archivo. Intentelo nuevamente.");
 			return;
-		inner_html = '<li><span class="folder">Errores</span><ul>';
+		}
+		
+		if (data.success == true) {
+			getAllOC();			
+		}
+			
+		if (data.errors == undefined)
+			return;
+		
+		inner_html = '<div class="csvreportclass" style="float: right; height: 350px; width: 100%; overflow: auto;">';
+		inner_html += '<ul class="filetree">';
+		inner_html += '<li><span class="folder">Errores</span><ul>';
 		for (var v in data.errors) {
 			inner_html += '<li class="closed"><span class="folder">Linea: ' + v + '</span><ul>';
 			inner_html += '<li><span class="file">' + data.errors[v] + '</span></li></ul>';
 		}
-		inner_html += '</ul></li>';
+		inner_html += '</ul></li></ul></div>';
 		$("#parsingreport").html(inner_html);
 		$("#parsingreport").treeview();	
 		$("#parsing_cell").show("slow");
