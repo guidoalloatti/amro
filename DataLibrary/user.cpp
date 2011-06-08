@@ -1,4 +1,5 @@
-#include "user.h"
+    #include "user.h"
+#include <QDebug>
 
 User::User(quint32 id, QString email, QString password)
 {
@@ -78,8 +79,9 @@ bool User::hasPrivileges(QString privilege)
     QList <Privilege> privileges = this->getPrivileges();
 
     foreach (Privilege p, privileges)
-        if (p.getName() == privilege || p.getName() == "ADMIN")
+        if (p.getName() == privilege || p.getName() == "ADMIN") {
             return true;
+        }
 
     return false;
 }

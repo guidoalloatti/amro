@@ -80,10 +80,19 @@ Query & Query::OrderBy(QString key, bool ascOrder)
     return *this;
 }
 
+#include <QMutex>
+
+QMutex mutex;
+
 QSqlQuery Query::prepare()
 {
+    // BUG: Al parecer si no lockeo todo al hacer el prepare() si el
+    // thread es reemplazo por otro, queda inconsistente la libreria
+    // mysql o el plugin, no se.
+    mutex.lock();
     QSqlQuery q(Database::getInstance()->getQSqlDatabase());
     bool query_ok = q.prepare(this->queryString);
+    mutex.unlock();
 
     // HACER: ver o sacar
     if (!query_ok)

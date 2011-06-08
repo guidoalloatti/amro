@@ -230,8 +230,9 @@ function prepareTT()
 			globals.currentTTermicos = data.tts;
 			showTTermicos(data.tts);
 		}
-		else
-		{
+		else if (data.permissions != undefined) {
+			alert("No se tienen permisos para realizar la operación");
+		} else	{
 			alert("No se pudieron cargar los tratamientos térmicos. Error con el servidor");
 		}
 	});
@@ -312,8 +313,9 @@ function prepareCA()
 				$("#all_ca").show("slow");
 			}			
 		}
-		else
-		{
+		else if (data.permissions != undefined)
+			alert("No se tienen permisos para realizar la operación");
+		else {
 			alert("Error de Consulta con el Servidor.");
 		}
 	});

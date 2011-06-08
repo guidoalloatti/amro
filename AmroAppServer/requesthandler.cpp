@@ -20,6 +20,8 @@ RequestHandler::RequestHandler(int socketDescriptor)
 // HACER: ver bien el flujo de los datos en esta funcion
 void RequestHandler::run()
 {    
+    QThread::currentThread()->setProperty("database", QVariant::Invalid);
+
     QTcpSocket socket;
 
     if (!socket.setSocketDescriptor(socketDescriptor)) {

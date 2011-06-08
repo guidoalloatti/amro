@@ -8,6 +8,8 @@
 #include "csvparsingresponse.h"
 #include "termicaltreatmentresponse.h"
 
+#include <QDebug>
+
 Response* ResponseFactory::createResponse(QString target)
 {
     if (target == "User")

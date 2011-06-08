@@ -352,7 +352,7 @@ class abmManager
 										<input type='label' id='namecode' />
 									</td>
 									<td>
-										<label>Cantidad Maxima de Certificados:</label>
+										<label>Cantidad Dígitos por Código:</label>
 									</td>
 									<td>
 										<input type='label' id='seqdigits' />

@@ -178,8 +178,9 @@ void CertificateResponse::newCertificate(JSONP &output, const QHash <QString, QS
         }
 
         success = CertificateMapper().insert(c);
-        if (!success)
+        if (!success) {
             output.add("certificate", "InsertError");
+        }
         break;
     }
 

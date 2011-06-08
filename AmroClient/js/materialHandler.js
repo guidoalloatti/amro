@@ -276,12 +276,17 @@ function getMaterials()
 	function(data) {	
 		if(data.success)
 		{
-			var inner_html = "<table><tr  bgcolor='#4797ED'><th class='rounded_start'>Material</th><th class='rounded_end'>Eliminar</th></tr>"
+			if (data.materials.length == 0) 				
+				newMaterial();			
+			
+			var inner_html = "<table><tr  bgcolor='#4797ED'><th class='rounded_start'>Material</th><th class='rounded_end'>Eliminar</th></tr>";
 			
 			for(i = 0; i < data.materials.length; i++)
 			{	
 				inner_html += "<tr><td class='rounded_4'> > <a href='#' id='material_"+data.materials[i].id+"' onclick='loadMaterial(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");'>"+data.materials[i].name+"</a></td>";
-				inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteMaterialConfirmation(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");' /></td></tr>";
+				//inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteMaterialConfirmation(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");' /></td></tr>";
+				inner_html += "<td align='center'><button style='background: #e82c2c;' onclick='deleteMaterialConfirmation(\""+data.materials[i].name+"\", \""+data.materials[i].id+"\");'>Borrar</button></td>";
+
 			}
 			$("#material_list").html(inner_html);
 			$("#materiales_totales").html("Cantidad de Materiales: "+data.materials.length);

@@ -23,6 +23,7 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
 
         q.exec();
 
+
         while (q.next())
         {
             Certificate c;
@@ -34,32 +35,44 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
             QList <Client> clients = ClientMapper().get(q.value(3).toUInt());
             if (clients.length() == 1)
                 c.client = clients.first();
-            else
-                continue;
+            else {
+                Client cl;
+                cl.setId(0);
+                c.client = cl;
+            }
 
             QList <Material> materials = MaterialMapper().get(q.value(4).toUInt());
             if (materials.length() == 1)
                 c.material = materials.first();
-            else
-                continue;
+            else {
+                Material m;
+                m.setId(0);
+                c.material = m;
+            }
 
             QList <User> approvers = UserMapper().get(q.value(5).toUInt());
             if (approvers.length() == 1)
                 c.approver = approvers.first();
-            else
-                continue;
+            else {
+                User u(0, "", "");
+                c.approver = u;
+            }
 
             QList <User> reviewers = UserMapper().get(q.value(6).toUInt());
             if (reviewers.length() == 1)
                 c.reviewer = reviewers.first();
-            else
-                continue;
+            else {
+                User u(0, "", "");
+                c.reviewer = u;
+            }
 
             QList <User> performers = UserMapper().get(q.value(7).toUInt());
             if (performers.length() == 1)
                 c.performer = performers.first();
-            else
-                continue;
+            else {
+                User u(0, "", "");
+                c.performer = u;
+            }
 
             QDataStream cds(QByteArray().fromPercentEncoding(q.value(8).toByteArray()));
             QVariantHash chemicalData;
@@ -84,8 +97,11 @@ QList <Certificate> CertificateMapper::makeCertificates(QSqlQuery &q)
             QList <TermicalTreatment> tts = TermicalTreatmentMapper().get(q.value(14).toUInt());
             if (tts.length() == 1)
                 c.tTreatment = tts.first();
-            else
-                continue;
+            else {
+                TermicalTreatment tt;
+                tt.setId(0);
+                c.tTreatment = tt;
+            }
 
             c.certificatePath = q.value(15).toString();
             c.state = Status(q.value(16).toUInt());
@@ -243,6 +259,8 @@ QList <Certificate> CertificateMapper::get(QVariantHash filters, QString order)
     Query queryObject = Query().
                         Select(selectFields).
                         From(tableName);
+
+    qDebug() << filters;
 
     if (!selectFields.contains(order))
         return QList<Certificate>();

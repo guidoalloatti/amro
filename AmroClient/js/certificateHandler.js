@@ -309,7 +309,21 @@ function generateCertificate()
 			alert("El certificado se generó con éxito");
 			
 			$("#view_certs_button").show("slow");	
-		} else
+		} else if (data.permissions != undefined)
+			alert("No tiene permisos para realizar la operación");
+		else if (data.client_id != undefined)
+			alert("No se puede generar el certificado. El cliente con id " + vars.client + " no existe.");
+		else if (data.ttermico_id != undefined)
+			alert("No se puede generar el certificado. El Tratamiento Térmico con id " + ttreatment + " no existe.");
+		else if (data.material_id != undefined)
+			alert("No se puede generar el certificado. El Material con id " + material_id + " no existe.");
+		else if (data.approver_id != undefined)
+			alert("No se puede generar el certificado. El usuario que aprueba con id " + approver_id + " no existe.");
+		else if (data.reviewer_id != undefined)
+			alert("No se puede generar el certificado. El usuario que revisa con id " + reviewer_id + " no existe.");
+		else if (data.error != undefined)
+			alert("No se puede generar el certificado. Mal formato en los valores químicos y mecánicos pasados.");
+		else
 			alert("Fallo en la generación de certificado");
 	});	
 }

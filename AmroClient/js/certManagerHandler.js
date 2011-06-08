@@ -279,7 +279,7 @@ function deleteCertificate(id)
 
 function showCerts(certs, title)
 {
-	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Revisa</th><th class='oc'>Aprueba</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Borrar</th><th class='oc'>Ver Certificado</th></tr>";
+	var inner_html = "<tr class='oc'><th class='oc'>ID</th><th class='oc'>ProtN</th><th class='oc'>Numero de Probeta</th><th class='oc'>Descripción</th><th class='oc'>Cliente</th><th class='oc'>Material</th><th class='oc'>Creador</th><th class='oc'>Revisa</th><th class='oc'>Aprueba</th><th class='oc'>Orden Compra</th><th class='oc'>Fecha</th><th class='oc'>Borrar</th><th class='oc'>Ver Certificado</th></tr>";
 	for(var i=0; i < certs.length; i++)
 	{
 		var line = "even";
@@ -292,6 +292,7 @@ function showCerts(certs, title)
 		inner_html += "<td class='oc'>"+certs[i].id+"</td>";
 		inner_html += "<td>"+certs[i].protn+"</td>";
 		inner_html += "<td>"+certs[i].numprobeta+"</td>";
+		inner_html += "<td>"+certs[i].description+"</td>";
 		inner_html += "<td>"+clientNameSearch(certs[i].client_id)+"</td>";
 		inner_html += "<td>"+materialNameSearch(certs[i].material_id)+"</td>";
 		inner_html += "<td>"+userNameSearch(certs[i].performer_id)+"</td>";

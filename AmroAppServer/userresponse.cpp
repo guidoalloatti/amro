@@ -5,7 +5,7 @@
 #include "../DataLibrary/usermapper.h"
 #include "../DataLibrary/privilegemapper.h"
 
-static QString default_privileges = "USER_LIST, CLIENT_LIST, MATERIAL_LIST, CERTIFICATE_LIST, GET_CA, GET_OC, TT_LIST, GET_MA";
+static QString default_privileges = "USER_UPDATE, USER_LIST, CLIENT_LIST, MATERIAL_LIST, CERTIFICATE_LIST, GET_CA, GET_OC, TT_LIST, GET_MA";
 static QString relative_user_folder = "../AmroClient/certificados/img/";
 
 UserResponse::UserResponse()
@@ -177,8 +177,10 @@ void UserResponse::updateUser(JSONP &output, const QHash <QString, QString> &par
 
         success = UserMapper().update(u);
     }
-    else
+    else {
+        output.add("permissions", "denied");
         success = false;
+    }
 
     output.add("success", success);
 }
@@ -218,8 +220,10 @@ void UserResponse::updatePrivileges(JSONP &output, const QHash <QString, QString
 
         success = UserMapper().update(u);
     }
-    else
+    else {
+        output.add("permissions", "denied");
         success = false;
+    }
 
     output.add("success", success);
 }

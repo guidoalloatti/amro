@@ -30,6 +30,7 @@ void ResponseMapper::execute(const QString &method, QTextStream &output, const Q
 
 
     qDebug() << method;
+    qDebug() << params;
 
     // HACER: usar new y delete para este caso obvio
     QScopedPointer <Response> r;

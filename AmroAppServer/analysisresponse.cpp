@@ -243,6 +243,7 @@ QVariantList serializeCAnalysis(QList <ChemicalAnalysis> analysis)
 
 void AnalysisResponse::checkCA(JSONP &output, const QHash <QString, QString> &params)
 {
+
     output.add("method", "CheckCA");
 
     QString email = params.value("email", "").toUtf8();

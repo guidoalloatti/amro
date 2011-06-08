@@ -31,7 +31,7 @@ CertificateGenerator::CertificateGenerator()
 bool CertificateGenerator::generate(Certificate &c)
 {
     c.checkState();
-    qDebug() << c.getState();
+    //qDebug() << c.getState();
 
     CertificatePrinter *printer = CertificatePrinter::getPrinter();
 
@@ -42,15 +42,15 @@ bool CertificateGenerator::generate(Certificate &c)
 
     connect(printer, SIGNAL(requestDone(bool)), this, SLOT(requestIsCompleted(bool)));
 
-    mutex.lock();
+    this->mutex.lock();
     while (!requestCompleted) {
-        mutex.unlock();
+        this->mutex.unlock();
         //sleep(1);
         SleeperThread::msleep(1000);
-        mutex.lock();
+        this->mutex.lock();
     }
 
-    mutex.unlock();
+    this->mutex.unlock();
     //return completedStatus;
 
     /*QFile htmlTemplate("files/template.html");

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QWebView>
 #include <QDir>
+#include <QMutex>
 
 #include "../DataLibrary/certificate.h"
 
@@ -13,8 +14,11 @@ class CertificatePrinter : public QObject
 
     QWebView *view;
     QDir dir;
+    QMutex mutex;
+    Certificate current;
 
     static CertificatePrinter *pinstance;
+
 
 protected:
     CertificatePrinter();

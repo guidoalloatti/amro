@@ -35,7 +35,6 @@ QList <User> UserMapper::makeUsers(QSqlQuery &q)
 
             users << u;
         }
-
         return users;
 }
 

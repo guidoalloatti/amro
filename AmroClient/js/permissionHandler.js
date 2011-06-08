@@ -87,12 +87,25 @@ function savePermissions()
 			{
 				console.log("La llamada fue un exito: ");
 				console.log(data);
+				var err = "";
+				if (data.denied.length > 0) {
+					alert("No se pudieron cambiar todos los permisos de " + selectedUser.name + " " + selectedUser.surname + "\nRecargue nuevamente para ver los resultados");
+				} else			
+					alert("Los permisos de " + selectedUser.name + " " + selectedUser.surname + " fueron cambiados con éxito");
+				
+				getUsersDropdown();
+				$("#option_usuarios").val(selectedUser.id);
+				getUsersPermissions();
+				
 			}
-			else
+			else if (data.permissions != undefined)
 			{
 				console.log("La llamada realizada no fue existosa: ");
 				console.log(data);
+				alert("Error. No tiene privilegios para realizar la operación");
 			}
+			else
+				alert("Error en el servidor.");
 		});
 	}
 	else
@@ -199,7 +212,7 @@ function getUsersDropdown()
 					console.log("Se selecciono el usuario: "+users[i].name);
 					selectedUser = users[i];
 				}
-				inner_html += '<option value='+users[i].id+'>'+users[i].name+'</option>';
+				inner_html += '<option value='+users[i].id+'>'+users[i].name+ ' ' + users[i].surname +'</option>';
 			}
 			inner_html += "</select>";
 			if(userId != undefined)

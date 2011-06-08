@@ -302,7 +302,7 @@ button.common:active span {
 
 #abm_tt button, #select_ca_button, #cm_body button, 
 #oc_body button, #search, #abm_body button, #submit_button, 
-#new_user_button, #new_user_table button  {
+#new_user_button, #new_user_table button, #footer_button  {
 	border:none;
 	outline: 5px;
     -moz-border-radius: 10px;
@@ -336,7 +336,8 @@ button.common:active span {
 
 #abm_tt button:hover, #select_ca_button:hover, #cm_body button:hover, 
 #oc_body button:hover, #abm_body button:hover, #search:hover, 
-#submit_button:hover, #new_user_button:hover, #new_user_table button:hover {
+#submit_button:hover, #new_user_button:hover, #new_user_table button:hover,
+#footer_button:hover {
     background:#d8d8d8;
     color:#666;
     text-shadow:1px 1px 1px #fff;

@@ -13,6 +13,7 @@
 #include "certificategenerator.h"
 
 static QString client_path = "../AmroClient/certificados/";
+bool canPrint = false;
 
 CertificatePrinter* CertificatePrinter::pinstance = 0;
 
@@ -32,25 +33,45 @@ CertificatePrinter::CertificatePrinter()
     dir.cd(client_path);
 }
 
+/*
+ Termino andando, no sé por qué. Problemas con la sincro
+ entre la señal de carga de nueva página y el método
+ print.
+ */
+
 void CertificatePrinter::print(bool ok)
 {
     qDebug() << "En printer" << ok;
 
+    /*if (!canPrint) {
+        qDebug() << "No puede imprimir";
+        return;
+    }*/
+
+    canPrint = false;
     if (!ok) {
         emit requestDone(false);
+        qDebug() << "Fallos request";
         return;
     }
+
+    disconnect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
 
     QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
 
-    QString certId = view->page()->mainFrame()->findFirstElement("#protn").toPlainText();
+    //QString certId = view->page()->mainFrame()->findFirstElement("#protn").toPlainText();
     //QString path = view->page()->mainFrame()->baseUrl().toLocalFile() + certId + ".pdf";
-    QString path = client_path + certId + ".pdf";
+    //QString path = client_path + certId + ".pdf";
+    QString path = client_path + current.getProtN() + ".pdf";
+    //qDebug() << path;
+    //Q_ASSERT(!certId.isEmpty());
     printer.setOutputFileName(path);
 
     view->print(&printer);
-    view->hide();
+    view->close();
+    view->deleteLater();
+    this->mutex.unlock();
     emit requestDone(true);
 }
 
@@ -66,7 +87,7 @@ static QString toString(double d)
 
     s.sprintf("%.2f", d);
 
-    qDebug() << s;
+    //qDebug() << s;
 
     return s;
 }
@@ -74,6 +95,9 @@ static QString toString(double d)
 
 void CertificatePrinter::generate(Certificate c)
 {
+    this->mutex.lock();
+    current = c;
+
     QFile htmlTemplate("files/template.html");
 
     if (!htmlTemplate.open(QFile::ReadOnly)) {
@@ -94,6 +118,9 @@ void CertificatePrinter::generate(Certificate c)
     QString html(content);
 
     htmlTemplate.close();
+
+    //view->close();
+    this->view = new QWebView;
 
     QString pwd = dir.path();
     //qDebug() << "file://" + str + "/files/";
@@ -181,6 +208,8 @@ void CertificatePrinter::generate(Certificate c)
 
     int certificatePathLength = QString("certificados/").length();
 
+    qDebug() << "asdfasdfsadfasdfasdf";
+
     QString tt_image = c.getTermicalTreatment().getImagePath().mid(certificatePathLength);
 
     QString performer_image = c.getPerformer().getSignature().mid(certificatePathLength);
@@ -214,9 +243,13 @@ void CertificatePrinter::generate(Certificate c)
 
     c.setCertificatePath("certificados/" + c.getProtN() + ".pdf");
 
-    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
 
-    //view->load(client_path + "files/" + c.getProtN() + ".html");
+
+    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(print(bool)));
+    canPrint = true;
+    //qDebug() << QUrl::fromLocalFile(pwd + "/" + c.getProtN() + ".html");
+    view->load(QUrl::fromLocalFile(pwd + "/" + c.getProtN() + ".html"));
+    //view->reload();
     //view->show();
 
 }

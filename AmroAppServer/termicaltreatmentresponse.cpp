@@ -16,6 +16,7 @@ TermicalTreatmentResponse::TermicalTreatmentResponse()
 static bool hasPermission(QString email, QString password, QString permission)
 {
     QList <User> users = UserMapper().get(email, password);
+    qDebug() << "busque usuarios";
 
     if (users.empty())
         return false;
@@ -160,7 +161,11 @@ QVariantList serializeTTs(QList <TermicalTreatment> termicalTreatments)
 
 void TermicalTreatmentResponse::getTTreatment(JSONP &output, const QHash <QString, QString> &params)
 {
+    qDebug() << "En get TT";
+
     output.add("method", "GetTT");
+
+    qDebug() << "Sigo en getTT";
 
     QString email = params.value("email", "").toUtf8();
     QString password = params.value("password", "").toUtf8();

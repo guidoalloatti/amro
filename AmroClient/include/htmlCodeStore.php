@@ -163,15 +163,23 @@ class htmlCodeStore {
 		$logedDateHours = floor($logedTimestamp/3600);
 		$logedDateMinutes = round(($logedTimestamp%3600)/60);
 		
-		$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<a href='main.php?invoice_url=logout'>Desloguear</a>)"; 
+		//$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<a href='main.php?invoice_url=logout'>Desloguear</a>)"; 
+		$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<button id='footer_button' style='background:green;' onclick='window.location = \"main.php?invoice_url=logout\";'>Desloguear</button>)"; 
+		
 		$sesionActivaMensaje =  "Sesion Activa por ".$logedDateHours." horas y ".$logedDateMinutes." minutos";
 		$sesionEmpezadaMensaje = "Logueado a las ".$lastLoginDate;
 		
 		
 		if($_SESSION['user'] === null || $_SESSION['pass'] === null)
 			$html = "<hr/><b>Ningun</b> Usuario Logueado<hr/></body></html>";
-		else	
-			$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
+		else {	
+			//$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
+			$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <button id='footer_button' style='background:green;' onclick='window.location = \"main.php?invoice_url=pr\";'>Volver al Menu Principal</button>";
+			if ($this->pageInvoice == "abm")
+				$html = $html . "<button id='footer_button' style='background:lightgreen;' onclick='window.location = \"main.php?invoice_url=ab\";'>Volver al Menu de ABM</button>";
+			$html = $html . "<hr/></body></html>";
+		}
+		
         return $html;
     }
 
