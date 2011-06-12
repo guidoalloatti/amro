@@ -169,7 +169,7 @@ class htmlCodeStore {
 		$nexo = "";
 		
 		if($logedDateHours == 0 && $logedDateMinutes == 0)
-			$horas = "por menos de un minuto";
+			$horas = "menos de un minuto";
 		else if($logedDateHours == 0 && $logedDateMinutes == 1)
 			$minutos = $logedDateMinutes." minuto";
 		else if($logedDateHours == 0 && $logedDateMinutes > 1)
