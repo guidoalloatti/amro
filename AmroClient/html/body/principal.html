@@ -1,58 +1,58 @@
-<!-- 
-<h1>Menu Principal</h1>
--->
-<table align="center">
-    <tr>
-        <td>
-            <button class='green' id='btn_green'>
-                <span>Generar Certificado</span>
-            </button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button class='red' id='btn_red'>
-                <span>Administrar Ordenes de Compra</span>
-            </button>
-        </td>
-    </tr>
+<table width='95%'>
 	<tr>
-        <td>
-            <button class='orange' id='btn_orange_1'>
-                <span>Administrar Certificados</span>
-            </button>
-        </td>
-    </tr>
-    <!--
-    <tr>
-        <td>
-            <button class='gray' id='btn_gray'>
-                <span>Configuracion del Sistema</span>
-            </button>
-        </td>
-    </tr>
-	-->
-    <tr>
-        <td>
-            <button class='blue' id='btn_blue'>
-                <span>Administrar Abm</span>
-            </button>
-        </td>
-    </tr>
-     <tr>
-        <td>
-            <button class='yellow' id='btn_yellow'>
-                <span>Gestionar Permisos de Usuarios</span>
-            </button>
-        </td>
-    </tr>
-    <!--
-	<tr>
-        <td>
-            <button class='orange' id='btn_orange'>
-                <span>Ir al Menu Principal</span>
-            </button>
-        </td>
-    </tr>
-	-->
+		<td width="30%" height="270px" align="center">
+			<table>
+				<tr>
+					<td>
+						<h1>Bienvenidos al sistema de generacion de certificados del AMRO.</h1>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h1>Por favor, utilice el menu para dirijirse a <br/>
+						locacion del sistema que requiera.</h1>
+					</td>
+				</tr>
+			</table>	
+		</td>
+		<td width="30%" height="270px" style="border-width: medium; border-style: outset; background: #DCDCDC;" align="center" >
+			<table align="center">
+				<tr><td><button id='menu_button_administrar_abm' style='background: #98FB98;' onclick="$(location).attr('href','main.php?invoice_url=ab');" >Administrar los ABM</button></td></tr>
+				<tr><td><button id='menu_button_generar_certificado' style='background:#87CEFA;' onclick="$(location).attr('href','main.php?invoice_url=ce');" >Generar Certificado</button></td></tr>
+				<tr><td><button id='menu_button_administrar_certificados' style='background: #48D1CC;' onclick="$(location).attr('href','main.php?invoice_url=cm');" >Administrar Certificados</button></td></tr>
+				<tr><td><button id='menu_button_orden_compra' style='background: #20B2AA;' onclick="$(location).attr('href','main.php?invoice_url=oc');" >Administrar Ordenes de Compra</button></td></tr>
+				<tr><td><button id='menu_button_permisos' style='background: #668B8B;' onclick="$(location).attr('href','main.php?invoice_url=pe');" >Gestionar Permisos de Usuarios</button></td></tr>
+			</table>
+		</td>
+		<td width="35%" VALIGN="top" height="270px" style="border-width: medium; border-style: outset;" align="center">
+			<table>
+				<td>
+					<div id="image_div"></div>
+				</td>
+			</table>
+		</td>
+	</tr>
 </table>
+
+<!--
+			<a href="main.php?invoice_url=ce"><img src="img/creacion_certificados.png" alt="" /></a>
+			<a href="main_image2.jpg"><img src="thumb2.jpg" alt="" /></a>
+		<li><a href="main_image7.jpg"><img src="thumb7.jpg" alt="" /></a></li> 
+		<li><a href="main_image8.jpg"><img src="thumb8.jpg" alt="" /></a></li> 
+		<li><a href="main_image9.jpg"><img src="thumb9.jpg" alt="" /></a></li> 
+		<li><a href="main_image6.jpg"><img src="thumb6.jpg" alt="" /></a></li> 
+		<a href="main_image3.jpg"><img src="thumb3.jpg" alt="" /></a>
+		<a href="main_image4.jpg"><img src="thumb4.jpg" alt="" /></a>
+		<a href="main_image5.jpg"><img src="thumb5.jpg" alt="" /></a>
+<table>
+	<tr>
+		<td><div class="container"><ul class="thumb"></td>
+		<td><li><button id='menu_button_administrar_abm' style='background: #98FB98;' onclick="$(location).attr('href','main.php?invoice_url=ab');" >Administrar los ABM</button></li></td>
+		<td><li><button id='menu_button_generar_certificado' style='background:#87CEFA;' onclick="$(location).attr('href','main.php?invoice_url=ce');" >Generar Certificado</button></li></td>
+		<td><li><button id='menu_button_administrar_certificados' style='background: #48D1CC;' onclick="$(location).attr('href','main.php?invoice_url=cm');" >Administrar Certificados</button></li></td>
+		<td><li><button id='menu_button_orden_compra' style='background: #20B2AA;' onclick="$(location).attr('href','main.php?invoice_url=oc');" >Administrar Ordenes de Compra</button></li></td>
+		<td><li><button id='menu_button_permisos' style='background: #668B8B;' onclick="$(location).attr('href','main.php?invoice_url=pe');" >Gestionar Permisos de Usuarios</button></li></ul></td>
+		<td></div><div id="image_div"></div></td>
+	</tr>
+</table>
+-->

@@ -1,3 +1,10 @@
+table.fixed
+{
+	overflow: auto; 
+	position:relative; 
+	width: 30%; 
+	height: 50%;
+}
 
 table.oc
 {

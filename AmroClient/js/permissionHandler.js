@@ -67,10 +67,10 @@ function savePermissions()
 			permString += $(this).attr('id')+", ";
 		});
 		
-		console.log("----------------- Actualizando Permisos -----------------");
-		console.log(permString);
+		//console.log("----------------- Actualizando Permisos -----------------");
+		//console.log(permString);
 		//sconsole.log(selectedUser);
-		console.log("---------------------------------------------------------");
+		//console.log("---------------------------------------------------------");
 		
 		
 		$.getJSON(server_url,
@@ -133,8 +133,10 @@ function selectedUserChanged()
 	for(var i = 0; i < users.length; i++)
 	{
 		if(users[i].id == $("#option_usuarios").val())
-			selectedUser = users[i];
+		{
 			getUsersPermissions();
+			selectedUser = users[i];
+		}
 	}
 }
 

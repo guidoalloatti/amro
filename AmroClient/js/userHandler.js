@@ -240,7 +240,7 @@ function getUsers()
 		
 		for(i = 0; i < data.users.length; i++)
 		{	
-			inner_html += "<tr><td class='rounded_4'> > <a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
+			inner_html += "<tr><td class='rounded_4'><a href='#' id='usuario_"+data.users[i].id+"' onclick='loadUser(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>"+data.users[i].name+"</a></td>";
 			inner_html += "<td id='subir_firma_"+data.users[i].id+"' align='center'><button onclick='uploadSignature("+data.users[i].id+")'>Subir</button></td>";
 			//inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");' /></td></tr>";
 			inner_html += "<td align='center'><button style='background: #e82c2c;' onclick='deleteUserConfirmation(\""+data.users[i].name+"\", \""+data.users[i].id+"\");'>Borrar</button></td>";

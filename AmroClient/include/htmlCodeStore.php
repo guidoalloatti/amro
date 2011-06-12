@@ -153,30 +153,80 @@ class htmlCodeStore {
         return $html;
     }
 
-    function getFooter()
-    {
+	function getTimeString()
+	{
+		
 		$lastLoginTimestamp = $_SESSION['lastLoginDate'][$_SESSION['user']];
 		$logedTimestamp = time() - $_SESSION['lastLoginDate'][$_SESSION['user']];
-		
 		$lastLoginDate = date("H:i:s d/m", $lastLoginTimestamp);
-		
 		$logedDateHours = floor($logedTimestamp/3600);
 		$logedDateMinutes = round(($logedTimestamp%3600)/60);
 		
-		//$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<a href='main.php?invoice_url=logout'>Desloguear</a>)"; 
-		$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b> (<button id='footer_button' style='background:green;' onclick='window.location = \"main.php?invoice_url=logout\";'>Desloguear</button>)"; 
+		$usuarioLogueadoMensaje = "Usuario Logueado: <b>".$_SESSION['user']."</b>"; 
+		$timeHeader = "Sesion activa por ";
+		$horas = "";
+		$minutos = "";
+		$nexo = "";
 		
-		$sesionActivaMensaje =  "Sesion Activa por ".$logedDateHours." horas y ".$logedDateMinutes." minutos";
+		if($logedDateHours == 0 && $logedDateMinutes == 0)
+			$horas = "por menos de un minuto";
+		else if($logedDateHours == 0 && $logedDateMinutes == 1)
+			$minutos = $logedDateMinutes." minuto";
+		else if($logedDateHours == 0 && $logedDateMinutes > 1)
+			$minutos = $logedDateMinutes." minutos";
+		else if($logedDateHours == 1 && $logedDateMinutes == 0)
+			$horas =  $logedDateHours." hora";
+		else if($logedDateHours == 1 && $logedDateMinutes == 1)
+		{
+			$horas =  $logedDateHours." hora";
+			$nexo = " y ";
+			$minutos = $logedDateMinutes." minuto";
+		}
+		else if($logedDateHours == 1 && $logedDateMinutes > 1)
+		{
+			$horas =  $logedDateHours." hora";
+			$nexo = " y ";
+			$minutos = $logedDateMinutes." minutos";
+		}
+		else if($logedDateHours > 1 && $logedDateMinutes == 0)
+			$horas =  $logedDateHours." horas";
+		else if($logedDateHours > 1 && $logedDateMinutes == 1)
+		{
+			$horas =  $logedDateHours." horas";
+			$nexo = " y ";
+			$minutos = $logedDateMinutes." minuto";
+		}
+		else if($logedDateHours > 1 && $logedDateMinutes > 1)
+		{
+			$horas =  $logedDateHours." horas";
+			$nexo = " y ";
+			$minutos = $logedDateMinutes." minutos";
+		}
+		
+		$sesionActivaMensaje = $timeHeader.$horas.$nexo.$minutos;
 		$sesionEmpezadaMensaje = "Logueado a las ".$lastLoginDate;
+		$timeString = $usuarioLogueadoMensaje." :: ".$sesionActivaMensaje." :: ".$sesionEmpezadaMensaje;
 		
+		return $timeString;
+	}
+	
+    function getFooter()
+    {
+		
+		
+		$timeString = $this->getTimeString();
 		
 		if($_SESSION['user'] === null || $_SESSION['pass'] === null)
 			$html = "<hr/><b>Ningun</b> Usuario Logueado<hr/></body></html>";
-		else {	
+		else 
+		{	
 			//$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <a href='main.php?invoice_url=pr'>Volver al Menu Principal</a><hr/></body></html>";
-			$html = "<hr/>$usuarioLogueadoMensaje :: $sesionEmpezadaMensaje :: $sesionActivaMensaje :: <button id='footer_button' style='background:green;' onclick='window.location = \"main.php?invoice_url=pr\";'>Volver al Menu Principal</button>";
+
+			$html = "<hr/>".$timeString." :: <button id='footer_button' style='background:#71C671;' onclick='window.location = \"main.php?invoice_url=pr\";'>Volver al Menu Principal</button>";
+			
 			if ($this->pageInvoice == "abm")
-				$html = $html . "<button id='footer_button' style='background:lightgreen;' onclick='window.location = \"main.php?invoice_url=ab\";'>Volver al Menu de ABM</button>";
+				$html .= " :: <button id='footer_button' style='background: #71C671;' onclick='window.location = \"main.php?invoice_url=ab\";'>Volver al Menu de ABM</button>";
+			$html .= " :: <button id='footer_button' style='background:  #71C671;' onclick='window.location = \"main.php?invoice_url=logout\";'>Desloguear</button>";
 			$html = $html . "<hr/></body></html>";
 		}
 		

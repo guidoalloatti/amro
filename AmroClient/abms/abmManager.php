@@ -258,7 +258,7 @@ class abmManager
 	function getAbmClienteHtml()
 	{	
 		$this->html = "<body id='abm_body' onload='clientStart();'>
-		<table width='90%' height='300px' border='0px'>
+		<table width='95%' height='300px' border='0px'>
 			<!-- 
 			<tr>
 				<td id='clientes_totales'>Cantidad de Clientes: 0
@@ -267,14 +267,17 @@ class abmManager
 			</tr>
 			-->
 			<tr>
-				<td width='30%'  id='client_list' VALIGN='top'>
-					<div style='height:300px overflow:auto;'><table>
-					</td>
+				<td width='30%' id='client_list' VALIGN='top'>
+					<div style='height:300px overflow:auto;'>
+					<!--
+					<table>
+						</td>
 						</tr>
 					</table>
+					-->
 					</div>
 				</td>
-				<td  width='70%' VALIGN='top' class='invisible' id='client_details'>
+				<td  width='65%' VALIGN='top' class='invisible' id='client_details'>
 					<table>
 						<tr>
 							<!-- <td class='rounded_2'><b>Cliente Seleccionado<b></td> -->

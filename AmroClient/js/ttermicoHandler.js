@@ -182,7 +182,7 @@ function deleteTT(id)
 function showTTermicos(ttermicos)
 {
 	var inner_html = "<div align='center' style='height: 300px; overflow:auto;'>";
-	inner_html += "<table style='width:400px;'><caption style='font-weight:bold;'>Tratamientos Térmicos</caption>";
+	inner_html += "<table style='width:400px;'>"; //<caption style='font-weight:bold;'>Tratamientos Térmicos</caption>";
 	inner_html += "<tr class='oc'><th class='oc'>ID</th><th class='oc'>Fecha</th><th class='oc'>Mostrar</th><th class='oc'>Borrar</th><th class='oc'>Seleccionar</th></tr>";
 	
 	for(var i=0; i < ttermicos.length; i++)
@@ -288,7 +288,7 @@ function prepareCA()
 			if(data.CAnalysis.length > 0)
 			{				
 				var inner_html = "<div align='center' style='height: 300px; overflow: auto;'>";
-				inner_html += "<table><caption style='font-weight:bold;'>Análisis Químicos</caption>";
+				inner_html += "<table><!-- <caption style='font-weight:bold;'>Análisis Químicos</caption> -->";
 				inner_html += "<tr class='oc'><th class='oc'>Numero de Probeta</th><th class='oc'>Material</th><th class='oc'>Fecha</th><th class='oc'>Id</th><th class='oc'>Seleccionar</th></tr>";
 				
 				globals.currentCA = data.CAnalysis;

@@ -1,4 +1,12 @@
+function hideAll()
+{
+	$("#crear_certificado_img").hide();
+}
+
+
 $(document).ready(function() {
+
+	hideAll();
 
     /* Mouseover Actions */
     $("#btn_green").mouseover(function() {
@@ -74,4 +82,167 @@ $(document).ready(function() {
         $(location).attr('href',url);
     });
 	
+
+
+	// Botones del menu principal
+	$("#menu_button_generar_certificado").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/creacion_certificados.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_generar_certificado").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/creacion_certificados.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+
+	$("#menu_button_administrar_abm").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/altas_bajas_modificaciones.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_administrar_abm").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/altas_bajas_modificaciones.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+
+	$("#menu_button_administrar_certificados").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/administracion_certificados.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_administrar_certificados").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/administracion_certificados.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+
+	$("#menu_button_orden_compra").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/administracion_ordenes_compra.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_orden_compra").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/administracion_ordenes_compra.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+	
+	$("#menu_button_permisos").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/gestionar_permisos_usuarios.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_permisos").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/gestionar_permisos_usuarios.png"></img>');
+		//$("#image_div").hide("slow");
+	});	
+	
+	$("#menu_button_abm_cliente").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_clientes.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_abm_cliente").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_clientes.png"></img>');
+		//$("#image_div").hide("slow");
+	});	
+	
+	$("#menu_button_abm_usuario").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_usuarios.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_abm_usuario").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_usuarios.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+	
+	$("#menu_button_abm_ttermico").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_ttermico.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_abm_ttermico").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_ttermico.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+	
+	$("#menu_button_abm_materiales").mouseover(function(){
+		$("#image_div").hide();
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_material.png"></img>');
+		$("#image_div").show("slow");
+	});
+	
+	$("#menu_button_abm_materiales").mouseout(function (){
+		$("#image_div").show("slow");
+		$("#image_div").html('<img id="crear_certificado_img" width="450" src="img/abm_material.png"></img>');
+		//$("#image_div").hide("slow");
+	});
+	
+	
+	
+	
+	
+	
 });
+
+
+
+
+/*
+$(document).ready(function(){ 
+	$("ul.thumb li").hover(function() {
+		$(this).css({'z-index' : '10'});
+		$(this).find('img').addClass("hover").stop()
+			.animate({
+				marginTop: '-110px', 
+				marginLeft: '-110px', 
+				top: '50%', 
+				left: '50%', 
+				width: '174px', 
+				height: '174px',
+				padding: '20px' 
+			}, 200);
+		
+		} , function() {
+		$(this).css({'z-index' : '0'});
+		$(this).find('img').removeClass("hover").stop()
+			.animate({
+				marginTop: '0', 
+				marginLeft: '0',
+				top: '0', 
+				left: '0', 
+				width: '100px', 
+				height: '100px', 
+				padding: '5px'
+			}, 400);
+	});
+	 
+	//Swap Image on Click
+		$("ul.thumb li a").click(function() {
+			
+			var mainImage = $(this).attr("href"); //Find Image Name
+			$("#main_view img").attr({ src: mainImage });
+			return false;		
+		});
+ 
+});
+
+*/
+
+
+

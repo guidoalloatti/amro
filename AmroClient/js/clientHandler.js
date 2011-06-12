@@ -202,10 +202,10 @@ function getClients()
 			if (data.clients.length == 0)
 				newClient();
 			
-			var inner_html = "<table><tr bgcolor='#4797ED'><th class='rounded_start'>Cliente</th><th class='rounded_middle'>Direccion</th><th class='rounded_end'>Eliminar</th></tr>";
+			var inner_html = "<table width='95%'><tr bgcolor='#4797ED'><th class='rounded_start'>Cliente</th><th class='rounded_middle'>Direccion</th><th width='15%' class='rounded_end'>Eliminar</th></tr>";
 			for(i = 0; i < data.clients.length; i++)
 			{	
-				inner_html += "<tr><td class='rounded_4'> > <a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
+				inner_html += "<tr><td class='rounded_4'><a href='#' id='client_"+data.clients[i].id+"' onclick='loadClient(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>"+data.clients[i].name+"</a></td>";
 				inner_html += "<td>"+data.clients[i].address+"</td>";
 				//inner_html += "<td align='center'><img src='img/delete.png' width='20' heigth='20' alt='Eliminar' title='Eliminar' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");' /></td></tr>";
 				inner_html += "<td align='center'><button style='background: #e82c2c;' onclick='deleteClientConfirmation(\""+data.clients[i].name+"\", \""+data.clients[i].id+"\");'>Borrar</button></td>";
